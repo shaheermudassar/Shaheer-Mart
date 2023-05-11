@@ -1,0 +1,57 @@
+{% extends 'core/base3.html' %}
+{% block title %}
+Orders
+{% endblock title %}
+{% block body %}
+{% load static %}
+<div class="content" style="overflow-y: scroll;">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header card-header-primary">
+            <h4 class="card-title">Orders</h4>
+            <p class="card-category">Here are all the orders you got</p>
+          </div>
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table">
+                <thead class="text-primary">
+                  <th>ID</th>
+                  <th colspan="2">Item</th>
+                  <th>Buyer</th>
+                  <th>Date</th>
+                  <th>Paid</th>
+                  <th>Quantity</th>
+                  <th>Price</th>
+                </thead>
+                <tbody>
+                  {% for o in order %}
+                  <tr>
+                    <td>order-{{o.order.id}}</td>
+                    <td>{{o.product.product_image}}</td>
+                    <td>{{o.product.title}}</td>
+                    <td><a href="{% url 'customer-profile' o.order.user.id %}"
+                        style="text-decoration: underline; color: #00bcd4;">{{o.order.user}}</a></td>
+                    <td>{{o.order.order_date}}</td>
+                    {% if o.order.paid_status == True %}
+                    <td><i class="fa fa-check-circle"></i></td>
+                    {% else %}
+                    <td><i class="fa fa-times-circle"></i></td>
+                    {% endif %}
+
+                    <td>{{o.qty}}</td>
+                    <td class="text-primary">Rs.{{o.total}}</td>
+                    <!-- <td><a href="{% url 'order-detail' o.id %}" style="text-decoration: underline; color: #00bcd4;">view</a></td> -->
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock body %}

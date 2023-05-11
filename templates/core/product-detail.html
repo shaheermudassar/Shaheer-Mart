@@ -1,0 +1,1259 @@
+{% extends 'core/base.html' %}
+{% block title %}
+{{product.title}}
+{% endblock title %}
+{% block body %}
+
+
+{% load static %}
+
+<style>
+  * {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+    font-family: 'Open Sans', sans-serif;
+  }
+
+  body {
+    line-height: 1.5;
+  }
+
+  .card-wrapper {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  img {
+    width: 100%;
+    display: block;
+  }
+
+  .imgflex {
+    height: 100px;
+    display: block;
+  }
+
+  .img-display {
+    overflow: hidden;
+  }
+
+  .img-showcase {
+    display: flex;
+    width: 100%;
+    transition: all 0.5s ease;
+  }
+
+  .img-showcase img {
+    min-width: 100%;
+  }
+
+  .img-select {
+    display: flex;
+  }
+
+  .img-item {
+    margin: 0.3rem;
+  }
+
+  .img-item:nth-child(1),
+  .img-item:nth-child(2),
+  .img-item:nth-child(3) {
+    margin-right: 0;
+  }
+
+  .img-item:hover {
+    opacity: 0.8;
+  }
+
+  .product-content {
+    padding: 2rem 1rem;
+  }
+
+  .product-title {
+    font-size: 3rem;
+    text-transform: capitalize;
+    font-weight: 700;
+    position: relative;
+    color: #12263a;
+    margin: 1rem 0;
+  }
+
+  .product-title::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 4px;
+    width: 80px;
+    background: #12263a;
+  }
+
+  .product-link {
+    text-decoration: none;
+    text-transform: uppercase;
+    font-weight: 400;
+    font-size: 0.9rem;
+    display: inline-block;
+    margin-bottom: 0.5rem;
+    background: #256eff;
+    color: #fff;
+    padding: 0 0.3rem;
+    transition: all 0.5s ease;
+  }
+
+  .product-link:hover {
+    opacity: 0.9;
+  }
+
+  .product-rating {
+    color: #ffc107;
+  }
+
+  .product-rating span {
+    font-weight: 600;
+    color: #252525;
+  }
+
+  .product-price {
+    margin: 1rem 0;
+    font-size: 1rem;
+    font-weight: 700;
+  }
+
+  .product-price span {
+    font-weight: 400;
+  }
+
+  .last-price span {
+    color: #f64749;
+    text-decoration: line-through;
+  }
+
+  .new-price span {
+    color: #256eff;
+  }
+
+  .product-detail h2 {
+    text-transform: capitalize;
+    color: #12263a;
+    padding-bottom: 0.6rem;
+  }
+
+  .product-detail p {
+    font-size: 0.9rem;
+    padding: 0.3rem;
+    opacity: 0.8;
+  }
+
+  .product-detail ul {
+    margin: 1rem 0;
+    font-size: 0.9rem;
+  }
+
+  .product-detail ul li {
+    margin: 0;
+    list-style: none;
+    background: url(shoes_images/checked.png) left center no-repeat;
+    background-size: 18px;
+    padding-left: 1.7rem;
+    margin: 0.4rem 0;
+    font-weight: 600;
+    opacity: 0.9;
+  }
+
+  .product-detail ul li span {
+    font-weight: 400;
+  }
+
+  .purchase-info {
+    margin: 1.5rem 0;
+  }
+
+  .purchase-info input,
+  .purchase-info .btn {
+    border: 1.5px solid #ddd;
+    border-radius: 25px;
+    text-align: center;
+    padding: 0.45rem 0.8rem;
+    outline: 0;
+    margin-right: 0.2rem;
+    margin-bottom: 1rem;
+  }
+
+  .purchase-info input {
+    width: 60px;
+  }
+
+  .purchase-info .btn {
+    cursor: pointer;
+    color: #fff;
+  }
+
+  .purchase-info .btn:first-of-type {
+    background: #256eff;
+  }
+
+  .purchase-info .btn:last-of-type {
+    background: #f64749;
+  }
+
+  .purchase-info .btn:hover {
+    opacity: 0.9;
+  }
+
+  .social-links {
+    display: flex;
+    align-items: center;
+  }
+
+  .social-links a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    color: #000;
+    border: 1px solid #000;
+    margin: 0 0.2rem;
+    border-radius: 50%;
+    text-decoration: none;
+    font-size: 0.8rem;
+    transition: all 0.5s ease;
+  }
+
+  .social-links a:hover {
+    background: #00bcd4;
+    border-color: transparent;
+    color: #fff;
+  }
+
+  @media screen and (min-width: 992px) {
+    .card {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      grid-gap: 1.5rem;
+    }
+
+    .card-wrapper {
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .product-imgs {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .product-content {
+      padding-top: 0;
+    }
+  }
+</style>
+
+<!--page Header-->
+<section class="page-header parallaxie padding_top center-block"
+  style="border-bottom-left-radius: 10px; border-bottom-right-radius: 10px;">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="page-titles text-center">
+
+
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!--page Header ends-->
+<style>
+  .sidebar:hover {
+    width: 290px;
+  }
+</style>
+
+<div class="sidebar" style="right: 0; width: 300px;">
+  <div class="col-md-4">
+    <aside class="sidebar whitebox" style="width: 290px;">
+
+
+      <div class="widget heading_space">
+        <h4 class="text-capitalize darkcolor bottom20">Delivery</h4>
+        <ul class="webcats">
+          {% if request.user.is_authenticated %}
+          <p><i class="fa fa-location-dot"></i> {{address.address}}, {{address.city}}, {{address.country}}</p>
+          <p style="margin-bottom: 0; color: #17fa3d;"><i class="fa fa-verified-circle"></i> Verified Address</p>
+          {% else %}
+          <p style="margin-bottom: 0; color: rgb(94, 91, 91);">Please <a href="{% url 'userauths:signup' %}"
+              style="color: #00bcd4; display: contents;">signup</a> to add an address or <a
+              href="{% url 'userauths:signin' %}" style="color: #00bcd4; display: contents;">login</a> if Already have
+            an account</p>
+          {% endif %}
+        </ul>
+        <hr>
+        <h4 class="text-capitalize darkcolor bottom20">Returns &amp; Warranty</h4>
+        <ul class="webcats">
+          <p><i class="fas fa-user-check"></i> {{product.vendor.authentic_rating}}% Authentic</p>
+          <p><i class="fas fa-history"></i> {{product.vendor.days_return}} Days Return</p>
+          <p style="margin-bottom: 0;"><i class="fas fa-calendar-check"></i> {{product.vendor.warranty_period}} Month
+            Warranty</p>
+
+        </ul>
+      </div>
+      <div class="widget heading_space">
+        <h4 class="text-capitalize darkcolor bottom20">Vendor</h4>
+        <div class="row row1">
+          <div class="col-md-4 " style="padding-left: 0px; width: 50%;">
+
+            <a href="{% url 'vendor-detail' product.vendor.vid %}">
+              <div class="item">
+                <img height="130px" style="padding-bottom: 10px; border-radius: 20px;"
+                  src="{{product.vendor.image.url}}" alt="vendor image">
+              </div>
+            </a>
+          </div>
+          <div class="col-md-4 " style="padding-left: 10px; width: 50%;">
+
+            <div class="item">
+              <div class=" whitecolor"><a href="{% url 'vendor-detail' product.vendor.vid %}">
+                  <h3 style="color: #212331;" class="bottom20">{{product.vendor.title}}</h3>
+                </a>
+                <h6 style="color: yellow;">
+                  {% if vendor_average_rating < 0.3 %} <i class="fa fa-star-o"></i>
+                    <i class="fa fa-star-o"></i>
+                    <i class="fa fa-star-o"></i>
+                    <i class="fa fa-star-o"></i>
+                    <i class="fa fa-star-o"></i>
+                    {% elif vendor_average_rating >= 0.3 and vendor_average_rating <= 0.8 %} <i
+                      class="fa fa-star-half-full"></i>
+                      <i class="fa fa-star-o"></i>
+                      <i class="fa fa-star-o"></i>
+                      <i class="fa fa-star-o"></i>
+                      <i class="fa fa-star-o"></i>
+                      {% elif vendor_average_rating >= 0.8 and vendor_average_rating <= 1.2 %} <i class="fa fa-star">
+                        </i>
+                        <i class="fa fa-star-o"></i>
+                        <i class="fa fa-star-o"></i>
+                        <i class="fa fa-star-o"></i>
+                        <i class="fa fa-star-o"></i>
+                        {% elif vendor_average_rating >= 1.2 and vendor_average_rating <= 1.8 %} <i class="fa fa-star">
+                          </i>
+                          <i class="fa fa-star-half-full"></i>
+                          <i class="fa fa-star-o"></i>
+                          <i class="fa fa-star-o"></i>
+                          <i class="fa fa-star-o"></i>
+                          {% elif vendor_average_rating >= 1.8 and vendor_average_rating <= 2.2 %} <i
+                            class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star-o"></i>
+                            <i class="fa fa-star-o"></i>
+                            <i class="fa fa-star-o"></i>
+                            {% elif vendor_average_rating >= 2.2 and vendor_average_rating <= 2.8 %} <i
+                              class="fa fa-star"></i>
+                              <i class="fa fa-star"></i>
+                              <i class="fa fa-star-half-full"></i>
+                              <i class="fa fa-star-o"></i>
+                              <i class="fa fa-star-o"></i>
+                              {% elif vendor_average_rating >= 2.8 and vendor_average_rating <= 3.2 %} <i
+                                class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star-o"></i>
+                                <i class="fa fa-star-o"></i>
+                                {% elif vendor_average_rating >= 3.2 and vendor_average_rating <= 3.8 %} <i
+                                  class="fa fa-star"></i>
+                                  <i class="fa fa-star"></i>
+                                  <i class="fa fa-star"></i>
+                                  <i class="fa fa-star-half-full"></i>
+                                  <i class="fa fa-star-o"></i>
+                                  {% elif vendor_average_rating >= 3.8 and vendor_average_rating <= 4.2 %} <i
+                                    class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star-o"></i>
+                                    {% elif vendor_average_rating >= 4.2 and vendor_average_rating <= 4.8 %} <i
+                                      class="fa fa-star"></i>
+                                      <i class="fa fa-star"></i>
+                                      <i class="fa fa-star"></i>
+                                      <i class="fa fa-star"></i>
+                                      <i class="fa fa-star-half-full"></i>
+                                      {% elif vendor_average_rating > 4.8 %}
+                                      <i class="fa fa-star"></i>
+                                      <i class="fa fa-star"></i>
+                                      <i class="fa fa-star"></i>
+                                      <i class="fa fa-star"></i>
+                                      <i class="fa fa-star"></i>
+                                      {% endif %}
+                                      <span style="color: #212331;">({{vendor_average_rating|floatformat:1}})</span>
+                </h6>
+                <small style="font-weight: 600; font-style: italic;color: #212331;">since
+                  {{product.vendor.date|date:"Y"}}</small>
+                <br><br>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <ul class="webcats">
+
+          <p><i class="fas fa-headset"></i> Contact: {{product.vendor.contact}}</p>
+          <p><i class="fa fa-location-dot"></i> Contact: {{product.vendor.address}}</p>
+
+        </ul>
+        <hr>
+        <div class="row">
+          <div class="col-md-4" style="width: 33.33%; padding: 0;">
+            <p style="font-size: 10px; text-align: center;">Ratting</p>
+            <h4 style="text-align: center;">{{vendor_rating|floatformat:1}}%</h4>
+          </div>
+          <div class="col-md-4" style="width: 33.33%; padding: 0;">
+            <p style="font-size: 10px; text-align: center;">Ship on time</p>
+            <h4 style="text-align: center;">{{product.vendor.shipping_on_time}}%</h4>
+          </div>
+          <div class="col-md-4" style="width: 33.33%; padding: 0;">
+            <p style="font-size: 10px; text-align: center;">Chat response</p>
+            <h4 style="text-align: center;">{{product.vendor.chat_resp_time}}%</h4>
+          </div>
+          {% if request.user.is_valid == False %}
+        </div>
+        <hr>
+        <h5>Wanna be a Vendor? <a style="color: #00bcd4;" href="{% url 'create-vendor-profile' %}">Register now</a></h5>
+        {% endif %}
+      </div>
+  </div>
+  <div class="widget heading_space">
+    <h4 class="text-capitalize darkcolor bottom20">Tags</h4>
+    <ul class="webtags">
+      {% for t in tags %}
+      <li><a href="{% url 'tag' t.slug %}">{{t.name}}</a></li>
+      {% endfor %}
+    </ul>
+  </div>
+  </aside>
+</div>
+</div>
+<style>
+  .heading_space {
+    margin-bottom: 13px;
+  }
+
+  .widget {
+    border-radius: 20px;
+  }
+
+  .main {
+    margin-left: 10px;
+    margin-right: 250px;
+  }
+</style>
+<style>
+  @media only screen and (max-width: 768px) {
+    .main {
+      margin-right: 10px;
+      /* Change this value to whatever margin-right you want for mobile view */
+      margin-left: 10px;
+      /* You may also want to adjust the margin-left for mobile view */
+    }
+  }
+</style>
+<div class="main">
+  <div class="">
+
+    <div class="card shadow" style="border: none; ;">
+      <!-- card left -->
+      <div class="product-imgs" style="margin-left: 10px;">
+        <div class="img-display">
+          <div class="img-showcase">
+            <img style="border-radius: 5px;" src="{{product.image.url}}" alt="shoe image">
+            {% for p in p_image %}
+
+
+            <img style="border-radius: 5px;" src="{{p.Images.url}}" alt="shoe image">
+            {% endfor %}
+          </div>
+        </div>
+        <div class="img-select">
+          <div class="img-item">
+            <a href="#" data-id="1">
+              <img style="border-radius: 5px;" class="imgflex" src="{{product.image.url}}" alt="shoe image">
+            </a>
+          </div>
+          {% for p in p_image %}
+          <div class="img-item">
+            <a href="#" data-id="{{ forloop.counter|add:1 }}">
+              <img style="border-radius: 5px;" class="imgflex" src="{{p.Images.url}}" alt="shoe image">
+            </a>
+          </div>
+          {% endfor %}
+
+        </div>
+      </div>
+      <!-- card right -->
+      <div class="product-content">
+        <h2 class="product-title">{{product.title}}</h2>
+
+        <div class="product-rating">
+          {% if average_rating.rating < 0.3 %} <i class="fa fa-star-o"></i>
+            <i class="fa fa-star-o"></i>
+            <i class="fa fa-star-o"></i>
+            <i class="fa fa-star-o"></i>
+            <i class="fa fa-star-o"></i>
+            {% elif average_rating.rating >= 0.3 and average_rating.rating <= 0.8 %} <i class="fa fa-star-half-full">
+              </i>
+              <i class="fa fa-star-o"></i>
+              <i class="fa fa-star-o"></i>
+              <i class="fa fa-star-o"></i>
+              <i class="fa fa-star-o"></i>
+              {% elif average_rating.rating >= 0.8 and average_rating.rating <= 1.2 %} <i class="fa fa-star"></i>
+                <i class="fa fa-star-o"></i>
+                <i class="fa fa-star-o"></i>
+                <i class="fa fa-star-o"></i>
+                <i class="fa fa-star-o"></i>
+                {% elif average_rating.rating >= 1.2 and average_rating.rating <= 1.8 %} <i class="fa fa-star"></i>
+                  <i class="fa fa-star-half-full"></i>
+                  <i class="fa fa-star-o"></i>
+                  <i class="fa fa-star-o"></i>
+                  <i class="fa fa-star-o"></i>
+                  {% elif average_rating.rating >= 1.8 and average_rating.rating <= 2.2 %} <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star-o"></i>
+                    <i class="fa fa-star-o"></i>
+                    <i class="fa fa-star-o"></i>
+                    {% elif average_rating.rating >= 2.2 and average_rating.rating <= 2.8 %} <i class="fa fa-star"></i>
+                      <i class="fa fa-star"></i>
+                      <i class="fa fa-star-half-full"></i>
+                      <i class="fa fa-star-o"></i>
+                      <i class="fa fa-star-o"></i>
+                      {% elif average_rating.rating >= 2.8 and average_rating.rating <= 3.2 %} <i class="fa fa-star">
+                        </i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star-o"></i>
+                        <i class="fa fa-star-o"></i>
+                        {% elif average_rating.rating >= 3.2 and average_rating.rating <= 3.8 %} <i class="fa fa-star">
+                          </i>
+                          <i class="fa fa-star"></i>
+                          <i class="fa fa-star"></i>
+                          <i class="fa fa-star-half-full"></i>
+                          <i class="fa fa-star-o"></i>
+                          {% elif average_rating.rating >= 3.8 and .rating <= 4.2 %} <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star-o"></i>
+                            {% elif average_rating.rating >= 4.2 and average_rating.rating <= 4.8 %} <i
+                              class="fa fa-star"></i>
+                              <i class="fa fa-star"></i>
+                              <i class="fa fa-star"></i>
+                              <i class="fa fa-star"></i>
+                              <i class="fa fa-star-half-full"></i>
+                              {% elif average_rating.rating > 4.8 %}
+                              <i class="fa fa-star"></i>
+                              <i class="fa fa-star"></i>
+                              <i class="fa fa-star"></i>
+                              <i class="fa fa-star"></i>
+                              <i class="fa fa-star"></i>
+                              {% endif %}
+                              <span>{{average_rating.rating|floatformat:1}}</span>
+        </div>
+        <br>
+        <div class="row">
+
+          <div class="product-price" style="width: 50%;">
+            <p class="last-price">Old Price: <span>Rs.{{product.old_price}}</span></p>
+            <p style="font-size: 16px;" class="new-price ">New Price: <span class="current-product-price"
+                style="color: #00bcf4;">Rs.<span class="current-product-price-{{p.id}}">{{product.price}}</span> <span
+                  style="color: rgb(47, 255, 47); font-weight: 600;">(-{{product.get_percentage|floatformat:0}}%)</span></span><button
+                data-product-item="{{product.id}}" id="add-to-wishlist" class="add-to-wishlist btn btnprimary"> <i
+                  class="fa fa-heart"></i> </button></p>
+          </div>
+          <a style="width: 40%; height: 50%;" href="{% url 'vendor-detail' product.vendor.vid %}"
+            class="button btnprimary">visit {{product.vendor.title}}'s store <i class="fa fa-store"></i></a>
+        </div>
+
+        <div class="product-detail">
+          <h4>About this item: </h4>
+          <p>{{product.description|slice:"200"|safe}}.... <a style="color: #00bcd4;" href="#description">read more</a>
+          </p>
+          <ul>
+            <li>Available:
+              {% if product.in_stock == True %}
+              <span>in stock</span>
+              {% else %}
+              <span>Out of stock</span>
+              {% endif %}
+            </li>
+            <li>Category: <span>{{product.category}}</span></li>
+            <li>Warranty: <span>{{product.warranty_period}}<span></li>
+            <li>Return Days: <span>{{product.days_return}}<span></li>
+            <li>Shipping Fee: <span>Free</span></li>
+          </ul>
+          <div class="widget heading_space">
+            <h4 class="text-capitalize darkcolor bottom20">Tags</h4>
+            <ul class="webtags">
+              {% for tags in product.tags.all %}
+              <li style="padding: 0px; margin: 0;"><a href="{% url 'tag' tags.slug %}">{{tags.name}}</a></li>
+              {% endfor %}
+            </ul>
+          </div>
+        </div>
+
+        <div class="purchase-info row " style="--bs-gutter-x: 0rem;">
+
+
+
+          <input type="hidden" value="{{product.pid}}" class="product-pid-{{p.id}}">
+          <input type="hidden" value="{{product.id}}" class="product-id-{{p.id}}">
+          <input type="hidden" value="{{product.title}}" class="product-title-{{p.id}}">
+          <input type="hidden" value="{{product.image.url}}" class="product-image-{{p.id}}">
+
+
+
+          <input type="number" value="1" name="" class="container1 product-quantity-{{p.id}}" id="box product-quantity"
+            style="color: #00bcd4; border: 2.5px solid #00bcd4;">
+          <button type="button" id="add-to-cart-btn" class="button btnprimary add-to-cart-btn" data-index="{{p.id}}"
+            style="width: 50%; margin-left: 20px;">
+            Add to Cart <i class="fas fa-shopping-cart"></i>
+          </button>
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Ratting -->
+
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+
+
+    :root {
+      --yellow: #FFBD13;
+      --blue: #4383FF;
+      --blue-d-1: #3278FF;
+      --light: #F5F5F5;
+      --grey: #AAA;
+      --white: #FFF;
+      --shadow: 8px 8px 30px rgba(0, 0, 0, .05);
+    }
+
+    .wrapper {
+      background: var(--white);
+      padding: 2rem;
+      max-width: 576px;
+      width: 100%;
+      border-radius: .75rem;
+      box-shadow: var(--shadow);
+      text-align: center;
+    }
+
+    .wrapper h3 {
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+    }
+
+    .rating {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      grid-gap: .5rem;
+      font-size: 2rem;
+      color: var(--yellow);
+      margin-bottom: 2rem;
+    }
+
+    .rating .star {
+      cursor: pointer;
+    }
+
+    .rating .star.active {
+      opacity: 0;
+      animation: animate .5s calc(var(--i) * .1s) ease-in-out forwards;
+    }
+
+    @keyframes animate {
+      0% {
+        opacity: 0;
+        transform: scale(1);
+      }
+
+      50% {
+        opacity: 1;
+        transform: scale(1.2);
+      }
+
+      100% {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+
+    .rating .star:hover {
+      transform: scale(1.1);
+    }
+
+    textarea {
+      width: 100%;
+      background: var(--light);
+      padding: 1rem;
+      border-radius: .5rem;
+      border: none;
+      outline: none;
+      resize: none;
+      margin-bottom: .5rem;
+    }
+
+    .btn1-group {
+      display: flex;
+      grid-gap: .5rem;
+      align-items: center;
+    }
+
+    .btn1-group .btn1 {
+      padding: .75rem 1rem;
+      border-radius: .5rem;
+      border: none;
+      outline: none;
+      cursor: pointer;
+      font-size: .875rem;
+      font-weight: 500;
+    }
+
+    .btn1-group .btn1.submit {
+      background: var(--blue);
+      color: var(--white);
+    }
+
+    .btn1-group .btn1.submit:hover {
+      background: var(--blue-d-1);
+    }
+
+    .btn1-group .btn1.cancel {
+      background: var(--white);
+      color: var(--blue);
+    }
+
+    .btn1-group .btn1.cancel:hover {
+      background: var(--light);
+    }
+  </style>
+  <script>
+    const allStar = document.querySelectorAll('.rating .star')
+    const ratingValue = document.querySelector('.rating input')
+
+    allStar.forEach((item, idx) => {
+      item.addEventListener('click', function () {
+        let click = 0
+        ratingValue.value = idx + 1
+
+        allStar.forEach(i => {
+          i.classList.replace('bxs-star', 'bx-star')
+          i.classList.remove('active')
+        })
+        for (let i = 0; i < allStar.length; i++) {
+          if (i <= idx) {
+            allStar[i].classList.replace('bx-star', 'bxs-star')
+            allStar[i].classList.add('active')
+          } else {
+            allStar[i].style.setProperty('--i', click)
+            click++
+          }
+        }
+      })
+    })
+  </script>
+
+  <!-- Ratting end -->
+
+
+  <br><br>
+
+
+
+
+  <div class="row px-xl-5">
+    <div class="col">
+      <div class="bg-light p-30">
+        <div class="nav nav-tabs mb-4">
+          <a class="nav-item nav-link text-dark active" id="description" data-toggle="tab"
+            href="#tab-pane-1">Description</a>
+          <a class="nav-item nav-link text-dark" data-toggle="tab" href="#tab-pane-2">Information</a>
+          <a class="nav-item nav-link text-dark" data-toggle="tab" href="#tab-pane-3">Reviews ({{reviews.count}})</a>
+        </div>
+        <div class="tab-content">
+          <div class="tab-pane fade show active" id="tab-pane-1">
+            <h4 class="mb-3">Product Description</h4>
+            <p>{{product.description|safe}}</p>
+          </div>
+          <div class="tab-pane fade" id="tab-pane-2">
+            <h4 class="mb-3">Additional Information</h4>
+            <p>{{product.specification|safe}}</p>
+          </div>
+
+
+
+
+
+
+
+
+          <div class="tab-pane fade" id="tab-pane-3">
+            <!-- Testimonials -->
+
+            <section id="our-testimonial" class="padding">
+              <div class="container">
+                <div class="row">
+                  <div class="col-md-12 col-sm-12 text-center">
+                    <div class="heading-title bottom30">
+                      <span>Reviews</span>
+                      <h2 class="darkcolor">What People Say</h2>
+                    </div>
+                    <div class="product-rating">
+                      {% if average_rating.rating < 0.3 %} <i class="fa fa-star-o"></i>
+                        <i class="fa fa-star-o"></i>
+                        <i class="fa fa-star-o"></i>
+                        <i class="fa fa-star-o"></i>
+                        <i class="fa fa-star-o"></i>
+                        {% elif average_rating.rating >= 0.3 and average_rating.rating <= 0.8 %} <i
+                          class="fa fa-star-half-full"></i>
+                          <i class="fa fa-star-o"></i>
+                          <i class="fa fa-star-o"></i>
+                          <i class="fa fa-star-o"></i>
+                          <i class="fa fa-star-o"></i>
+                          {% elif average_rating.rating >= 0.8 and average_rating.rating <= 1.2 %} <i
+                            class="fa fa-star"></i>
+                            <i class="fa fa-star-o"></i>
+                            <i class="fa fa-star-o"></i>
+                            <i class="fa fa-star-o"></i>
+                            <i class="fa fa-star-o"></i>
+                            {% elif average_rating.rating >= 1.2 and average_rating.rating <= 1.8 %} <i
+                              class="fa fa-star"></i>
+                              <i class="fa fa-star-half-full"></i>
+                              <i class="fa fa-star-o"></i>
+                              <i class="fa fa-star-o"></i>
+                              <i class="fa fa-star-o"></i>
+                              {% elif average_rating.rating >= 1.8 and average_rating.rating <= 2.2 %} <i
+                                class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star-o"></i>
+                                <i class="fa fa-star-o"></i>
+                                <i class="fa fa-star-o"></i>
+                                {% elif average_rating.rating >= 2.2 and average_rating.rating <= 2.8 %} <i
+                                  class="fa fa-star"></i>
+                                  <i class="fa fa-star"></i>
+                                  <i class="fa fa-star-half-full"></i>
+                                  <i class="fa fa-star-o"></i>
+                                  <i class="fa fa-star-o"></i>
+                                  {% elif average_rating.rating >= 2.8 and average_rating.rating <= 3.2 %} <i
+                                    class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star-o"></i>
+                                    <i class="fa fa-star-o"></i>
+                                    {% elif average_rating.rating >= 3.2 and average_rating.rating <= 3.8 %} <i
+                                      class="fa fa-star"></i>
+                                      <i class="fa fa-star"></i>
+                                      <i class="fa fa-star"></i>
+                                      <i class="fa fa-star-half-full"></i>
+                                      <i class="fa fa-star-o"></i>
+                                      {% elif average_rating.rating >= 3.8 and .rating <= 4.2 %} <i class="fa fa-star">
+                                        </i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star-o"></i>
+                                        {% elif average_rating.rating >= 4.2 and average_rating.rating <= 4.8 %} <i
+                                          class="fa fa-star"></i>
+                                          <i class="fa fa-star"></i>
+                                          <i class="fa fa-star"></i>
+                                          <i class="fa fa-star"></i>
+                                          <i class="fa fa-star-half-full"></i>
+                                          {% elif average_rating.rating > 4.8 %}
+                                          <i class="fa fa-star"></i>
+                                          <i class="fa fa-star"></i>
+                                          <i class="fa fa-star"></i>
+                                          <i class="fa fa-star"></i>
+                                          <i class="fa fa-star"></i>
+                                          {% endif %}
+                                          <span class="heading-title">{{ average_rating.rating|floatformat:1 }} <p
+                                              style="color: #00bcd4;">
+                                              reviews({{reviews.count}})</p></span>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-12 col-sm-12">
+                    <div id="testimonial-slider" class="owl-carousel reviewlist">
+                      {% for r in reviews %}
+                      <div class="item">
+                        <div class="testimonial-wrapp">
+                          <span class="quoted"><i class="fa fa-quote-right"></i></span>
+                          <div class="testimonial-text">
+                            <p style="font-size: larger; color: gold;">
+                              {% for star in r.rating|ljust:r.rating %}
+                              <span>&starf;</span>
+                              {% endfor %}
+                            </p>
+                            <p class="bottom40">{{r.review}}</p>
+                          </div>
+                          <div class="testimonial-photo"><img alt="" src="{% static 'images/testimonial-1.jpg' %}">
+                          </div>
+                          <h4 class="darkcolor">{{r.user.username|title}}</h4>
+                          <small class="defaultcolor">Businessman</small>
+                        </div>
+                      </div>
+                      {% endfor %}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </section>
+            <!--Testimonials Ends-->
+
+
+            <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
+            {% if request.user.is_authenticated %}
+            {% if make_review == True %}
+
+            <div class="wrapper" style="max-width: 100%;">
+              <h3 class="hideform">Add Review</h3>
+              <strong class="text-success" id="review-res"></strong>
+              <form class="hideform" action="{% url 'ajax-add-review' product.id %}" method="POST" id="commentForm">
+                {% csrf_token %}
+                <div class="rating">
+
+                  {{review_form.rating}}
+                  <!-- <input type="number" name="rating" hidden>
+            <i class='bx bx-star star' style="--i: 0;"></i>
+            <i class='bx bx-star star' style="--i: 1;"></i>
+            <i class='bx bx-star star' style="--i: 2;"></i>
+            <i class='bx bx-star star' style="--i: 3;"></i>
+            <i class='bx bx-star star' style="--i: 4;"></i> -->
+                </div>
+                {{review_form.review}}
+
+
+            </div>
+            <div class="btn1-group">
+              <button type="submit" class="btn1 submit">Submit</button>
+              <button class="btn1 cancel">Cancel</button>
+            </div>
+            </form>
+          </div>
+          {% endif %}
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Shop Detail End -->
+
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8 offset-md-2 col-sm-12 text-center">
+        <div style="align-content: center;" class="heading-title wow fadeInUp" data-wow-delay="300ms">
+          <br>
+          {% if related_products %}
+          <h1 class="darkcolor bottom20 button btnprimary">Related Products:</h1>
+          {% endif %}
+          <br>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="row row1">
+      {% for p in related_products %}
+
+
+
+      <div class="col-md-4">
+        <div class="news_item shadow text-center">
+          <div class="image-container">
+            <a class="image" href="{% url 'product-detail' p.pid %}">
+              <img src="{{p.image.url}}" style="height: 200px; " alt="Latest News" class="img-responsive">
+            </a>
+            <div class="hot-deal">-{{p.get_percentage|floatformat:0}}%</div>
+          </div>
+          <style>
+            /* .image-container {
+position: relative; */
+            /* width: 100%;
+height: 0;
+padding-bottom: 80%; } */
+
+
+
+
+
+            .hot-deal {
+              position: absolute;
+              top: 0;
+              left: 0;
+              background-color: #00bcd4;
+              color: #ffffff;
+              padding: 5px;
+              font-size: 14px;
+              font-weight: bold;
+              border-bottom-right-radius: 16px;
+            }
+          </style>
+          <div class="news_desc">
+            <h6 style="text-align: left; font-weight: 600; color: darkgrey;"
+              class="text-capitalize font-light darkcolor">
+              {{p.category}}</h6>
+            <h5 style="font-weight: 900;" class="text-capitalize font-light darkcolor"><a
+                href="{% url 'product-detail' p.pid %}">{{p.title}}</a></h5>
+            <ul class="meta-tags top20 bottom20">
+              <li><a href="#."><i class="fa fa-calendar"></i>{{p.date|date:"d M"}}</a></li>
+              <li><a href="#."> <i class="fa fa-user-o"></i>{{p.vendor}}</a></li>
+              {% if p.get_average_rating == None %}
+              <li><a style="font-family:sans-serif;" href="#."> <i style="color: gold;" class="fa fa-star"></i>(0)</a>
+              </li>
+              {% else %}
+              <li><a style="font-family:sans-serif;" href="#."> <i style="color: gold;"
+                    class="fa fa-star"></i>({{p.get_average_rating|floatformat:1}})</a></li>
+              {% endif %}
+            </ul>
+            <p style="text-decoration: line-through; font-weight: 200; color: rgb(162, 166, 167);" class="bottom35">
+              Rs.{{p.old_price}}</p>
+            <p style="font-weight: 500; font-size: large; color: chartreuse;" class="bottom35">Rs.{{p.price}} <button
+                data-product-item="{{product.id}}" id="add-to-wishlist" class="add-to-wishlist btn btnprimary"> <i
+                  class="fa fa-heart"></i> </button></p>
+            <a href="blog-detail.html" class="button btnprimary">Add to cart <i class="fa fa-cart-shopping"></i> </a>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+
+
+
+
+
+
+
+
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+    <script>
+      const imgs = document.querySelectorAll('.img-select a');
+      const imgBtns = [...imgs];
+      let imgId = 1;
+
+      imgBtns.forEach((imgItem) => {
+        imgItem.addEventListener('click', (event) => {
+          event.preventDefault();
+          imgId = imgItem.dataset.id;
+          slideImage();
+        });
+      });
+
+      function slideImage() {
+        const displayWidth = document.querySelector('.img-showcase img:first-child').clientWidth;
+
+        document.querySelector('.img-showcase').style.transform = `translateX(${- (imgId - 1) * displayWidth}px)`;
+      }
+
+      window.addEventListener('resize', slideImage);
+    </script>
+
+    <style>
+      .container1 {
+        position: relative;
+        width: 80px;
+        height: 50px;
+        border-radius: 40px;
+        border: 2px solid #00bcd4;
+        transition: 0.5s;
+      }
+
+      .container1:hover {
+        width: 120px;
+
+      }
+
+      .container1 .next {
+        position: absolute;
+        top: 50%;
+        right: 30px;
+        display: block;
+        width: 12px;
+        height: 12px;
+        border-top: 2px solid #00bcd4;
+        border-left: 2px solid #00bcd4;
+        z-index: 1;
+        transform: translateY(-50%) rotate(135deg);
+        cursor: pointer;
+        opacity: 0;
+        transition: 0.5s;
+      }
+
+      .container1:hover .next {
+        opacity: 1;
+        right: 20px;
+      }
+
+      .container1 .prev {
+        position: absolute;
+        top: 50%;
+        left: 30px;
+        display: block;
+        width: 12px;
+        height: 12px;
+        border-top: 2px solid #00bcd4;
+        border-left: 2px solid #00bcd4;
+        z-index: 1;
+        transform: translateY(-50%) rotate(315deg);
+        cursor: pointer;
+        opacity: 0;
+        transition: 0.5s;
+      }
+
+      .container1:hover .prev {
+        opacity: 1;
+        left: 20px;
+      }
+
+      #box span {
+        position: absolute;
+        display: block;
+        width: 100%;
+        height: 100%;
+        text-align: center;
+        line-height: 46px;
+        display: none;
+        color: #00bcd4;
+        font-size: 24px;
+        font-weight: 700;
+        font-family: sans-serif;
+        user-select: none;
+      }
+
+      #box span:nth-child(1) {
+        display: initial;
+      }
+    </style>
+
+    <script type="text/javascript">
+      var numbers = document.getElementById('box');
+      for (i = 1; i < 100; i++) {
+        var span = document.createElement('span')
+        span.textContent = i;
+        numbers.appendChild(span);
+      }
+      var num = numbers.getElementsByTagName("span");
+      var index = 1;
+
+      function nextNum() {
+        num[index].style.display = 'none';
+        index = (index + 1) % num.length;
+        num[index].style.display = 'initial';
+      }
+      function prevNum() {
+        num[index].style.display = 'none';
+        index = (index - 1 + num.length) % num.length;
+        num[index].style.display = 'initial';
+      }
+    </script>
+    <script>
+      // Get all the image items
+      const imgItems = document.querySelectorAll('.img-item');
+
+      // Check if the number of image items exceeds 5
+      if (imgItems.length > 4) {
+        // Get the number of remaining images
+        const numRemaining = imgItems.length - 4;
+
+        // Create a new image item for the remaining images
+        const remainingItem = document.createElement('div');
+        remainingItem.classList.add('img-item');
+        remainingItem.innerHTML = `
+        <a href="#">
+          <div class="img-container">
+      <img style="height: 100px; filter: brightness(40%);" src="{{product.image.url}}" alt="+${numRemaining}">
+      <div class="overlay2">+${numRemaining}</div>
+    </div>
+    
+    <style>
+      .img-container {
+        position: relative;
+        display: inline-block;
+      }
+      .overlay2 {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 24px;
+        font-weight: bold;
+        color: white;
+        text-shadow: 1px 1px black;
+      }
+    </style>
+    
+        </a>
+      `;
+
+        // Add the remaining item to the end of the list
+        document.querySelector('.img-select').appendChild(remainingItem);
+
+        // Hide the remaining image items
+        for (let i = 4; i < imgItems.length; i++) {
+          imgItems[i].style.display = 'none';
+        }
+
+        // Add a click event listener to the remaining image item
+        remainingItem.addEventListener('click', function (e) {
+          e.preventDefault();
+
+          // Show the remaining image items
+          for (let i = 4; i < imgItems.length; i++) {
+            imgItems[i].style.display = 'block';
+          }
+
+          // Hide the remaining item
+          remainingItem.style.display = 'none';
+        });
+      }
+
+    </script>
+    <style>
+      .img-item:last-child img {
+        border: 2px solid #00bcd4;
+
+        cursor: pointer;
+      }
+
+      .img-item:last-child img:hover {
+        background-color: #00bcd4;
+        color: white;
+      }
+    </style>
+  </div>
+
+
+  {% endblock body %}

@@ -1,0 +1,123 @@
+{% extends 'core/base.html' %}
+{% block title %}
+Add store
+{% endblock title %}
+
+{% block body %}
+{% load static %}
+<section class="page-header parallaxie padding_top center-block">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="page-titles text-center">
+          <h2 class="whitecolor font-light bottom30">Add Store</h2>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!--page Header-->
+
+<!--page Header ends-->
+<section id="our-blog" class="padding text-center">
+  <div class="container">
+    <div class="row d-flex justify-content-center">
+      <div class="col-lg-12">
+        <div class="bglight logincontainer">
+          <h3 class="darkcolor bottom35">Create Profile </h3>
+          <form method="post" class="getin_form border-form" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="row row1">
+              <div class="col-md-6">
+                <div class="form-group bottom35">
+                  <label class="bmd-label-floating">Store Name:</label>
+
+                  <input class="form-control" placeholder="Store Name" type="text" name="title">
+
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group bottom35">
+                  <label class="bmd-label-floating">Store Address:</label>
+                  <input class="form-control" type="text" placeholder="Address" name="address">
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-5">
+                <div class="form-group bottom35">
+                  <label class="bmd-label-floating">Profile Image:</label>
+                  <input class="form-control" placeholder="Choose an image" name="image" type="file"
+                    data-preview="profile-preview" onchange="previewImage('profile-preview')"
+                    accept=".jpg, .jpeg, .png">
+                  <br><img id="profile-preview" src="{% static 'images/Unknown_person.jpg' %}">
+                  <style>
+                    #profile-preview {
+                      max-width: 300px;
+                      max-height: 300px;
+                      border-radius: 300px;
+                    }
+
+                    #cover-preview {
+                      width: 600px;
+                      max-width: 100%;
+                      max-height: 300px;
+                      border-radius: 30px;
+                    }
+                  </style>
+                  <script>
+                    function previewImage(previewId) {
+                      var preview = document.querySelector('#' + previewId);
+                      var file = document.querySelector('input[type=file][data-preview="' + previewId + '"]').files[0];
+                      var reader = new FileReader();
+
+                      reader.onloadend = function () {
+                        preview.src = reader.result;
+                      }
+
+                      if (file) {
+                        reader.readAsDataURL(file);
+                      } else {
+                        preview.src = "";
+                      }
+                    }
+
+                  </script>
+                </div>
+              </div>
+
+              <div class="col-md-7">
+                <div class="col-md-12">
+                  <div class="form-group bottom35">
+                    <label class="bmd-label-floating">Store Bio:</label>
+                    <textarea class="form-control" placeholder="(Should not be more than 50 Characters):"
+                      name="description"></textarea>
+                  </div>
+                </div>
+                <div class="row row1">
+                  <div class="col-md-6">
+                    <div class="form-group bottom35">
+                      <label class="bmd-label-floating">contact no.:</label>
+                      <input class="form-control" type="text" placeholder="Contact no." name="contact">
+                    </div>
+                  </div>
+                  <div class="col-md-6"><button style="display: block; margin: 0 auto; margin-top: 20px;" type="submit"
+                      class="button btnprimary" name="submit">Start Selling <i class="fas fa-arrow-right"></i></button>
+                  </div>
+                </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<style>
+  .form-control {
+    border-radius: 20px;
+  }
+</style>
+
+{% endblock body %}

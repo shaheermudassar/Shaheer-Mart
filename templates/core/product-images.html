@@ -1,0 +1,83 @@
+{% extends 'core/base.html' %}
+{% block title %}
+Add Product
+{% endblock title %}
+
+{% block body %}
+{% load static %}
+
+<section class="page-header parallaxie padding_top center-block">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="page-titles text-center">
+                    <h2 class="whitecolor font-light bottom30">Edit Product</h2>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<br><br>
+<form method="post">
+    <div class="row row1" id="add-images">
+        <div class="col-md-4">
+            <input class="form-control" placeholder="Choose an image" name="image" required type="file"
+                data-preview="preview-image0" onchange="previewImage('preview-image0')" accept=".jpg, .jpeg, .png">
+            <br>
+            <img id="preview-image0" src="{% static 'images/Unknown_person.jpg' %}">
+        </div>
+        <button id="add-image" class="button btnsecondary">Add image</button>
+    </div>
+    <button class="button btnprimary" type="submit">Save</button>
+</form>
+<style>
+    #preview-image0 {
+        max-width: 300px;
+        max-height: 300px;
+    }
+</style>
+<script>
+    console.log("working fine..");
+
+    let imageCount = 1;
+
+    $("#add-image").on("click", function () {
+        let previewId = "preview-image" + imageCount;
+        let _html = '<div class="col-md-4">';
+        _html += '<input class="form-control" placeholder="Choose an image" name="image" required type="file" data-preview="' + previewId + '" onchange="previewImage(\'' + previewId + '\')" accept=".jpg, .jpeg, .png">';
+        _html += '<br>';
+        _html += '<img id="' + previewId + '" src="{% static 'images / Unknown_person.jpg' %}">';
+        _html += '<button id="delete-image-' + imageCount + '" class="button btnsecondary">Delete image</button>';
+        _html += '</div>';
+        _html += '<style>#' + previewId + '{max-width: 300px; max-height: 300px;}</style>';
+        $("#add-images").prepend(_html);
+        imageCount++;
+        console.log("done");
+        addDeleteButtonListener(imageCount - 1);
+    });
+
+    function addDeleteButtonListener(index) {
+        $("#delete-image-" + index).on("click", function () {
+            $("#preview-image" + index).closest(".col-md-4").remove();
+        });
+    }
+
+    function previewImage(previewId) {
+        var preview = document.querySelector('#' + previewId);
+        var file = document.querySelector('input[type=file][data-preview="' + previewId + '"]').files[0];
+        var reader = new FileReader();
+
+        reader.onloadend = function () {
+            preview.src = reader.result;
+        }
+
+        if (file) {
+            reader.readAsDataURL(file);
+        } else {
+            preview.src = "";
+        }
+    }
+</script>
+
+{% endblock body %}

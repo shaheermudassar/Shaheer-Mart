@@ -1,0 +1,97 @@
+{% extends 'core/base.html' %}
+{% load widget_tweaks %}
+<!-- <form method="post" action="" >
+    {% csrf_token %}
+    {{form.as_p}}
+<button type="submit">Register</button>
+</form> -->
+
+{% block title %}
+Signup
+{% endblock title %}
+{% block body %}
+{% load static %}
+
+<!--page Header-->
+<section class="page-header parallaxie padding_top center-block">
+   <div class="container">
+      <div class="row">
+         <div class="col-sm-12">
+            <div class="page-titles text-center">
+               <h2 class="whitecolor font-light bottom30">Register</h2>
+               <ul class="breadcrumb justify-content-center">
+                  <li class="breadcrumb-item"><a href="/">Home</a></li>
+                  <li class="breadcrumb-item active" aria-current="page">Login</li>
+               </ul>
+            </div>
+         </div>
+      </div>
+   </div>
+</section>
+<!--page Header ends-->
+
+
+<!-- Login Register -->
+<section id="our-blog" class="padding text-center">
+   <div class="container">
+      <div class="row d-flex justify-content-center">
+         <div class="col-lg-4 col-md-6 col-sm-10">
+            <div class="bglight logincontainer">
+               <h3 class="darkcolor bottom35">Create Your account </h3>
+               {% if form.errors %}
+               <div class="alert alert-danger">
+                  <strong>{{form.errors}}</strong>
+
+               </div>
+               {% endif %}
+
+               <form method="post" class="getin_form border-form" id="login">
+                  {% csrf_token %}
+                  <div class="row">
+
+                     <div class="col-md-12 col-sm-12">
+                        <div class="form-group bottom35">
+                           {{form.username|attr:"class:form-control"}}
+                        </div>
+                     </div>
+                     <div class="col-md-12 col-sm-12">
+                        <div class="form-group bottom35">
+                           {{form.email|attr:"class:form-control"}}
+                        </div>
+                        <div style="font-size: smaller;" class="help-block">
+                           <spam style="color: #00bcd4">Note: </spam>Will also be used for emails
+                        </div>
+                     </div>
+                  </div>
+                  <div class="col-md-12 col-sm-12">
+                     <div class="form-group bottom35">
+                        {{form.password1|attr:"class:form-control"}}
+                     </div>
+                  </div>
+                  <br>
+                  <div class="col-md-12 col-sm-12">
+                     <div class="form-group bottom35">
+                        {{form.password2|attr:"class:form-control"}}
+                     </div>
+                  </div>
+                  <!-- <div class="col-md-12 col-sm-12">
+                         <div class="form-group bottom35">
+                            <input class="form-control" type="password" placeholder="Confirm Password:" required>
+                         </div>
+                      </div> -->
+                  <br>
+                  <div class="col-sm-12">
+                     <button type="submit" style="width: 50%; display: block; margin: 0 auto;"
+                        class="button btnprimary">Login</button>
+                     <p class="top20 log-meta"> Already have an account? <a href="{% url 'userauths:signin' %}">Sign
+                           In</a> </p>
+                  </div>
+            </div>
+            </form>
+         </div>
+      </div>
+   </div>
+   </div>
+</section>
+<!--Login Ends-->
+{% endblock body %}

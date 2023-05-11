@@ -1,0 +1,40 @@
+{% extends 'core/base.html' %}
+{% block title %}
+Payment Failed
+{% endblock title %}
+
+{% block body %}
+{% load static %}
+<main id="cart-list">
+   <!--page Header-->
+   <section class="page-header parallaxie padding_top center-block">
+      <div class="container">
+         <div class="row">
+            <div class="col-sm-12">
+               <div class="page-titles text-center">
+                  <h2 class="whitecolor font-light bottom30">Payment Failed</h2>
+                  </ul>
+               </div>
+            </div>
+         </div>
+      </div>
+   </section>
+   <!--Error 404 SECTION-->
+   <section id="error" class="padding">
+      <div class="container">
+         <div class="row">
+            <div class="col-md-3 col-sm-2"></div>
+            <div class="col-md-6 col-sm-8 text-center">
+               <div class="error wow zoomIn">
+                  <h1>404</h1>
+                  <h2>404</h2>
+               </div>
+               <p class="heading_space">We are sorry, the payment <span
+                     style="color: red; font-weight: 600;">Failed</span> !</p>
+               <a href="{% url 'index' %}" class="button btnprimary btn-gradient-hvr wow fadeInLeft">bake to home</a>
+            </div>
+            <div class="col-md-3 col-sm-2"></div>
+         </div>
+      </div>
+   </section>
+   {% endblock body %}

@@ -1,0 +1,86 @@
+{% extends 'core/base3.html' %}
+{% block title %}
+Shop Dashboard
+{% endblock title %}
+{% block body %}
+{% load static %}
+<div class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-3 col-md-6 col-sm-6">
+                <div class="card card-stats">
+                    <div class="card-header card-header-warning card-header-icon">
+                        <div class="card-icon">
+                            <i class="material-icons">content_copy</i>
+                        </div>
+                        <p class="card-category">Total Orders</p>
+                        <h4 class="card-title">{{total_orders|length}}
+                        </h4>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 col-sm-6">
+                <div class="card card-stats">
+                    <div class="card-header card-header-success card-header-icon">
+                        <div class="card-icon">
+                            <i class="material-icons">store</i>
+                        </div>
+                        <p class="card-category">Delivered</p>
+                        <h4 class="card-title">{{delivered|length}}</h4>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 col-sm-6">
+                <div class="card card-stats">
+                    <div class="card-header card-header-success card-header-icon">
+                        <div class="card-icon" style="background: linear-gradient(60deg,#00bcd4,#9c27b0);">
+                            <i class="material-icons">delivery_dining</i>
+                        </div>
+                        <p class="card-category">To be delivered</p>
+                        <h4 class="card-title">{{to_be_delivered|length}}</h4>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 col-sm-6">
+                <div class="card card-stats">
+                    <div class="card-header card-header-danger card-header-icon">
+                        <div class="card-icon">
+                            <i class="material-icons">paid</i>
+                        </div>
+                        <p class="card-category">Total Revenue</p>
+                        <h4 class="card-title">Rs.{{total_revenue}}</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div>
+            <canvas style="height: 200px;" id="myChart"></canvas>
+        </div>
+
+        <script>
+            const ctx = document.getElementById('myChart');
+            const data = {{ revenue_totals| safe}}
+            const labels = {{ month_names| safe}}
+
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Revenue Each Month',
+                        data: data,
+                        backgroundColor: 'rgba(0,188,244)',
+                        borderColor: 'rgba(0,188,244)',
+                        borderWidth: 1,
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        </script>
+        {% endblock body %}

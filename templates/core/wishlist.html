@@ -1,0 +1,155 @@
+{% extends 'core/base.html' %}
+{% block title %}
+Wishlist
+{% endblock title %}
+
+{% block body %}
+{% load static %}
+<main id="wishlist-list">
+  <!--page Header-->
+  <section class="page-header parallaxie padding_top center-block">
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="page-titles text-center">
+            <h2 class="whitecolor font-light bottom30">Wishlist</h2>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <br><br>
+  <div class="content">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="card">
+            <div class="card-header card-header-primary">
+              <h4 class="card-title">Wishlist</h4>
+              <p class="card-category">See your favourite products</p>
+            </div>
+            <div class="card-body">
+              <div class="table-responsive">
+                <table class="table">
+                  <thead class="text-primary">
+                    <th colspan="2">Product</th>
+                    <th>Price</th>
+                    <th>Stock</th>
+                    <th>Buy</th>
+                    <th>Remove</th>
+                    <th>Detail</th>
+                  </thead>
+                  <tbody>
+                    {% for w in w %}
+                    <tr>
+                      <td><a href="{% url 'product-detail' w.product.pid %}"><img src="{{w.product.image.url}}"
+                            style="width: 50px;" alt=""></a></td>
+                      <td><a href="{% url 'product-detail' w.product.pid %}"> {{w.product.title}} <br><span
+                            style="color: gold; font-size: smaller;">
+                            {% if w.product.get_average_rating < 0.3 %} <i class="fa fa-star-o"></i>
+                              <i class="fa fa-star-o"></i>
+                              <i class="fa fa-star-o"></i>
+                              <i class="fa fa-star-o"></i>
+                              <i class="fa fa-star-o"></i>
+                              {% elif w.product.get_average_rating >= 0.3 and w.product.get_average_rating <= 0.8 %} <i
+                                class="fa fa-star-half-full"></i>
+                                <i class="fa fa-star-o"></i>
+                                <i class="fa fa-star-o"></i>
+                                <i class="fa fa-star-o"></i>
+                                <i class="fa fa-star-o"></i>
+                                {% elif w.product.get_average_rating >= 0.8 and w.product.get_average_rating <= 1.2 %}
+                                  <i class="fa fa-star"></i>
+                                  <i class="fa fa-star-o"></i>
+                                  <i class="fa fa-star-o"></i>
+                                  <i class="fa fa-star-o"></i>
+                                  <i class="fa fa-star-o"></i>
+                                  {% elif w.product.get_average_rating >= 1.2 and w.product.get_average_rating <= 1.8 %}
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star-half-full"></i>
+                                    <i class="fa fa-star-o"></i>
+                                    <i class="fa fa-star-o"></i>
+                                    <i class="fa fa-star-o"></i>
+                                    {% elif w.product.get_average_rating >= 1.8 and w.product.get_average_rating <= 2.2
+                                      %} <i class="fa fa-star"></i>
+                                      <i class="fa fa-star"></i>
+                                      <i class="fa fa-star-o"></i>
+                                      <i class="fa fa-star-o"></i>
+                                      <i class="fa fa-star-o"></i>
+                                      {% elif w.product.get_average_rating >= 2.2 and w.product.get_average_rating <=
+                                        2.8 %} <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star-half-full"></i>
+                                        <i class="fa fa-star-o"></i>
+                                        <i class="fa fa-star-o"></i>
+                                        {% elif w.product.get_average_rating >= 2.8 and w.product.get_average_rating <=
+                                          3.2 %} <i class="fa fa-star"></i>
+                                          <i class="fa fa-star"></i>
+                                          <i class="fa fa-star"></i>
+                                          <i class="fa fa-star-o"></i>
+                                          <i class="fa fa-star-o"></i>
+                                          {% elif w.product.get_average_rating >= 3.2 and w.product.get_average_rating
+                                          <= 3.8 %} <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star-half-full"></i>
+                                            <i class="fa fa-star-o"></i>
+                                            {% elif w.product.get_average_rating >= 3.8 and w.product.get_average_rating
+                                            <= 4.2 %} <i class="fa fa-star"></i>
+                                              <i class="fa fa-star"></i>
+                                              <i class="fa fa-star"></i>
+                                              <i class="fa fa-star"></i>
+                                              <i class="fa fa-star-o"></i>
+                                              {% elif w.product.get_average_rating >= 4.2 and
+                                              w.product.get_average_rating <= 4.8 %} <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star-half-full"></i>
+                                                {% elif w.product.get_average_rating > 4.8 %}
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                                {% endif %}</span>
+                      </td></a>
+                      <td>
+                        <p type style="font-weight: 500; font-size: large; color: chartreuse;" class="bottom35">Rs.<span
+                            class="current-product-price-{{w.product.id}}">{{w.product.price}}</span> </p>
+                      </td>
+                      {% if w.product.in_stock == True %}
+                      <td><strong class="text-success">in stock</strong></td>
+                      {% else %}
+                      <td><strong class="text-warning">out of stock</strong></td>
+                      {% endif %}
+                      <td>
+                        <input type="hidden" value="1" id="product-quantity" class="product-quantity-{{w.product.id}}">
+                        <input type="hidden" value="{{w.product.pid}}" class="product-pid-{{w.product.id}}">
+                        <input type="hidden" value="{{w.product.id}}" class="product-id-{{w.product.id}}">
+                        <input type="hidden" value="{{w.product.title}}" class="product-title-{{w.product.id}}">
+                        <input type="hidden" value="{{w.product.image.url}}" class="product-image-{{w.product.id}}">
+                        <button class="button btnprimary add-to-cart-btn" data-index="{{w.product.id}}"
+                          id="add-to-cart-btn">Add to cart <i class="fa fa-cart-shopping"></i> </button>
+                      </td>
+                      <td><button class="delete-wishlist-product" id="delete-wishlist-product"
+                          style="background: none; border: none; color: slategrey;" data-wishlist-product="{{w.id}}"><i
+                            class="fas fa-trash"></i></button></td>
+                      <td><a href="{% url 'product-detail' w.product.pid %}"
+                          style="text-decoration: underline; color: #00bcd4;">view</a></td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                      <td>Your Wishlist is empty</td>
+                    </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endblock body %}

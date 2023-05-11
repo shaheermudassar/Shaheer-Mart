@@ -1,0 +1,1 @@
+web: gunicorn shaheerecommerce.wsgi --log-file -

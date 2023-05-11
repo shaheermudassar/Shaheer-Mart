@@ -1,0 +1,292 @@
+{% extends 'core/base.html' %}
+{% block title %}
+Add Product
+{% endblock title %}
+
+{% block body %}
+{% load static %}
+<!-- Include necessary CSS and JavaScript files -->
+<link rel="stylesheet" href="{% static 'tag-it/css/jquery.tagit.css' %}">
+<script src="{% static 'tag-it/js/tag-it.min.js' %}"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<link rel="stylesheet" href="https://cdn.ckeditor.com/4.16.0/full-all/ckeditor.css">
+<!-- CKEditor 4 script -->
+<script src="https://cdn.ckeditor.com/4.16.0/full-all/ckeditor.js"></script>
+<section class="page-header parallaxie padding_top center-block">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="page-titles text-center">
+                    <h2 class="whitecolor font-light bottom30">Add Product</h2>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!--page Header-->
+
+<!--page Header ends-->
+<section id="our-blog" class="padding text-center">
+    <div class="container">
+        <div class="row d-flex justify-content-center">
+            <div class="col-lg-12">
+                <div class="bglight logincontainer">
+                    <h3 class="darkcolor bottom35">Fill the Product details </h3>
+                    <form method="post" class="getin_form border-form" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="row row1">
+                            <div class="col-md-6">
+                                <div class="form-group bottom35">
+                                    <label class="bmd-label-floating">Product Name:</label>
+
+                                    <input class="form-control" placeholder="Product Name" type="text" name="title"
+                                        required>
+
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group bottom35">
+                                    <label class="bmd-label-floating">Old Price:</label>
+                                    <input class="form-control" type="text" placeholder="Old Price" name="old_price"
+                                        required>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group bottom35">
+                                    <label class="bmd-label-floating">New Price:</label>
+                                    <input class="form-control" type="text" placeholder="New Price" name="price"
+                                        required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-5">
+                                <div class="form-group bottom35">
+                                    <label class="bmd-label-floating">Product Image:</label>
+                                    <input class="form-control" placeholder="Choose an image" name="image" required
+                                        type="file" data-preview="profile-preview"
+                                        onchange="previewImage('profile-preview')" accept=".jpg, .jpeg, .png">
+                                    <br><img id="profile-preview" src="{% static 'images/Unknown_person.jpg' %}">
+                                    <style>
+                                        #profile-preview {
+                                            max-width: 300px;
+                                            max-height: 300px;
+                                        }
+
+                                        #cover-preview {
+                                            width: 600px;
+                                            max-width: 100%;
+                                            max-height: 300px;
+                                            border-radius: 30px;
+                                        }
+                                    </style>
+                                    <script>
+                                        function previewImage(previewId) {
+                                            var preview = document.querySelector('#' + previewId);
+                                            var file = document.querySelector('input[type=file][data-preview="' + previewId + '"]').files[0];
+                                            var reader = new FileReader();
+
+                                            reader.onloadend = function () {
+                                                preview.src = reader.result;
+                                            }
+
+                                            if (file) {
+                                                reader.readAsDataURL(file);
+                                            } else {
+                                                preview.src = "";
+                                            }
+                                        }
+
+                                    </script>
+                                </div>
+                            </div>
+
+                            <div class="col-md-7">
+                                <div class="col-md-12">
+                                    <div class="form-group bottom35">
+                                        <label class="bmd-label-floating">Product description:</label>
+                                        <textarea class="form-control ckeditor" placeholder="Description" required
+                                            name="description"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row row1">
+                                <div class="col-md-3">
+                                    <div class="form-group bottom35">
+                                        <!-- Render the tags input field -->
+                                        <label class="bmd-label-floating" for="tags">Add Tags:</label>
+                                        <input placeholder="like: cakes, chocolate.." class="form-control" id="tags"
+                                            name="tags" type="text" required>
+                                        <div style="font-size: smaller;" class="help-block">Must be seperated by a
+                                            comma( , )</div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group bottom35">
+                                        <label class="bmd-label-floating" for="tags">Return days policy:</label>
+                                        <input placeholder="No. of days" class="form-control" name="days_return"
+                                            type="text" required>
+                                        <div style="font-size: smaller;" class="help-block">None if no return policy
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group bottom35">
+                                        <label class="bmd-label-floating" for="tags">Warranty Period:</label>
+                                        <input placeholder="No. of days" class="form-control" name="warranty_period"
+                                            type="text" required>
+                                        <div style="font-size: smaller;" class="help-block">None if no Warranty</div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group bottom35">
+                                        <label class="bmd-label-floating" for="tags">In Stock:</label>
+                                        <input name="in_stock" type="checkbox" required>
+                                        <div style="font-size: smaller;" class="help-block">check the box if item is
+                                            available</div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="row">
+                                <div class="col-md-7">
+                                    <div class="form-group bottom35">
+                                        <label class="bmd-label-floating">Specifications/Additional info:</label>
+                                        <textarea class="form-control ckeditor" placeholder="specification"
+                                            name="specification" required></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group bottom35">
+                                        <label for="color">Category:</label>
+                                        <select class="button" style="width: auto;" name="category" required>
+                                            <option class="button" value="" disabled selected>Select a category</option>
+                                            {% for c in categories %}
+                                            <option class="button">{{c.title}}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                    <br><br>
+
+                                </div>
+                            </div>
+                            <div class="row row1" id="add-images">
+                                <div class="col-md-4">
+                                    <input class="form-control" placeholder="Choose an image" name="images" required
+                                        type="file" data-preview="preview-image0"
+                                        onchange="previewImage('preview-image0')" accept=".jpg, .jpeg, .png">
+                                    <br>
+                                    <img id="preview-image0" src="{% static 'images/Unknown_person.jpg' %}">
+                                </div>
+                                <button id="add-image" class="button btnsecondary">Add image</button>
+                            </div>
+                            <style>
+                                #preview-image0 {
+                                    max-width: 200px;
+                                    max-height: 200px;
+                                }
+                            </style>
+                            <script>
+                                console.log("working fine..");
+
+                                let imageCount = 1;
+
+                                $("#add-image").on("click", function () {
+                                    let previewId = "preview-image" + imageCount;
+                                    let _html = '<div class="col-md-4">';
+                                    _html += '<input class="form-control" placeholder="Choose an image" name="images" required type="file" data-preview="' + previewId + '" onchange="previewImage(\'' + previewId + '\')" accept=".jpg, .jpeg, .png">';
+                                    _html += '<br>';
+                                    _html += '<img id="' + previewId + '" src="{% static 'images / Unknown_person.jpg' %}">';
+                                    _html += '<button id="delete-image-' + imageCount + '" class="button btnsecondary">Delete image</button>';
+                                    _html += '</div>';
+                                    _html += '<style>#' + previewId + '{max-width: 200px; max-height: 200px;}</style>';
+                                    $("#add-images").prepend(_html);
+                                    imageCount++;
+                                    console.log("done");
+                                    addDeleteButtonListener(imageCount - 1);
+                                });
+
+                                function addDeleteButtonListener(index) {
+                                    $("#delete-image-" + index).on("click", function () {
+                                        $("#preview-image" + index).closest(".col-md-4").remove();
+                                    });
+                                }
+
+                                function previewImage(previewId) {
+                                    var preview = document.querySelector('#' + previewId);
+                                    var file = document.querySelector('input[type=file][data-preview="' + previewId + '"]').files[0];
+                                    var reader = new FileReader();
+
+                                    reader.onloadend = function () {
+                                        preview.src = reader.result;
+                                    }
+
+                                    if (file) {
+                                        reader.readAsDataURL(file);
+                                    } else {
+                                        preview.src = "";
+                                    }
+                                }
+                            </script>
+                            <br><br>
+                            <button type="submit" class="button btnsecondary"
+                                style="padding-top: 30px; padding-bottom: 30px; width: 50%;">Create <i
+                                    class="fas fa-arrow-right"></i></button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<style>
+    .form-control {
+        border-radius: 20px;
+    }
+</style>
+<!-- Initialize the Tag-it plugin for the tags input field -->
+<script>
+    $(document).ready(function () {
+        $('#tags').tagit({
+            fieldName: 'tags',
+            allowSpaces: true,
+            removeConfirmation: true,
+            autocomplete: {
+                source: '/tags-autocomplete/'  // Replace with the URL to your tags autocomplete view
+            }
+        });
+    });
+</script>
+{% endblock body %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+    CKEDITOR.replace('description');
+</script>
+
+<script>
+    CKEDITOR.replace('specification');
+</script>
+<!-- CKEditor 4 stylesheet -->

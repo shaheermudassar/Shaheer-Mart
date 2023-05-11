@@ -1,0 +1,117 @@
+{% extends 'core/base.html' %}
+{% block title %}
+Categories
+{% endblock title %}
+
+{% block body %}
+
+<!--page Header-->
+<section class="page-header parallaxie padding_top center-block">
+   <div class="container">
+      <div class="row">
+         <div class="col-sm-12">
+            <div class="page-titles text-center">
+               <h2 class="whitecolor font-light bottom30">Categories</h2>
+               </ul>
+            </div>
+         </div>
+      </div>
+   </div>
+</section>
+<!--page Header ends-->
+
+<div class="sidebar">
+   <div class="col-md-4">
+      <aside class="sidebar whitebox">
+         <br>
+         <div class="widget heading_space">
+            <h4 class="text-capitalize darkcolor bottom20">Categories</h4>
+            <ul class="webcats">
+               {% for c in categories %}
+               <li><a href="{% url 'category-product-list' c.cid %}">{{c.title}}<span>({{c.category.count}})</span></a>
+               </li>
+               {% endfor %}
+
+            </ul>
+         </div>
+         <div class="widget heading_space">
+            <h4 class="text-capitalize darkcolor bottom20">Tags</h4>
+            <ul class="webtags">
+               {% for t in tags %}
+               <li><a href="{% url 'tag' t.slug %}">{{t.name}}</a></li>
+               {% endfor %}
+            </ul>
+         </div>
+      </aside>
+   </div>
+</div>
+
+<div class="main">
+
+
+   <section id="our-blog">
+      <div class="container">
+         <h3 style="font-weight: 700; padding-bottom: 10px; font-family: sans-serif;">All Categories</h3>
+         <div class="row row1">
+
+            {% for c in categories %}
+
+
+            <div class="col-md-4">
+               <div class="news_item shadow text-center">
+                  <div class="image-container">
+                     <a class="image" href="{% url 'category-product-list' c.cid %}">
+                        <img src="{{c.image.url}}" style="height: 200px; " alt="Latest News" class="img-responsive">
+                     </a>
+
+                     <style>
+                        /* .image-container {
+/* position: relative; */
+                        /* width: 100%;
+height: 0;
+padding-bottom: 80%; } */
+
+
+
+
+                        .hot-deal {
+                           position: absolute;
+                           top: 0;
+                           left: 0;
+                           background-color: #00bcd4;
+                           color: #ffffff;
+                           padding: 5px;
+                           font-size: 14px;
+                           font-weight: bold;
+                           border-bottom-right-radius: 16px;
+                        }
+                     </style>
+                     <div class="news_desc">
+
+                        <h5 style="font-weight: 900; color: lightslategrey;"
+                           class="text-capitalize font-light darkcolor"><a
+                              href="{% url 'category-product-list' c.cid %}">{{c.title}}</a></h5>
+
+
+                        <p style="font-weight: 500;  color: #00bcd4;" class="bottom35">{{c.category.count}} items</p>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            {% endfor %}
+
+         </div>
+      </div>
+   </section>
+   <!--Our Blogs Ends-->
+   <br><br><br>
+
+
+
+
+
+
+
+
+
+   {% endblock body %}

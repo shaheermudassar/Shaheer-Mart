@@ -1,0 +1,47 @@
+{% extends 'core/base2.html' %}
+{% block title %}
+Order details
+{% endblock title %}
+{% block body %}
+{% load static %}
+
+<div class="content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header card-header-primary">
+            <h4 class="card-title">Order detail</h4>
+            <p class="card-category">Here is the detail view of selected order</p>
+          </div>
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table">
+                <thead class="text-primary">
+                  <th>Products</th>
+                  <th>Price</th>
+                  <th>Quantity</th>
+                  <th>Total</th>
+                </thead>
+                <tbody>
+                  {% for o in order_items %}
+                  <tr>
+                    <td>{{o.order_img}} {{o.item}}</td>
+                    <td>Rs.{{o.price}}</td>
+                    <td>{{o.qty}}</td>
+
+                    <td class="text-primary">Rs.{% widthratio o.price 1 o.qty %}</td>
+
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+              <a href="{% url 'order' %}" class="btn btn-primary">Go back to orders</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock body %}

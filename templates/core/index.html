@@ -1,0 +1,351 @@
+{% extends 'core/base.html' %}
+{% block title %}
+Shaheer Mart
+{% endblock title %}
+{% block body %}
+
+
+{% load static %}
+
+
+<!--Main Slider-->
+<section class="full-screen gradient_bg_alt particles_bg d-flex flex-column justify-content-center">
+	<canvas id="particles-js"></canvas>
+	<div class="container">
+		<div class="row">
+			<div class="col-md-2 col-sm-1"></div>
+			<div class="col-md-8 col-sm-10">
+				<div class="text-center banner-center-content padding_half">
+					<h2 class="text-capitalize whitecolor font-light top50 bottom35">
+						<img height="100px" src="{% static 'images/logo-transparent.png' %}" alt="logo"><span
+							class="block fontbold">Buy or Sell Goods</span>
+					</h2>
+					<a href="#main-page-index" class="button btnwhite pagescroll">Visit Store</a>
+					{% if request.user.is_authenticated %}
+					<a href="{% url 'dashboard' %}" class="button btnprimary">Dashboard</a>
+					{% else %}
+					<a href="{% url 'userauths:signin' %}" class="button btnprimary">Sign in</a>
+					{% endif %}
+
+				</div>
+			</div>
+			<div class="col-md-2 col-sm-1"></div>
+		</div>
+	</div>
+</section>
+<!--Main Slider ends -->
+
+<!--page Header-->
+<section class="page-header parallaxie padding_top center-block" id="main-page-index">
+	<div class="container">
+		<div class="row">
+			<div class="col-sm-12">
+				<div class="page-titles text-center">
+					{% if request.user.is_authenticated %}
+					<h2 class="whitecolor font-light bottom30">Welcome {{user}}</h2>
+					{% else %}
+					<h2 class="whitecolor font-light bottom30">Welcome to Shaheer Mart</h2>
+					{% endif %}
+
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+<!--page Header ends-->
+
+
+
+<section id="our-blog">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-8 offset-md-2 col-sm-12 text-center">
+				<div class="heading-title wow fadeInUp" data-wow-delay="300ms">
+					<h2 class="darkcolor bottom20">Most Rated</h2>
+				</div>
+			</div>
+		</div>
+		<div class="row row1">
+			{% for p in most_rated_products|slice:":5" %}
+			<div class="col-md-4">
+				<div class="news_item shadow text-center">
+					<div class="image-container">
+						<a class="image" href="{% url 'product-detail' p.pid %}">
+							<img src="{{p.image.url}}" style="height: 200px; " alt="Latest News" class="img-responsive">
+						</a>
+						<div class="hot-deal">-{{p.get_percentage|floatformat:0}}%</div>
+					</div>
+					<div class="news_desc">
+						<h6 style="text-align: left; font-weight: 600; color: darkgrey;"
+							class="text-capitalize font-light darkcolor">{{p.category}}</h6>
+						<h5 style="font-weight: 900;" class="text-capitalize font-light darkcolor"><a
+								href="{% url 'product-detail' p.pid %}">{{p.title}}</a></h5>
+						<ul class="meta-tags top20 bottom20">
+
+							<li><a href="#."> <i class="fa fa-user-o"></i>by {{p.vendor}}</a></li>
+							{% if p.get_average_rating == None %}
+							<li><a style="font-family:sans-serif;" href="#."> <i style="color: gold;"
+										class="fa fa-star"></i>(0)</a></li>
+							{% else %}
+							<li><a style="font-family:sans-serif;" href="#."> <i style="color: gold;"
+										class="fa fa-star"></i>({{p.get_average_rating|floatformat:1}})</a></li>
+							{% endif %}
+						</ul>
+						<p style="text-decoration: line-through; font-weight: 200; color: rgb(162, 166, 167);"
+							class="bottom35">Rs.{{p.old_price}}</p>
+						<p style="font-weight: 500; font-size: large; color: chartreuse;" class="bottom35">Rs.<span
+								class="current-product-price-{{p.id}}">{{p.price}} </span><button
+								title="Add to Wishlist" data-product-item="{{p.id}}" id="add-to-wishlist"
+								class="add-to-wishlist btn btnprimary"> <i class="fa fa-heart"></i> </button> </p>
+						<input type="hidden" value="1" id="product-quantity" class="product-quantity-{{p.id}}">
+						<input type="hidden" value="{{p.pid}}" class="product-pid-{{p.id}}">
+						<input type="hidden" value="{{p.id}}" class="product-id-{{p.id}}">
+						<input type="hidden" value="{{p.title}}" class="product-title-{{p.id}}">
+						<input type="hidden" value="{{p.image.url}}" class="product-image-{{p.id}}">
+						<button class="button btnprimary add-to-cart-btn" data-index="{{p.id}}" id="add-to-cart-btn">Add
+							to cart <i class="fa fa-cart-shopping"></i> </button>
+					</div>
+				</div>
+			</div>
+			{% endfor %}
+
+			<div class="col-md-4 text-center">
+				<div class="heading-title wow fadeInUp" data-wow-delay="300ms"><br><br>
+					<a href="{% url 'product-list' %}" class="button btnprimary btn-gradient-hvr wow fadeInUp"
+						data-wow-delay="450ms" style="color: aliceblue;">View All Products <i
+							class="fas fa-arrow-right"></i></a>
+				</div>
+			</div>
+		</div>
+</section>
+
+<section id="our-blog">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-8 offset-md-2 col-sm-12 text-center">
+				<div class="heading-title wow fadeInUp" data-wow-delay="300ms">
+					<h2 class="darkcolor bottom20">Categories</h2>
+				</div>
+			</div>
+		</div>
+		<div class="row row1" style="animation: scroll 10s linear infinite; flex-wrap: nowrap;">
+			{% for c in categories|slice:":10" %}
+			<div class="col-md-4">
+				<div class="news_item shadow text-center">
+					<div class="image-container">
+						<a class="image" href="{% url 'category-product-list' c.cid %}">
+							<img src="{{c.image.url}}" style="height: 200px; " alt="Latest News" class="img-responsive">
+						</a>
+						<div class="news_desc">
+
+							<h5 style="font-weight: 900; color: lightslategrey;"
+								class="text-capitalize font-light darkcolor"><a
+									href="{% url 'category-product-list' c.cid %}">{{c.title}}</a></h5>
+							<p style="font-weight: 500;  color: #00bcd4;" class="bottom35">{{c.category.count}} items
+							</p>
+						</div>
+					</div>
+				</div>
+			</div>
+			{% endfor %}
+
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-8 offset-md-2 col-sm-12 text-center">
+			<div class="heading-title wow fadeInUp" data-wow-delay="300ms"><br><br>
+				<a href="{% url 'category-list' %}" class="button btnprimary btn-gradient-hvr wow fadeInUp"
+					data-wow-delay="450ms" style="color: aliceblue;">View all Categories <i
+						class="fas fa-arrow-right"></i></a>
+			</div>
+		</div>
+	</div>
+</section>
+<!-- Counters -->
+<section id="funfacts-four" class="padding_half fact-iconic gradient_bg">
+	<div class="container">
+		<div class="row text-center">
+			<h4 class="text-capitalize whitecolor bottom20">Tags</h4>
+			<ul class="webtags">
+				{% for t in tags %}
+				<li><a href="{% url 'tag' t.slug %}">{{t.name}}</a></li>
+				{% endfor %}
+			</ul>
+		</div>
+	</div>
+</section>
+<!--Counters ends-->
+<style>
+	.webtags li a,
+	.btn_reply {
+		-webkit-border-radius: 24px;
+		border-radius: 24px;
+		color: #ffffff;
+		font-size: 12px;
+		margin: 2px 0;
+		padding: 5px 16px;
+		border: 1px solid #ffffff;
+		display: block;
+		backdrop-filter: brightness(0.8);
+	}
+</style>
+<br>
+<div class="row">
+	<div class="col-md-8 offset-md-2 col-sm-12 text-center">
+		<div class="heading-title wow fadeInUp" data-wow-delay="300ms">
+			<h2 class="darkcolor bottom20">Vendors</h2>
+		</div>
+	</div>
+</div>
+<br><br><br><br><br><br>
+<!--Some Services-->
+<div class="container">
+	<div class="row">
+		<div class="col-md-12">
+			<div id="services-slider" class="owl-carousel">
+				{% for v in vendor_list %}
+				<div class="item">
+					<div class="service-box" style="padding: 0;">
+						<img class="image-offer" width="120px" src="{{v.image.url}}" alt="vendor image"
+							style="border-radius: 5px;">
+
+						<h3 class="bottom20 darkcolor"><span>{{v.title}}</span></h3>
+
+						<p>
+							{{v.description}}
+							<br>
+							{{v.address}}
+							<br>
+							{{v.contact}}
+						</p>
+
+						<ul class="top20">
+							<span style=" color: yellow; font-size: 30px;">
+								{% if v.avr_rating < 0.3 %} <i class="fa fa-star-o"></i>
+									<i class="fa fa-star-o"></i>
+									<i class="fa fa-star-o"></i>
+									<i class="fa fa-star-o"></i>
+									<i class="fa fa-star-o"></i>
+									{% elif v.avr_rating >= 0.3 and v.avr_rating <= 0.8 %} <i
+										class="fa fa-star-half-full"></i>
+										<i class="fa fa-star-o"></i>
+										<i class="fa fa-star-o"></i>
+										<i class="fa fa-star-o"></i>
+										<i class="fa fa-star-o"></i>
+										{% elif v.avr_rating >= 0.8 and v.avr_rating <= 1.2 %} <i class="fa fa-star">
+											</i>
+											<i class="fa fa-star-o"></i>
+											<i class="fa fa-star-o"></i>
+											<i class="fa fa-star-o"></i>
+											<i class="fa fa-star-o"></i>
+											{% elif v.avr_rating >= 1.2 and v.avr_rating <= 1.8 %} <i
+												class="fa fa-star"></i>
+												<i class="fa fa-star-half-full"></i>
+												<i class="fa fa-star-o"></i>
+												<i class="fa fa-star-o"></i>
+												<i class="fa fa-star-o"></i>
+												{% elif v.avr_rating >= 1.8 and v.avr_rating <= 2.2 %} <i
+													class="fa fa-star"></i>
+													<i class="fa fa-star"></i>
+													<i class="fa fa-star-o"></i>
+													<i class="fa fa-star-o"></i>
+													<i class="fa fa-star-o"></i>
+													{% elif v.avr_rating >= 2.2 and v.avr_rating <= 2.8 %} <i
+														class="fa fa-star"></i>
+														<i class="fa fa-star"></i>
+														<i class="fa fa-star-half-full"></i>
+														<i class="fa fa-star-o"></i>
+														<i class="fa fa-star-o"></i>
+														{% elif v.avr_rating >= 2.8 and v.avr_rating <= 3.2 %} <i
+															class="fa fa-star"></i>
+															<i class="fa fa-star"></i>
+															<i class="fa fa-star"></i>
+															<i class="fa fa-star-o"></i>
+															<i class="fa fa-star-o"></i>
+															{% elif v.avr_rating >= 3.2 and v.avr_rating <= 3.8 %} <i
+																class="fa fa-star"></i>
+																<i class="fa fa-star"></i>
+																<i class="fa fa-star"></i>
+																<i class="fa fa-star-half-full"></i>
+																<i class="fa fa-star-o"></i>
+																{% elif v.avr_rating >= 3.8 and v.avr_rating <= 4.2 %}
+																	<i class="fa fa-star"></i>
+																	<i class="fa fa-star"></i>
+																	<i class="fa fa-star"></i>
+																	<i class="fa fa-star"></i>
+																	<i class="fa fa-star-o"></i>
+																	{% elif v.avr_rating >= 4.2 and v.avr_rating <= 4.8
+																		%} <i class="fa fa-star"></i>
+																		<i class="fa fa-star"></i>
+																		<i class="fa fa-star"></i>
+																		<i class="fa fa-star"></i>
+																		<i class="fa fa-star-half-full"></i>
+																		{% elif v.avr_rating > 4.8 %}
+																		<i class="fa fa-star"></i>
+																		<i class="fa fa-star"></i>
+																		<i class="fa fa-star"></i>
+																		<i class="fa fa-star"></i>
+																		<i class="fa fa-star"></i>
+																		{% endif %}
+							</span>{{v.avr_rating|floatformat:1}}
+
+							<br><span
+								style="background-color: #00bcd4; padding: 10px; border-radius: 10px; color: #fff; text-align: center; border: 1px; border-style: solid; border-color: #fff; ">{{v.vendorproducts.all.count}}
+								products</span>
+						</ul>
+						<div class="clearfix"></div>
+						<a href="{% url 'vendor-detail' v.vid %}" class="button btnprimary top50"><span>Visit Store <i
+									class="fa fa-right-to-bracket"></i> </span> </a>
+					</div>
+
+				</div>
+
+
+				{% endfor %}
+			</div>
+		</div>
+	</div>
+</div>
+<!--Some Services ends-->
+<div class="row">
+	<div class="col-md-8 offset-md-2 col-sm-12 text-center">
+		<div class="heading-title wow fadeInUp" data-wow-delay="300ms"><br><br>
+			<a href="{% url 'vendor-list' %}" class="button btnprimary btn-gradient-hvr wow fadeInUp"
+				data-wow-delay="450ms" style="color: aliceblue;">View all vendors<i class="fas fa-arrow-right"></i></a>
+		</div>
+	</div>
+</div>
+
+
+<style>
+	@media (min-width: 768px) {
+		.col-md-4 {
+			flex: 0 0 auto;
+			width: 20%;
+		}
+	}
+</style>
+<style>
+	/* .image-container {
+/* position: relative; */
+	/* width: 100%;
+height: 0;
+padding-bottom: 80%; } */
+
+
+
+
+	.hot-deal {
+		position: absolute;
+		top: 0;
+		left: 0;
+		background-color: #00bcd4;
+		color: #ffffff;
+		padding: 5px;
+		font-size: 14px;
+		font-weight: bold;
+		border-bottom-right-radius: 16px;
+	}
+</style>
+
+{% endblock body %}

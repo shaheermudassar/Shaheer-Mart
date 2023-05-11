@@ -1,0 +1,40 @@
+{% extends 'core/base3.html' %}
+{% block title %}
+Notifications
+{% endblock title %}
+{% block body %}
+{% load static %}
+<div class="content" style="overflow-y: scroll;">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header card-header-primary">
+            <h4 class="card-title">Notifications</h4>
+            <p class="card-category">Be updated with the new information</p>
+          </div>
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table">
+                <thead class="text-primary">
+                  <th>Date</th>
+                  <th>Message</th>
+
+                </thead>
+                <tbody>
+                  {% for n in notification %}
+                  <tr>
+                    <td>{{n.created_at}}</td>
+                    <td>{{n.message}}</td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock body %}

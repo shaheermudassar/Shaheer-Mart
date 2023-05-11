@@ -1,0 +1,80 @@
+{% extends 'core/base2.html' %}
+{% block title %}
+Dashboard
+{% endblock title %}
+{% block body %}
+{% load static %}
+<div class="content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-lg-3 col-md-6 col-sm-6">
+        <div class="card card-stats">
+          <div class="card-header card-header-warning card-header-icon">
+            <div class="card-icon">
+              <i class="material-icons">content_copy</i>
+            </div>
+            <p class="card-category">Total Orders</p>
+            <h3 class="card-title">{{no_of_orders|length}}
+            </h3>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-6 col-sm-6">
+        <div class="card card-stats">
+          <div class="card-header card-header-success card-header-icon">
+            <div class="card-icon">
+              <i class="material-icons">store</i>
+            </div>
+            <p class="card-category">Delivered</p>
+            <h3 class="card-title">{{delivered|length}}</h3>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-6 col-sm-6">
+        <div class="card card-stats">
+          <div class="card-header card-header-danger card-header-icon">
+            <div class="card-icon">
+              <i class="material-icons">info_outline</i>
+            </div>
+            <p class="card-category">In Process</p>
+            <h3 class="card-title">{{in_process|length}}</h3>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <canvas style="height: 200px;" id="myChart"></canvas>
+    </div>
+
+
+  </div>
+</div>
+
+<script>
+  const ctx = document.getElementById('myChart');
+  const labels = {{ month| safe }}
+  const data = {{ total_orders| safe}}
+
+  new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: labels,
+      datasets: [{
+        label: 'No of Orders per Month',
+        data: data,
+        backgroundColor: 'rgba(0,188,244)',
+        borderColor: 'rgba(0,188,244)',
+        borderWidth: 1,
+      }]
+    },
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      }
+    }
+  });
+</script>
+{% endblock body %}

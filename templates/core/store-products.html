@@ -1,0 +1,58 @@
+{% extends 'core/base3.html' %}
+{% block title %}
+Store Products
+{% endblock title %}
+{% block body %}
+{% load static %}
+<div class="content" style="overflow-y: scroll;">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header card-header-primary">
+            <h4 class="card-title">Store Products</h4>
+            <p class="card-category"><a style="color: #9c27b0;" href="{% url 'create-products' %}"
+                class="btn btn-secondary pull-right">Add Product <span style="font-size: 15px;">+</span></a></p>
+          </div>
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table">
+                <thead class="text-primary">
+                  <th>ID</th>
+                  <th colspan="2">Product</th>
+                  <th>Category</th>
+                  <th>Price</th>
+                  <th>Status</th>
+                  <th>In Stock</th>
+                  <th>Update</th>
+                </thead>
+                <tbody>
+                  {% for p in products %}
+
+                  <tr>
+                    <td>{{p.pid}}</td>
+                    <td>{{p.product_image}}</td>
+                    <td>{{p.title}}</td>
+                    <td>{{p.category}}</td>
+                    <td>{{p.price}}</td>
+                    <td>{{p.product_status}}</td>
+                    {% if p.in_stock == True %}
+                    <td><i class="fa fa-check-circle"></i></td>
+                    {% else %}
+                    <td><i class="fa fa-times-circle"></i></td>
+                    {% endif %}
+                    <td><a href="{% url 'update-product' p.pid %}"
+                        style="text-decoration: underline; color: #00bcd4;">Edit</a></td>
+                  </tr>
+
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock body %}

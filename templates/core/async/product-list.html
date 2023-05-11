@@ -1,0 +1,257 @@
+<div class="row" id="products">
+  <div class="col-md-8 offset-md-2 col-sm-12 text-center">
+    <div class="heading-title wow fadeInUp" data-wow-delay="300ms"><br><br>
+      <p class="heading_space">We've found <span style="color: #00bcd4;">{{products.count}} </span>items for you.</p>
+    </div>
+  </div>
+</div>
+
+<section id="our-blog">
+  <div class="container">
+    <div class="row row1" id="filtered-product">
+
+      {% for p in products %}
+
+
+      <div class="col-md-4">
+
+        <div class="news_item shadow text-center">
+          <div class="image-container">
+            <a class="image" href="{% url 'product-detail' p.pid %}">
+              <img src="{{p.image.url}}" style="height: 200px; " alt="Latest News" class="img-responsive">
+
+            </a>
+            <div class="hot-deal">-{{p.get_percentage|floatformat:0}}%</div>
+          </div>
+          <style>
+            /* .image-container {
+/* position: relative; */
+            /* width: 100%;
+height: 0;
+padding-bottom: 80%; } */
+
+
+
+
+            .hot-deal {
+              position: absolute;
+              top: 0;
+              left: 0;
+              background-color: #00bcd4;
+              color: #ffffff;
+              padding: 5px;
+              font-size: 14px;
+              font-weight: bold;
+              border-bottom-right-radius: 16px;
+            }
+          </style>
+          <div class="news_desc">
+            <h6 style="text-align: left; font-weight: 600; color: darkgrey;"
+              class="text-capitalize font-light darkcolor">{{p.category}}</h6>
+            <h5 style="font-weight: 900;" class="text-capitalize font-light darkcolor"><a
+                href="{% url 'product-detail' p.pid %}">{{p.title}}</a></h5>
+            <ul class="meta-tags top20 bottom20">
+              <li><a href="#."><i class="fa fa-calendar"></i>{{p.date|date:"d M"}}</a></li>
+              <li><a href="#."> <i class="fa fa-user-o"></i>{{p.vendor}}</a></li>
+              {% if p.get_average_rating == None %}
+              <li><a style="font-family:sans-serif;" href="#."> <i style="color: gold;" class="fa fa-star"></i>(0)</a>
+              </li>
+              {% else %}
+              <li><a style="font-family:sans-serif;" href="#."> <i style="color: gold;"
+                    class="fa fa-star"></i>({{p.get_average_rating|floatformat:1}})</a></li>
+              {% endif %}
+            </ul>
+            <p style="text-decoration: line-through; font-weight: 200; color: rgb(162, 166, 167);" class="bottom35">
+              Rs.{{p.old_price}}</p>
+            <p style="font-weight: 500; font-size: large; color: chartreuse;" class="bottom35">Rs.<span
+                class="current-product-price-{{p.id}}">{{p.price}}</span> <button data-product-item="{{p.id}}"
+                id="add-to-wishlist" class="add-to-wishlist btn btnprimary"> <i class="fa fa-heart"></i> </button></p>
+            <input type="hidden" value="1" id="product-quantity" class="product-quantity-{{p.id}}">
+            <input type="hidden" value="{{p.pid}}" class="product-pid-{{p.id}}">
+            <input type="hidden" value="{{p.id}}" class="product-id-{{p.id}}">
+            <input type="hidden" value="{{p.title}}" class="product-title-{{p.id}}">
+            <input type="hidden" value="{{p.image.url}}" class="product-image-{{p.id}}">
+            <button class="button btnprimary add-to-cart-btn" data-index="{{p.id}}" id="add-to-cart-btn">Add to cart <i
+                class="fa fa-cart-shopping"></i> </button>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+
+    </div>
+  </div>
+</section>
+<!--Our Blogs Ends-->
+<br><br><br>
+
+
+
+
+
+
+
+
+
+<script>
+  $(document).ready(function () {
+    $(".filter-checkbox").on("click", function () {
+      console.log("A checkbox have been clicked");
+
+      let filter_object = {};
+      $(".filter-checkbox").each(function () {
+        let filter_value = $(this).val();
+        let filter_key = $(this).data("filter");
+        // console.log("filter value is: ", filter_value);
+        // console.log("filter key is: ", filter_key);
+
+        filter_object[filter_key] = Array.from(
+          document.querySelectorAll(
+            "input[data-filter=" + filter_key + "]:checked"
+          )
+        ).map(function (element) {
+          return element.value;
+        });
+      });
+      console.log("filter object is: ", filter_object);
+      $.ajax({
+        url: "/filter-product",
+        data: filter_object,
+        dataType: "json",
+        beforeSend: function () {
+          console.log("Sending Data...");
+        },
+        success: function (response) {
+          console.log(response);
+          console.log("Data filtered successfully");
+          $("#filtered-product").html(response.data);
+        },
+      });
+    });
+    $(".add-to-cart-btn").on("click", function () {
+      let this_val = $(this);
+      let index = this_val.attr("data-index");
+      let quantity = $(".product-quantity-" + index).val();
+      let product_title = $(".product-title-" + index).val();
+      let product_id = $(".product-id-" + index).val();
+      let product_pid = $(".product-pid-" + index).val();
+      let product_image = $(".product-image-" + index).val();
+      let product_price = $(".current-product-price-" + index).text();
+
+      console.log("Quantity:", quantity);
+      console.log("Tilte:", product_title);
+      console.log("Price:", product_price);
+      console.log("ID:", product_id);
+      console.log("PID:", product_pid);
+      console.log("Image:", product_image);
+      console.log("Index:", index);
+      console.log("Current Element:", this_val);
+
+      $.ajax({
+        url: "/add-to-cart",
+        data: {
+          id: product_id,
+          pid: product_pid,
+          image: product_image,
+          qty: quantity,
+          price: product_price,
+          title: product_title,
+        },
+        dataType: "json",
+        beforeSend: function () {
+          console.log("Adding product to cart...");
+        },
+        success: function (response) {
+          this_val.html("item added to cart");
+          console.log("Added Product to Cart!");
+          $(".cart-items-count").text(response.totalcartitems);
+        },
+      });
+    });
+    $(".delete-product").on("click", function () {
+      let product_id = $(this).attr("data-product");
+      let this_val = $(this);
+      console.log("Product id:", product_id);
+
+      $.ajax({
+        url: "/delete-from-cart",
+        data: {
+          id: product_id,
+        },
+        dataType: "json",
+        beforeSend: function () {
+          this_val.hide();
+        },
+        success: function (response) {
+          this_val.show();
+          $(".cart-items-count").text(response.totalcartitems);
+          $("#cart-list").html(response.data);
+        },
+      });
+    });
+    $(".update-product").on("click", function () {
+      let product_id = $(this).attr("data-product");
+      let this_val = $(this);
+      let product_quantity = $(".product-qty-" + product_id).val();
+      console.log("Product id:", product_id);
+      console.log("Product qty:", product_quantity);
+
+      $.ajax({
+        url: "/update-cart",
+        data: {
+          id: product_id,
+          qty: product_quantity,
+        },
+        dataType: "json",
+        beforeSend: function () {
+          this_val.hide();
+        },
+        success: function (response) {
+          this_val.show();
+          $(".cart-items-count").text(response.totalcartitems);
+          $("#cart-list").html(response.data);
+        },
+      });
+    });
+    $(".add-to-wishlist").on("click", function () {
+      let product_id = $(this).attr("data-product-item");
+      let this_val = $(this);
+      console.log("product id:", product_id);
+
+      $.ajax({
+        url: "/add-to-wishlist",
+        data: {
+          id: product_id,
+        },
+        dataType: "json",
+        beforeSend: function () {
+          console.log("Adding to Wishlist");
+        },
+        success: function (response) {
+          this_val.html("Added to Wishlist");
+          if (response.bool === true) {
+            console.log("added to wishlist");
+          }
+        },
+      });
+    });
+    $(".delete-wishlist-product").on("click", function () {
+      let wishlist_id = $(this).attr("data-wishlist-product");
+      let this_val = $(this);
+      console.log("wishlist id:", wishlist_id);
+      $.ajax({
+        url: "/remove-from-wishlist",
+        data: {
+          id: wishlist_id,
+        },
+        dataType: "json",
+        beforeSend: function () {
+          console.log("removing from wishlist..");
+        },
+        success: function (response) {
+          $("#wishlist-list").html(response.data);
+          console.log("removed succesfully");
+        },
+      });
+    });
+  });
+</script>

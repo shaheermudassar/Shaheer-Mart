@@ -1,0 +1,117 @@
+{% extends 'core/base.html' %}
+{% block title %}
+Contact us
+{% endblock title %}
+
+{% block body %}
+{% load static %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+
+<main id="cart-list">
+   <!--page Header-->
+   <section class="page-header parallaxie padding_top center-block">
+      <div class="container">
+         <div class="row">
+            <div class="col-sm-12">
+               <div class="page-titles text-center">
+                  <h2 class="whitecolor font-light bottom30">Contact Us</h2>
+                  </ul>
+               </div>
+            </div>
+         </div>
+      </div>
+   </section>
+   <!--page Header ends-->
+   <!-- Contact US -->
+   <section id="contactus" class="padding_top">
+      <div class="container">
+         <div class="row">
+            <div class="col-md-12 col-sm-12">
+               <div class="heading-title heading_space wow fadeInUp" data-wow-delay="300ms">
+                  <span>Lets Get In Touch</span>
+                  <h2 class="darkcolor">Contact Shaheer<span style="font-size: 18px; color: #00bcf4;">Web
+                        Developer</span></h2>
+                  <div class="our-address">
+                     <a class="pickus" target="_blank" href="https://shaheermudassar.github.io/Shaheer-Mudassar/"
+                        data-text="See my Portfolio">See my Portfolio</a>
+                  </div>
+               </div>
+            </div>
+            <div class="col-md-6 col-sm-12 margin_bottom wow fadeInUp" data-wow-delay="350ms">
+               <p>Looking for a reliable web developer to bring your ideas to life? Look no further! I offer top-quality
+                  web development services that are tailored to meet your unique needs. In today's digital age, having a
+                  strong online presence is crucial. That's where I come in. As a web developer, I specialize in
+                  creating websites that are fast, secure, and easy to use. Let me help you stand out from the crowd and
+                  reach your goals.</p>
+               <div class="row">
+                  <div class="col-md-6 col-sm-6 our-address top40">
+                     <h5 class="bottom25">Address</h5>
+                     <p class="bottom15">523-F2 Johar Town Lahore, Pakistan. </p>
+                  </div>
+                  <div class="col-md-6 col-sm-6 our-address top40">
+                     <h5 class="bottom25">Phone</h5>
+                     <p class="bottom15">Office Mobile : +92 306 4078601</p>
+                  </div>
+                  <div class="col-md-6 col-sm-6 our-address top40">
+                     <h5 class="bottom25">Email</h5>
+                     <p class="bottom15">Main Email : shaheer.mudassar13@gmail.com </p>
+                     <a class="pickus" href="mailto:shaheer.mudassar13@gmail.com" target="_blank"
+                        data-text="Send a Message">Send a Message</a>
+                  </div>
+                  <div class="col-md-6 col-sm-6 our-address top40">
+                     <h5 class="bottom25">Social Links:</h5>
+                     <a class="pickus" href="https://www.instagram.com/shaheer_mudassar/"
+                        data-text="Instagram">Instagram</a><br>
+                     <a class="pickus" href="https://www.facebook.com/shaheer.mudassar14"
+                        data-text="Facebook">Facebook</a><br>
+                     <a class="pickus" href="https://www.twitter.com/mrshaheer786" data-text="Twitter">Twitter</a>
+                  </div>
+               </div>
+            </div>
+            <div class="col-md-6 col-sm-12 margin_bottom">
+               <h4 class="text-success" id="message-response"></h4>
+               <form class="getin_form wow fadeInUp" id="message-form" data-wow-delay="400ms">
+                  {% csrf_token %}
+                  <div class="row">
+
+                     <div class="col-sm-12" id="result"></div>
+
+                     <div class="col-md-12 col-sm-12">
+                        <div class="form-group bottom35">
+                           <input class="form-control" type="text" placeholder="Full Name:" id="full_name"
+                              name="full_name" required>
+                        </div>
+                     </div>
+                     <div class="col-md-6 col-sm-6">
+                        <div class="form-group bottom35">
+                           <input class="form-control" type="email" placeholder="Email:" id="email" name="email"
+                              required>
+                        </div>
+                     </div>
+                     <div class="col-md-6 col-sm-6">
+                        <div class="form-group bottom35">
+                           <input class="form-control" type="text" placeholder="Phone:" id="phone" name="phone"
+                              required>
+                        </div>
+                     </div>
+                     <div class="col-md-12 col-sm-12">
+                        <div class="form-group bottom35">
+                           <textarea class="form-control" placeholder="Message" id="contact-message"
+                              name="message"></textarea>
+                        </div>
+                     </div>
+                     <div class="col-sm-12">
+                        <button type="submit" class="button btnprimary contact_submit" id="contact_submit">submit
+                           request</button>
+                     </div>
+                  </div>
+               </form>
+            </div>
+         </div>
+      </div>
+
+      <!--Location Map here-->
+      <div id="map-container"></div>
+   </section>
+   <!--Contact US Ends-->
+   {% endblock body %}

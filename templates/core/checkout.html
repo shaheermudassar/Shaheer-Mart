@@ -1,0 +1,189 @@
+{% extends 'core/base.html' %}
+{% block title %}
+Checkout
+{% endblock title %}
+
+{% block body %}
+{% load static %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+
+<main id="cart-list">
+    <!--page Header-->
+    <section class="page-header parallaxie padding_top center-block">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="page-titles text-center">
+                        <h2 class="whitecolor font-light bottom30">Checkout</h2>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--page Header ends-->
+    <div class="row">
+        <div class="col-md-8 offset-md-2 col-sm-12 text-center">
+            <div class="heading-title wow fadeInUp" data-wow-delay="300ms"><br><br>
+                <p class="heading_space">There are <span style="color: #00bcd4;">{{totalcartitems}} items</span> in your
+                    Order.</p>
+            </div>
+        </div>
+    </div>
+    <!-- Checkout Start -->
+    <div class="container-fluid">
+        <div class="row px-xl-5">
+
+
+
+            <div class="col-lg-8 ">
+                <div class="bglight logincontainer">
+                    <h3 class="darkcolor bottom35">Will be deliveredd to:</h3>
+                    <form method="post" class="getin_form border-form">
+                        {% csrf_token %}
+                        <div class="col-md-12 col-sm-12">
+                            <div class="form-group bottom35">
+                                <label class="bmd-label-floating">Address</label>
+                                <input type="text" class="form-control" name="address" placeholder="Your Address"
+                                    value="  {{address.address}}" />
+                            </div>
+                        </div>
+                        <input type="hidden" name="previous_url" value="{{ request.META.HTTP_REFERER }}">
+                        <div class="row">
+                            <div class="col-md-6 col-sm-6">
+                                <div class="form-group bottom35">
+                                    <label class="bmd-label-floating">Mobile</label>
+                                    <input type="text" class="form-control" name="mobile" placeholder="Your Phone no."
+                                        value="{{address.mobile}}" />
+                                </div>
+                            </div>
+
+
+                            <div class="col-md-6 col-sm-6">
+                                <div class="form-group bottom35">
+                                    <label class="bmd-label-floating">City</label>
+                                    <input type="text" class="form-control" name="city" placeholder="Your City"
+                                        value="{{address.city}}" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 col-sm-6">
+                                <div class="form-group bottom35">
+                                    <label class="bmd-label-floating">Country</label>
+                                    <input type="text" class="form-control" name="country" placeholder="Your Country"
+                                        value="{{address.country}}" />
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-sm-6">
+                                <div class="form-group bottom35">
+                                    <label class="bmd-label-floating">Postal Code</label>
+                                    <input type="text" class="form-control" name="postal_code" placeholder="Postal Code"
+                                        value="{{address.postal_code}}" />
+                                </div>
+                            </div>
+                        </div>
+                </div>
+                <br>
+                <a href="{% url 'update-address' %}" style="display: block; margin: 0 auto;" class="button btnprimary"
+                    name="submit">Edit Address</a>
+                </form>
+            </div>
+
+
+
+            <style>
+                .form-control {
+                    border-radius: 20px;
+                }
+            </style>
+            <div class="col-lg-4">
+                <span style="color: #00bcd4;" class="wow fadeIn" data-wow-delay="300ms">Order Total</span>
+                <div class=" price-table wow fadeIn" style="border-radius: 20px; padding: 0%;">
+                    <div class="border-bottom ">
+                        <table class="table  table-borderless table-hover text-center mb-0">
+                            <thead class="thead-dark">
+
+
+                                <tr>
+                                    <th colspan="2">Products</th>
+                                    <th>Price</th>
+                                    <th>Quantity</th>
+                                    <th>Total</th>
+                                </tr>
+                            </thead>
+                            <tbody class="align-middle">
+
+                                {% for product_id, item in cart_data.items %}
+                                <tr>
+                                    <td class="align-middle"><img src="{{ item.image }}" alt="" style="width: 60px;">
+                                    </td>
+                                    <td><a href="{% url 'product-detail' item.pid %}"> {{item.title}}</a></td>
+                                    <td class="align-middle">Rs.{{item.price}}</td>
+                                    <td class="align-left">
+                                        <div class="input-group quantity mx-auto" style="width: 35%">
+
+                                            <p>x{{item.qty}}</p>
+
+                                        </div>
+                                    </td>
+                                    <td class="align-middle">Rs.{% widthratio item.price 1 item.qty %}</td>
+
+                                    {% endfor %}
+
+
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                        <div>
+                            <h4>Subtotal: <span
+                                    style="color: #00bcd4; font-size: larger;">Rs.{{cart_total_amount|floatformat:2}}</span>
+                            </h4>
+                        </div>
+                        <div>
+                            <h4>Shipping: <span style="color: #00bcd4; font-size: larger">Free</span></h4>
+
+                        </div>
+                    </div>
+                    <div class="pt-2">
+                        <div>
+                            <h3>Total:</h3>
+                            <h3 style="color: #00bcd4;">Rs.{{cart_total_amount|floatformat:2}}</h3>
+                        </div>
+                    </div>
+                    <a class="btnsecondary btn" href="{% url 'cart' %}">Go back to cart</a>
+                </div>
+                <br>
+                <div class="mb-5">
+                    <span style="color: #00bcd4;" class="wow fadeIn" data-wow-delay="300ms">Select Payment Method</span>
+                    </form>
+                    <form method="post" action="{% url 'cash-on-delivery' %}">
+                        {% csrf_token %}
+                        <button style="display: block; margin: 0 auto; width: 50%;" type="submit"
+                            class="button btnsecondary">Cash on Delivery</button>
+                    </form>
+                    <p style="text-align: center; font-size: large; color: #00bcd4; font-weight: 700;">OR</p>
+                    <form method="post" action="{% url 'paypal' %}">
+                        {% csrf_token %}
+                        <button type="submit" class="button btnsecondary "
+                            style="display: block; margin: 0 auto; width: 50%;">
+                            <span>Paypal</span>
+                        </button>
+                        <!-- <button class="btn btn-block btn-primary font-weight-bold py-3">Place Order</button> -->
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    <!-- Checkout End -->
+
+
+
+    <style>
+        .table> :not(:last-child)> :last-child>* {
+            border-bottom-color: currentColor;
+        }
+    </style>
+</main>
+{% endblock body %}

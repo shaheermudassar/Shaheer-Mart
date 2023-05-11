@@ -1,0 +1,27 @@
+{% extends 'core/base2.html' %}
+{% block title %}
+{{user}} Store
+{% endblock title %}
+{% block body %} {% load static %}
+<div class="content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-8">
+        <div class="card">
+          <div class="card-header card-header-primary">
+            <h4 class="card-title">Become a Seller</h4>
+            <p class="card-category">Start your business now for free</p>
+          </div>
+          <div class="card-body">
+            <div>
+              <a href="{% url 'create-store' %}" class="btn btn-primary pull-right">
+                Create Store
+              </a>
+              <div class="clearfix"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endblock body %}

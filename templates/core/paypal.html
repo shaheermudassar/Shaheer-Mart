@@ -1,0 +1,44 @@
+{% extends 'core/base.html' %}
+{% block title %}
+Checkout
+{% endblock title %}
+
+{% block body %}
+{% load static %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+
+<main id="cart-list">
+	<!--page Header-->
+	<section class="page-header parallaxie padding_top center-block">
+		<div class="container">
+			<div class="row">
+				<div class="col-sm-12">
+					<div class="page-titles text-center">
+						<h2 class="whitecolor font-light bottom30">Paypal Gateway</h2>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!--page Header ends-->
+	<div class="row">
+		<div class="col-md-8 offset-md-2 col-sm-12 text-center">
+			<div class="heading-title wow fadeInUp" data-wow-delay="300ms"><br><br>
+				<p class="heading_space">Your order was created, please complete payment through paypal</p>
+			</div>
+		</div>
+	</div>
+
+	<div style="margin: 0 auto; padding: 0; display: flex; justify-content: center; width: 200px;">
+		{{ paypal_payment_button.render }}
+	</div>
+
+
+	<style>
+		.table> :not(:last-child)> :last-child>* {
+			border-bottom-color: currentColor;
+		}
+	</style>
+</main>
+{% endblock body %}

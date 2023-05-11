@@ -1,0 +1,102 @@
+{% extends 'core/base.html' %}
+{% block title %}
+Create Profile
+{% endblock title %}
+
+{% block body %}
+{% load static %}
+<section class="page-header parallaxie padding_top center-block">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="page-titles text-center">
+          <h2 class="whitecolor font-light bottom30">Edit Your Profile</h2>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!--page Header-->
+
+<!--page Header ends-->
+<section id="our-blog" class="padding text-center">
+  <div class="container">
+    <div class="row d-flex justify-content-center">
+      <div class="col-lg-4 col-md-6 col-sm-10">
+        <div class="bglight logincontainer">
+          <h3 class="darkcolor bottom35">Create Profile </h3>
+          <form method="post" class="getin_form border-form" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="col-md-12 col-sm-12">
+              <div class="form-group bottom35">
+                <label class="bmd-label-floating">First Name:</label>
+
+                <input class="form-control" placeholder="First Name" type="text" id="first_name" name="first_name">
+
+              </div>
+            </div>
+            <div class="col-md-12 col-sm-12">
+              <div class="form-group bottom35">
+                <label class="bmd-label-floating">Last Name:</label>
+                <input class="form-control" type="text" id="last_name" placeholder="Last Name" name="last_name">
+              </div>
+            </div>
+
+            <div class="col-md-12 col-sm-12">
+              <div class="form-group bottom35">
+                <label class="bmd-label-floating">Profile Image:</label>
+                <input class="form-control" placeholder="Choose an image" name="image" type="file" id="image"
+                  onchange="previewImage()" accept=".jpg, .jpeg, .png">
+                <br><img id="preview" src="{% static 'images/Unknown_person.jpg' %}">
+                <style>
+                  #preview {
+                    max-width: 300px;
+                    max-height: 300px;
+                    border-radius: 300px;
+                  }
+                </style>
+                <script>
+                  function previewImage() {
+                    var preview = document.querySelector('#preview');
+                    var file = document.querySelector('input[type=file]').files[0];
+                    var reader = new FileReader();
+
+                    reader.onloadend = function () {
+                      preview.src = reader.result;
+                    }
+
+                    if (file) {
+                      reader.readAsDataURL(file);
+                    } else {
+                      preview.src = "";
+                    }
+                  }
+                </script>
+              </div>
+            </div>
+            <div class="col-md-12 col-sm-12">
+              <div class="form-group bottom35">
+                <label class="bmd-label-floating">Bio:</label>
+                <textarea class="form-control" placeholder="Add Bio" id="bio" name="bio"></textarea>
+              </div>
+            </div>
+
+            <br>
+            <button style="display: block; margin: 0 auto;" type="submit" class="button btnprimary" name="submit">Next
+              <i class="fas fa-arrow-right"></i></button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<style>
+  .form-control {
+    border-radius: 20px;
+  }
+</style>
+
+{% endblock body %}

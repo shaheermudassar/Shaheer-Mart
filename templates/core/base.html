@@ -1,0 +1,912 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title> {% block title %}
+		My Website
+		{% endblock title %} </title>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+	<link href="{% static 'images/favicon.png' %}" rel="icon">
+	<link rel="stylesheet" href="{% static '/css/animate.min.css' %}">
+	<link rel="stylesheet" href="{% static '/css/bootstrap.min.css' %}">
+	<link rel="stylesheet" href="{% static '/css/cubeportfolio.min.css' %}">
+	<link rel="stylesheet" href="{% static '/css/font-awesome.min.css' %}">
+	<link rel="stylesheet" href="{% static '/css/green.css' %}">
+	<link rel="stylesheet" href="{% static '/css/jquery.background-video.css' %}">
+	<link rel="stylesheet" href="{% static '/css/jquery.fancybox.min.css' %}">
+	<link rel="stylesheet" href="{% static '/css/layers.css' %}">
+	<link rel="stylesheet" href="{% static '/css/navigation.css' %}">
+	<link rel="stylesheet" href="{% static '/css/orange.css' %}">
+	<link rel="stylesheet" href="{% static '/css/owl.carousel.min.css' %}">
+	<link rel="stylesheet" href="{% static '/css/pink.css' %}">
+	<link rel="stylesheet" href="{% static '/css/settings.css' %}">
+	<link rel="stylesheet" href="{% static '/css/solid.css' %}">
+	<link rel="stylesheet" href="{% static '/css/yellow.css' %}">
+	<link rel="stylesheet" href="{% static '/css/style.css' %}">
+	<style>
+		/* Styling for the sidebar */
+		.sidebar {
+			background-color: white;
+			padding: 20px;
+			width: 250px;
+			position: absolute;
+			height: 100%;
+
+			transition: all .5s ease-in-out;
+		}
+
+		.sidebar:hover {
+			width: 300px;
+			transition: all .5s ease-in-out;
+		}
+
+		.sidebar h2 {
+			font-size: 1.5rem;
+			font-weight: bold;
+			margin-bottom: 20px;
+			color: #393e46;
+			text-transform: uppercase;
+		}
+
+		.sidebar p {
+
+			color: #222831;
+		}
+
+		.sidebar a {
+			color: #393e46;
+			text-decoration: none;
+
+			display: block;
+
+			border-radius: 10px;
+			transition: all .2s ease-in-out;
+		}
+
+		.sidebar a:hover {
+			background-color: #393e46;
+			color: #fff;
+			transition: all .2s ease-in-out;
+		}
+
+		/* Styling for the main content */
+		.main {
+			padding: 20px;
+			margin-left: 300px;
+			font-size: 1.2rem;
+			line-height: 1.5;
+			color: #222831;
+		}
+
+		/* Media query to hide the sidebar on mobile devices */
+		@media only screen and (max-width: 767px) {
+			.sidebar {
+				display: none;
+			}
+
+			.main {
+				margin-left: 0;
+			}
+		}
+
+		.dropdown {
+			position: relative;
+			display: inline-block;
+		}
+
+		.dropdown-toggle {
+			background-color: #ffffff00;
+			border: none;
+			color: #ffffff;
+			padding: 10px 20px;
+			font-size: 16px;
+			cursor: pointer;
+		}
+
+		.dropdown-menu {
+			display: none;
+			position: absolute;
+			z-index: 1;
+			padding: 4px;
+			margin: 0;
+			border-radius: 6px;
+			background-color: #00bcd4;
+			box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+			min-width: 160px;
+		}
+
+
+		.dropdown-menu li {
+			border-radius: 10px;
+			display: block;
+
+		}
+
+		.dropdown-menu li:last-child {
+			border-bottom: none;
+		}
+
+		.dropdown-menu li a {
+			display: block;
+			color: #333333;
+			padding: 10px 20px;
+			text-decoration: none;
+		}
+
+		.dropdown-menu li a:hover {
+			background-color: #ffffff;
+		}
+
+		.dropdown-toggle:hover,
+		.dropdown-toggle:focus {
+			background-color: #ffffff;
+			color: #00bcd4;
+			outline: none;
+		}
+
+		.dropdown-toggle:active {
+			background-color: #ffffff;
+			color: #00bcd4;
+		}
+
+		.dropdown-toggle:hover+.dropdown-menu,
+		.dropdown-toggle:focus+.dropdown-menu,
+		.dropdown-menu:hover,
+		.dropdown-menu:focus {
+			display: block;
+		}
+
+		.dropdown-menu li a:hover {
+			background-color: #ffffff;
+		}
+	</style>
+</head>
+
+<body>
+	<!-- header -->
+	<header class="site-header transparent-sidemenu">
+		<nav class="navbar navbar-expand-lg transparent-bg static-nav">
+			<div class="container">
+				<a class="navbar-brand" href="{% url 'index' %}">
+					<img src="{% static 'images/logo-transparent.png' %}" alt="logo">
+				</a>
+				<div class="d-md-none">
+					<form method="get" action="{% url 'search' %}" class="widget_search">
+						<div class="input-group" style="flex-wrap: nowrap; width: 140px; margin-right: 30px;">
+							<input type="search" class="form-control" placeholder="search..." name="q" required>
+							<button type="submit" class="input-group-addon"><i class="fa fa-search"></i> </button>
+						</div>
+					</form>
+				</div>
+
+				<div class="collapse navbar-collapse" id="xenav">
+					<ul class="navbar-nav ms-auto">
+						<li class="nav-item active">
+							<a class="nav-link " href="{% url 'index' %}">Home</a>
+						</li>
+						<li class="nav-item">
+
+							<form method="get" action="{% url 'search' %}" class="widget_search">
+								<div class="input-group">
+									<input type="search" class="form-control" placeholder="search..." name="q" required>
+									<button type="submit" class="input-group-addon"><i class="fa fa-search"></i>
+									</button>
+								</div>
+							</form>
+
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="{% url 'product-list' %}">Products</a>
+						</li>
+						<div class="nav-item">
+							<button style="font-size: 14px;" class="btn btn-secondary dropdown-toggle" type="button"
+								id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
+								aria-expanded="false">
+								Categories
+							</button>
+							<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+
+								{% for c in categories %}
+								<li class="nav-item">
+
+									<a class="nav-link" href="{% url 'category-product-list' c.cid %}">{{c.title}}</a>
+
+
+								</li>
+
+								{% endfor %}
+								<hr style="margin: 1px; color: #fff; height: 1.5px;">
+								<li class="nav-item">
+
+									<a class="nav-link" href="{% url 'category-list' %}">All Categories</a>
+
+
+								</li>
+							</div>
+						</div>
+						<li class="nav-item">
+							<a class="nav-link" href="{% url 'wishlist' %}">
+								Wishlist <i class="fa fa-heart fa-lg">
+									<span style="right: auto; top: auto; background: none;"
+										class="badge badge-icon wishlist-add">{{wishlist_count.count}}</span>
+							</a></i>
+						</li>
+						<div class="nav-item">
+							<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+								data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								Cart <i class="fa fa-cart-shopping fa-lg"><span
+										style="right: auto; top: auto; background: none;"
+										class="badge badge-icon cart-items-count">{{request.session.cart_data_obj|length}}</span></i></button>
+							<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+
+								<li class="nav-item">
+									<a class="nav-link " href="{% url 'cart' %}">View cart</a>
+								</li>
+								<li class="nav-item">
+									<a class="nav-link " href="{% url 'checkout' %}">Checkout</a>
+								</li>
+
+							</div>
+						</div>
+
+						<script>
+							$(document).ready(function () {
+								// retrieve the cart items count from the session
+								var cartItemsCount = {{ request.session.cart_data_obj| length
+							}};
+
+							// update the badge icon with the cart items count
+							$('.cart-items-count').text(cartItemsCount);
+						});
+						</script>
+
+						</a>
+						</li>
+						<div class="nav-item">
+							<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+								data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								Account <i class="fa fa-user fa-lg"></i>
+							</button>
+							<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+
+								{% if request.user.is_authenticated %}
+								<li class="nav-item">
+									<a class="nav-link " href="{% url 'userauths:signout' %}">Sign out</a>
+								</li>
+								<li class="nav-item">
+									<a class="nav-link " href="{% url 'dashboard' %}">dashboard</a>
+								</li>
+
+
+								{% else %}
+								<li class="nav-item">
+									<a class="nav-link " href="{% url 'userauths:signin' %}">Sign in</a>
+								</li>
+								<li class="nav-item">
+									<a class="nav-link " href="{% url 'userauths:signup' %}">Create Account</a>
+								</li>
+								{% endif %}
+							</div>
+						</div>
+
+					</ul>
+				</div>
+			</div>
+
+			<!--side menu open button-->
+			<a href="javascript:void(0)" class="sidemenu_btn" id="sidemenu_toggle">
+				<span></span> <span></span> <span></span>
+			</a>
+		</nav>
+
+		<!-- side menu -->
+		<div class="side-menu">
+			<div class="inner-wrapper">
+				<span class="btn-close" id="btn_sideNavClose"><i></i><i></i></span>
+				<nav class="side-nav">
+					<ul class="navbar-nav w-100">
+						<li class="nav-item active">
+							<a class="nav-link" href="/">Home</a>
+						</li>
+						<li class="nav-item">
+
+							<form class="widget_search">
+								<div class="input-group">
+									<input type="search" class="form-control" placeholder="search..." required>
+									<button type="submit" class="input-group-addon"><i class="fa fa-search"></i>
+									</button>
+								</div>
+							</form>
+
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="{% url 'product-list' %}">Products</a>
+						</li>
+
+						<li class="nav-item">
+							<a class="nav-link dropdown-toogle" href="{% url 'wishlist' %}">
+								Wishlist <i class="fa fa-heart fa-lg"></i>
+								<span style="margin-left: 10px; font-weight: 800; position: initial; background: none;"
+									class="badge badge-icon wishlist-add">{{wishlist_count.count}}</span>
+							</a>
+						</li>
+						<div class="nav-item">
+							<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+								data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								Cart <i class="fa fa-cart-shopping fa-lg"><span
+										style="left: 0; top: auto; background: none;"
+										class="badge badge-icon cart-items-count">
+										{{request.session.cart_data_obj|length}}</span></i></button>
+							<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+
+								<li class="nav-item">
+									<a class="nav-link " href="{% url 'cart' %}">View cart</a>
+								</li>
+								<li class="nav-item">
+									<a class="nav-link " href="{% url 'checkout' %}">Checkout</a>
+								</li>
+
+							</div>
+						</div>
+						<div class="nav-item">
+							<button style="font-size: 14px;" class="btn btn-secondary dropdown-toggle" type="button"
+								id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
+								aria-expanded="false">
+								Categories
+							</button>
+							<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+
+								{% for c in categories %}
+								<li class="nav-item">
+
+									<a style="color: #101414de; border-radius: 20px; font-size: 18px; font-weight: 500;"
+										class="nav-link" href="{% url 'category-product-list' c.cid %}">{{c.title}}</a>
+
+
+								</li>
+
+								{% endfor %}
+								<hr style="margin: 1px; color: #fff; height: 1.5px;">
+								<li class="nav-item">
+
+									<a style="color: #101414de; border-radius: 20px; font-size: 18px; font-weight: 500;"
+										class="nav-link" href="{% url 'category-list' %}">All Categories</a>
+
+
+								</li>
+							</div>
+						</div>
+						<div class="nav-item">
+							<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+								data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								Account <i class="fa fa-user fa-lg"></i>
+							</button>
+							<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+
+								{% if request.user.is_authenticated %}
+								<li class="nav-item">
+									<a style="color: #101414de; border-radius: 20px; font-size: 18px; font-weight: 500;"
+										class="nav-link " href="{% url 'userauths:signout' %}">Sign out</a>
+								</li>
+								<li class="nav-item">
+									<a style="color: #101414de; border-radius: 20px; font-size: 18px; font-weight: 500;"
+										class="nav-link " href="{% url 'dashboard' %}">dashboard</a>
+								</li>
+								{% else %}
+								<li class="nav-item">
+									<a style="color: #101414de; border-radius: 20px; font-size: 18px; font-weight: 500;"
+										class="nav-link " href="{% url 'userauths:signin' %}">Sign in</a>
+								</li>
+								<li style="color: #101414de; border-radius: 20px; font-size: 18px; font-weight: 500;"
+									class="nav-item">
+									<a class="nav-link " href="{% url 'userauths:signup' %}">Create Account</a>
+								</li>
+								{% endif %}
+							</div>
+						</div>
+
+					</ul>
+				</nav>
+
+				<div class="side-footer w-100">
+					<ul class="social-icons-simple white top40">
+						<li><a href="javascript:void(0)"><i class="fa fa-facebook"></i> </a> </li>
+						<li><a href="javascript:void(0)"><i class="fa fa-instagram"></i> </a> </li>
+						<li><a href="javascript:void(0)"><i class="fa fa-twitter"></i> </a> </li>
+					</ul>
+					<p class="whitecolor">&copy; 2023 Shaheer Mart. Made With Love by Shaheer</p>
+				</div>
+			</div>
+		</div>
+		<a id="close_side_menu" href="javascript:void(0);"></a>
+		<!-- End side menu -->
+	</header>
+	<!-- header -->
+	{% if messages %}
+	{% for message in messages %}
+	<div id="message" class="message-hidden">
+		<div class="message-content">
+			<div class="alert alert-{{message.tags}}">
+				<strong>{{message}}</strong>
+			</div>
+		</div>
+	</div>
+	{% endfor %}
+	{% endif %}
+
+
+	<style>
+		#message {
+			position: fixed;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+			z-index: 9999;
+
+			transition: opacity 0.3s ease-in-out;
+
+		}
+
+		.message-hidden {
+			opacity: 0;
+		}
+
+		.message-show {
+			opacity: 1;
+			transition: opacity 0.5s ease-in-out;
+		}
+
+		.message-content {
+			width: 250px;
+			text-align: center;
+			align-items: center;
+			display: flex;
+			justify-items: center;
+		}
+
+		.alert {
+
+			width: 250px;
+		}
+	</style>
+	<script>
+		// Get the message element
+		const message = document.getElementById("message");
+
+		// Show the message
+		message.classList.add("message-show");
+		message.classList.remove("message-hidden");
+
+		// Hide the message after 3 seconds
+		setTimeout(() => {
+			message.classList.add("message-hidden");
+			message.classList.remove("message-show");
+		}, 3000);
+
+	</script>
+
+	{% block body %}
+
+
+	{% endblock body %}
+	<!--Site Footer Here-->
+	<footer id="site-footer" class="padding_half">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12 col-sm-12 text-center">
+					<ul class="social-icons bottom25 wow fadeInUp" data-wow-delay="300ms">
+						<li><a href="https://www.facebook.com/shaheer.mudassar14" target="_blank"><i
+									class="fa fa-facebook"></i> </a> </li>
+						<li><a href="https://www.twitter.com/mrshaheer786" target="_blank"><i class="fa fa-twitter"></i>
+							</a> </li>
+						<li><a href="https://www.linkedin.com/in/shaheer-mudassar-8b43b8264/" target="_blank"><i
+									class="fa fa-linkedin"></i> </a> </li>
+						<li><a href="https://www.instagram.com/shaheer_mudassar/" target="_blank"><i
+									class="fa fa-instagram"></i> </a> </li>
+						<li><a href="mailto:shaheer.mudassar13@gmail.com" target="_blank"><i
+									class="fa fa-envelope-o"></i> </a> </li>
+					</ul>
+					<p class="copyrights wow fadeInUp" data-wow-delay="350ms"> &copy; 2023 Shaheer Mart. made with love
+						by <a href="https://shaheermudassar.github.io/Shaheer-Mudassar/" target="_blank">Shaheer</a>
+					</p>
+				</div>
+			</div>
+		</div>
+	</footer>
+	<!--Footer ends-->
+	<section id="funfacts-four" class="padding_half fact-iconic ">
+		<div class="container">
+			<div class="row text-center">
+				<h4 class="text-capitalize bottom20">All Links</h4>
+				<ul class="webtags">
+					<li><a style="backdrop-filter: unset; color: #222831; border:0.5px solid #222831" href="{% url 'contact' %}">Contact us</a></li>
+					<li><a style="backdrop-filter: unset; color: #222831; border:0.5px solid #222831" href="{% url 'product-list' %}">All Products</a></li>
+					<li><a style="backdrop-filter: unset; color: #222831; border:0.5px solid #222831" href="{% url 'category-list' %}">All Categories</a></li>
+					{% for c in categories %}
+					<li><a style="backdrop-filter: unset; color: #222831; border:0.5px solid #222831" href="{% url 'category-product-list' c.cid %}">{{c.title}}</a></li>
+					{% endfor %}
+					<li><a style="backdrop-filter: unset; color: #222831; border:0.5px solid #222831" href="{% url 'vendor-list' %}">All Vendors</a></li>
+					<li><a style="backdrop-filter: unset; color: #222831; border:0.5px solid #222831" href="{% url 'vendor-profile' %}">Vendor Profile</a></li>
+					<li><a style="backdrop-filter: unset; color: #222831; border:0.5px solid #222831" href="{% url 'search' %}">Search</a></li>
+					<li><a style="backdrop-filter: unset; color: #222831; border:0.5px solid #222831" href="{% url 'cart' %}">Cart</a></li>
+					<li><a style="backdrop-filter: unset; color: #222831; border:0.5px solid #222831" href="{% url 'checkout' %}">Checkout</a></li>
+					<li><a style="backdrop-filter: unset; color: #222831; border:0.5px solid #222831" href="{% url 'payment-failed' %}">Payment Failed</a></li>
+					<li><a style="backdrop-filter: unset; color: #222831; border:0.5px solid #222831" href="{% url 'dashboard' %}">User Dashboard</a></li>
+					<li><a style="backdrop-filter: unset; color: #222831; border:0.5px solid #222831" href="{% url 'order' %}">User Orders</a></li>
+					<li><a style="backdrop-filter: unset; color: #222831; border:0.5px solid #222831" href="{% url 'profile' %}">User Profile</a></li>
+					<li><a style="backdrop-filter: unset; color: #222831; border:0.5px solid #222831" href="{% url 'address' %}">User Address</a></li>
+					<li><a style="backdrop-filter: unset; color: #222831; border:0.5px solid #222831" href="{% url 'create-profile' %}">Create Profile</a></li>
+					<li><a style="backdrop-filter: unset; color: #222831; border:0.5px solid #222831" href="{% url 'update-profile' %}">Update Profile</a></li>
+					<li><a style="backdrop-filter: unset; color: #222831; border:0.5px solid #222831" href="{% url 'wishlist' %}">Wishlist</a></li>
+					<li><a style="backdrop-filter: unset; color: #222831; border:0.5px solid #222831" href="{% url 'create-store' %}">Create Store</a></li>
+					<li><a style="backdrop-filter: unset; color: #222831; border:0.5px solid #222831" href="{% url 'update-store' %}">Update Store</a></li>
+					<li><a style="backdrop-filter: unset; color: #222831; border:0.5px solid #222831" href="{% url 'store-products' %}">Store Products</a></li>
+					<li><a style="backdrop-filter: unset; color: #222831; border:0.5px solid #222831" href="{% url 'create-products' %}">Create Products</a></li>
+					<li><a style="backdrop-filter: unset; color: #222831; border:0.5px solid #222831" href="{% url 'user-notifications' %}">User Notifications</a></li>
+					<li><a style="backdrop-filter: unset; color: #222831; border:0.5px solid #222831" href="{% url 'vendor-notifications' %}">Vendor Notifications</a></li>
+					<li><a style="backdrop-filter: unset; color: #222831; border:0.5px solid #222831" href="{% url 'vendor-orders' %}">Vendor Orders</a></li>
+					<li><a style="backdrop-filter: unset; color: #222831; border:0.5px solid #222831" href="{% url 'vendor-dashboard' %}">Vendor Dashboard</a></li>
+				</ul>
+			</div>
+		</div>
+	</section>
+
+	<script>
+		console.log("working fine..");
+
+		$("#commentForm").submit(function (e) {
+			e.preventDefault();
+
+			$.ajax({
+				data: $(this).serialize(),
+
+				method: $(this).attr("method"),
+
+				url: $(this).attr("action"),
+
+				dataType: "json",
+
+				success: function (response) {
+					console.log("Comment saved");
+
+					if (response.bool == true) {
+						$("#review-res").html("Review added successfully")
+						$(".hideform").hide()
+
+
+						let _html = '<div class="item">'
+						_html += '<div class="testimonial-wrapp">'
+						_html += '<span class="quoted"><i class="fa fa-quote-right"></i></span>'
+						_html += '<div class="testimonial-text">'
+						_html += '<p style="font-size: larger; color: gold;">'
+						for (let i = 1; i <= response.context.rating; i++) {
+							_html += '<span>&starf;</span>'
+						}
+						_html += '</p>'
+						_html += '<p class="bottom40">' + response.context.review + '</p>'
+						_html += '</div>'
+						_html += '<div class="testimonial-photo"><img alt="" src="{% static 'images / testimonial - 1.jpg' %}"></div>'
+						_html += '<h4 class="darkcolor">' + response.context.user + '</h4>'
+						_html += '<small class="defaultcolor">Businessman</small>'
+						_html += '</div>'
+						_html += '</div>'
+						$(".reviewlist").prepend(_html)
+					}
+
+				}
+
+			})
+		})
+
+		$(document).ready(function () {
+			$(".filter-checkbox, #price-filter-btn").on("click", function () {
+				console.log("A checkbox have been clicked");
+
+				let filter_object = {}
+
+				let min_price = $("#max_price").attr("min")
+				let max_price = $("#max_price").val()
+
+				filter_object.min_price = min_price;
+				filter_object.max_price = max_price;
+
+				$(".filter-checkbox").each(function () {
+					let filter_value = $(this).val()
+					let filter_key = $(this).data("filter")
+					// console.log("filter value is: ", filter_value);
+					// console.log("filter key is: ", filter_key);
+
+					filter_object[filter_key] = Array.from(document.querySelectorAll('input[data-filter=' + filter_key + ']:checked')).map(function (element) {
+						return element.value
+					})
+				})
+				console.log("filter object is: ", filter_object);
+				$.ajax({
+					url: '/filter-product',
+					data: filter_object,
+					dataType: 'json',
+					beforeSend: function () {
+						console.log("Sending Data...");
+					},
+					success: function (response) {
+						console.log(response);
+						console.log("Data filtered successfully");
+						$("#filtered-product").html(response.data)
+					}
+				})
+			})
+			$("#max_price").on("blur", function () {
+				let max_price = $(this).attr("max")
+				let min_price = $(this).attr("min")
+				let current_price = $(this).val()
+
+				console.log("Current price: ", current_price)
+				console.log("Max price: ", max_price)
+				console.log("Min price: ", min_price)
+
+				if (current_price > parseInt(max_price) || current_price < parseInt(min_price)) {
+					alert("Price must be between Rs." + min_price + " and Rs." + max_price)
+					$(this).val(min_price)
+					$("#range").val(min_price)
+					$(this).focus
+					return false
+				}
+			})
+
+			$(".add-to-cart-btn").on("click", function () {
+
+				let this_val = $(this)
+				let index = this_val.attr("data-index")
+				let quantity = $(".product-quantity-" + index).val()
+				let product_title = $(".product-title-" + index).val()
+				let product_id = $(".product-id-" + index).val();
+				let product_pid = $(".product-pid-" + index).val();
+				let product_image = $(".product-image-" + index).val()
+				let product_price = $(".current-product-price-" + index).text()
+
+
+				console.log("Quantity:", quantity);
+				console.log("Tilte:", product_title);
+				console.log("Price:", product_price);
+				console.log("ID:", product_id);
+				console.log("PID:", product_pid);
+				console.log("Image:", product_image);
+				console.log("Index:", index);
+				console.log("Current Element:", this_val);
+
+				$.ajax({
+					url: "/add-to-cart",
+					data: {
+						"id": product_id,
+						"pid": product_pid,
+						"image": product_image,
+						"qty": quantity,
+						"price": product_price,
+						"title": product_title,
+					},
+					dataType: "json",
+					beforeSend: function () {
+						console.log("Adding product to cart...");
+					},
+					success: function (response) {
+						this_val.html("item added to cart")
+						console.log("Added Product to Cart!");
+						$(".cart-items-count").text(response.totalcartitems)
+					}
+				})
+
+			})
+
+			$(".delete-product").on("click", function () {
+				let product_id = $(this).attr("data-product")
+				let this_val = $(this)
+				console.log("Product id:", product_id);
+
+				$.ajax({
+					url: "/delete-from-cart",
+					data: {
+						"id": product_id
+					},
+					dataType: "json",
+					beforeSend: function () {
+						this_val.hide()
+					},
+					success: function (response) {
+						this_val.show()
+						$(".cart-items-count").text(response.totalcartitems)
+						$("#cart-list").html(response.data)
+					}
+				})
+			})
+			$(".update-product").on("click", function () {
+				let product_id = $(this).attr("data-product")
+				let this_val = $(this)
+				let product_quantity = $(".product-qty-" + product_id).val()
+				console.log("Product id:", product_id);
+				console.log("Product qty:", product_quantity);
+
+				$.ajax({
+					url: "/update-cart",
+					data: {
+						"id": product_id,
+						"qty": product_quantity
+					},
+					dataType: "json",
+					beforeSend: function () {
+						this_val.hide()
+					},
+					success: function (response) {
+						this_val.show()
+						$(".cart-items-count").text(response.totalcartitems)
+						$("#cart-list").html(response.data)
+					}
+				})
+			})
+			$(".add-to-wishlist").on("click", function () {
+				let product_id = $(this).attr("data-product-item")
+				let this_val = $(this)
+				console.log("product id:", product_id);
+
+				$.ajax({
+					url: "/add-to-wishlist",
+					data: {
+						"id": product_id,
+					},
+					dataType: "json",
+					beforeSend: function () {
+						console.log("Adding to Wishlist");
+					},
+					success: function (response) {
+						this_val.html("✔")
+						if (response.bool === true) {
+							console.log("added to wishlist");
+							$(".wishlist-add").html(response.wishlist_count);
+						}
+					}
+				})
+			})
+			$(".delete-wishlist-product").on("click", function () {
+
+				let wishlist_id = $(this).attr("data-wishlist-product")
+				let this_val = $(this)
+				console.log("wishlist id:", wishlist_id)
+				$.ajax({
+					url: "/remove-from-wishlist",
+					data: {
+						"id": wishlist_id,
+					},
+					dataType: "json",
+					beforeSend: function () {
+						console.log("removing from wishlist..")
+					},
+					success: function (response) {
+
+						$("#wishlist-list").html(response.data)
+						console.log("removed succesfully")
+						$(".wishlist-add").html(response.wishlist_count);
+					}
+				})
+			})
+			$(".contact_submit").on("click", function (e) {
+				e.preventDefault()
+				let full_name = $("#full_name").val()
+				let email = $("#email").val()
+				let phone = $("#phone").val()
+				let message = $("#contact-message").val()
+
+				console.log("name:", full_name)
+				console.log("email:", email)
+				console.log("phone:", phone)
+				console.log("message:", message)
+
+				$.ajax({
+					url: "/contact-page",
+					data: {
+						"full_name": full_name,
+						"email": email,
+						"phone": phone,
+						"message": message,
+					},
+					dataType: "json",
+					beforeSend: function () {
+						console.log("Sending message..")
+					},
+					success: function (response) {
+						console.log("sent message.")
+						$("#message-form").hide()
+						$("#message-response").html("Message sent")
+					}
+				})
+			})
+		})
+	</script>
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	</div>
+	<style>
+		@media only screen and (max-width: 768px) {
+
+			/* styles for mobile devices */
+			.row1>* {
+				flex-shrink: 0;
+				width: 50%;
+				max-width: 100%;
+				padding-right: calc(var(--bs-gutter-x) / 2);
+				padding-left: calc(var(--bs-gutter-x) / 2);
+				margin-top: var(--bs-gutter-y);
+			}
+		}
+	</style>
+	<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+
+	<script src="{% static 'js/bootstrap.min.js' %}"></script>
+	<script src="{% static 'js/jquery-3.6.0.min.js' %}"></script>
+
+	<!--Bootstrap Core-->
+	<script src="{% static 'js/popper.min.js' %}"></script>
+	<script src="{% static 'js/jsPDF.min.js' %}"></script>
+
+
+	<!--to view items on reach-->
+	<script src="{% static 'js/jquery.appear.js' %}"></script>
+
+	<!--Equal-Heights-->
+	<script src="{% static 'js/jquery.matchHeight-min.js' %}"></script>
+
+	<!--Owl Slider-->
+	<script src="{% static 'js/owl.carousel.min.js' %}"></script>
+
+	<!--number counters-->
+	<script src="{% static 'js/jquery-countTo.js' %}"></script>
+
+	<!--Parallax Background-->
+	<script src="{% static 'js/parallaxie.js' %}"></script>
+
+	<!--Cubefolio Gallery-->
+	<script src="{% static 'js/jquery.cubeportfolio.min.js' %}"></script>
+
+	<!--FancyBox popup-->
+	<script src="{% static 'js/jquery.fancybox.min.js' %}"></script>
+
+	<!-- Video Background-->
+	<script src="{% static 'js/jquery.background-video.js' %}"></script>
+
+	<!--TypeWriter-->
+	<script src="{% static 'js/typewriter.js' %}"></script>
+
+	<!--Particles-->
+	<script src="{% static 'js/particles.min.js' %}"></script>
+
+	<!--WOw animations-->
+	<script src="{% static 'js/wow.min.js' %}"></script>
+
+	<!--Revolution SLider-->
+	<script src="{% static 'js/revolution/jquery.themepunch.tools.min.js' %}"></script>
+	<script src="{% static 'js/revolution/jquery.themepunch.revolution.min.js' %}"></script>
+	<!-- SLIDER REVOLUTION 5.0 EXTENSIONS  (Load Extensions only on Local File Systems !  The following part can be removed on Server for On Demand Loading) -->
+	<script src="{% static 'js/revolution/extensions/revolution.extension.actions.min.js' %}"></script>
+	<script src="{% static 'js/revolution/extensions/revolution.extension.carousel.min.js' %}"></script>
+	<script src="{% static 'js/revolution/extensions/revolution.extension.kenburn.min.js' %}"></script>
+	<script src="{% static 'js/revolution/extensions/revolution.extension.layeranimation.min.js' %}"></script>
+	<script src="{% static 'js/revolution/extensions/revolution.extension.migration.min.js' %}"></script>
+	<script src="{% static 'js/revolution/extensions/revolution.extension.navigation.min.js' %}"></script>
+	<script src="{% static 'js/revolution/extensions/revolution.extension.parallax.min.js' %}"></script>
+	<script src="{% static 'js/revolution/extensions/revolution.extension.slideanims.min.js' %}"></script>
+	<script src="{% static 'js/revolution/extensions/revolution.extension.video.min.js' %}"></script>
+
+	<!--Google Map API-->
+	<script
+		src="{% static 'https://maps.googleapis.com/maps/api/js?key=AIzaSyBJnKEvlwpyjXfS_h-J1Cne2fPMqeb44Mk' %}"></script>
+	<script src="{% static 'js/functions.js' %}"></script>
+
+	<script>
+
+
+	</script>
+
+</body>
+
+</html>

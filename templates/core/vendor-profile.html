@@ -1,0 +1,106 @@
+{% extends 'core/base3.html' %}
+{% block title %}
+
+Store
+
+{% endblock title %}
+{% block body %} {% load static %}
+<link href="{{profile_all.image}}" rel="icon">
+<div class="content">
+  <div class="container-fluid">
+    <div class="row">
+
+      <div class="col-md-4">
+        <div class="card card-profile">
+          <div class="card-avatar">
+            {% for v in vendor %}
+
+            {% if v.image %}
+
+
+            <img class="img" src="{{v.image.url}}" />
+            {% else %}
+            <img class="img"
+              src="https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.hudl.com%2Fprofile%2F5499830&psig=AOvVaw0TpLHiKIukyCX3VQ16OIei&ust=1683145611167000&source=images&cd=vfe&ved=0CBEQjRxqFwoTCODGy5S81_4CFQAAAAAdAAAAABAE" />
+            {% endif %}
+          </div>
+          <div class="card-body">
+
+            <h4 class="card-title">{{v.title}}</h4>
+            <p class="card-description">
+              {{v.description}}
+            </p>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+      <div class="col-md-8">
+        <div class="card">
+          <div class="card-header card-header-primary">
+            <h4 class="card-title">Your Store</h4>
+            <p class="card-category">Complete Details</p>
+          </div>
+          <div class="card-body">
+            <form>
+              <div class="row">
+                <div class="col-md-5">
+                  <div class="form-group">
+                    {% for v in vendor %}
+
+                    <label class="bmd-label-floating">Contact no:</label>
+                    <p type="text" class="form-control">{{v.contact}}</p>
+
+                    {% endfor %}
+                  </div>
+                </div>
+                {% for v in vendor %}
+
+                <div class="col-md-3">
+                  <div class="form-group">
+                    <label class="bmd-label-floating">User:</label>
+                    <p class="form-control">{{v.user}}</p>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label class="bmd-label-floating">Store Name</label>
+                    <p class="form-control">{{v.title}}</p>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="bmd-label-floating">Address:</label>
+                    <p class="form-control">{{v.address}}</p>
+                  </div>
+                </div>
+              </div>
+
+
+
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <label>About Me</label>
+                    <div class="form-group">
+                      <label class="bmd-label-floating">
+                      </label>
+                      <textarea class="form-control" rows="5">{{v.description}}</textarea>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              {% endfor %}
+              <a href="{% url 'update-store' %}" class="btn btn-primary pull-right">
+                Edit Store
+              </a>
+              <div class="clearfix"></div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock body %}

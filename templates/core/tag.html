@@ -1,0 +1,144 @@
+{% extends 'core/base.html' %}
+{% block title %}
+#{{tag.name}}
+{% endblock title %}
+
+{% block body %}
+
+<!--page Header-->
+<section class="page-header parallaxie padding_top center-block">
+   <div class="container">
+      <div class="row">
+         <div class="col-sm-12">
+            <div class="page-titles text-center">
+               <h2 class="whitecolor font-light bottom30">#{{tag.name}}</h2>
+               </ul>
+            </div>
+         </div>
+      </div>
+   </div>
+</section>
+<!--page Header ends-->
+
+
+
+
+<!--Our Blogs Ends-->
+<div class="row">
+   <div class="col-md-8 offset-md-2 col-sm-12 text-center">
+      <div class="heading-title wow fadeInUp" data-wow-delay="300ms"><br><br>
+         <p class="heading_space">We've found <span style="color: #00bcd4;">{{products.count}} </span>items for you.</p>
+      </div>
+   </div>
+</div>
+
+<section id="our-blog">
+   <div class="container">
+      <div class="row row1">
+
+         {% for p in products %}
+
+
+         <div class="col-md-4">
+
+            <div class="news_item shadow text-center">
+               <div class="image-container">
+                  <a class="image" href="{% url 'product-detail' p.pid %}">
+                     <img src="{{p.image.url}}" style="height: 200px; " alt="Latest News" class="img-responsive">
+
+                  </a>
+                  <div class="hot-deal">-{{p.get_percentage|floatformat:0}}%</div>
+               </div>
+               <style>
+                  /* .image-container {
+/* position: relative; */
+                  /* width: 100%;
+height: 0;
+padding-bottom: 80%; } */
+
+
+
+
+                  .hot-deal {
+                     position: absolute;
+                     top: 0;
+                     left: 0;
+                     background-color: #00bcd4;
+                     color: #ffffff;
+                     padding: 5px;
+                     font-size: 14px;
+                     font-weight: bold;
+                     border-bottom-right-radius: 16px;
+                  }
+               </style>
+               <div class="news_desc">
+                  <h6 style="text-align: left; font-weight: 600; color: darkgrey;"
+                     class="text-capitalize font-light darkcolor">{{p.category}}</h6>
+                  <h5 style="font-weight: 900;" class="text-capitalize font-light darkcolor"><a
+                        href="{% url 'product-detail' p.pid %}">{{p.title}}</a></h5>
+                  <ul class="meta-tags top20 bottom20">
+                     <li><a href="#."><i class="fa fa-calendar"></i>{{p.date|date:"d M"}}</a></li>
+                     <li><a href="#."> <i class="fa fa-user-o"></i>{{p.vendor}}</a></li>
+                     {% if p.get_average_rating == None %}
+                     <li><a style="font-family:sans-serif;" href="#."> <i style="color: gold;"
+                              class="fa fa-star"></i>(0)</a></li>
+                     {% else %}
+                     <li><a style="font-family:sans-serif;" href="#."> <i style="color: gold;"
+                              class="fa fa-star"></i>({{p.get_average_rating|floatformat:1}})</a></li>
+                     {% endif %}
+
+                  </ul>
+                  <p style="text-decoration: line-through; font-weight: 200; color: rgb(162, 166, 167);"
+                     class="bottom35">Rs.{{p.old_price}}</p>
+                  <p style="font-weight: 500; font-size: large; color: chartreuse;" class="bottom35">Rs.<span
+                        class="current-product-price-{{p.id}}">{{p.price}} </span><button data-product-item="{{p.id}}"
+                        id="add-to-wishlist" class="add-to-wishlist btn btnprimary"> <i class="fa fa-heart"></i>
+                     </button> </p>
+                  <input type="hidden" value="1" id="product-quantity" class="product-quantity-{{p.id}}">
+                  <input type="hidden" value="{{p.pid}}" class="product-pid-{{p.id}}">
+                  <input type="hidden" value="{{p.id}}" class="product-id-{{p.id}}">
+                  <input type="hidden" value="{{p.title}}" class="product-title-{{p.id}}">
+                  <input type="hidden" value="{{p.image.url}}" class="product-image-{{p.id}}">
+                  <button class="button btnprimary add-to-cart-btn" data-index="{{p.id}}" id="add-to-cart-btn">Add to
+                     cart <i class="fa fa-cart-shopping"></i> </button>
+               </div>
+            </div>
+         </div>
+         {% endfor %}
+
+      </div>
+   </div>
+</section>
+<section id="our-blog">
+   <div class="container">
+      <div class="row">
+
+         <div class="col-md-4" style="margin-top: 60px; width: 100%;">
+            <div class="news_item shadow " style="padding: 10px;border-radius: 20px;position: relative;
+                width: 100%;
+                 ">
+               <div class="widget heading_space">
+                  <h4 class="text-capitalize darkcolor bottom20" style="text-align: center;">All Tags</h4>
+                  <ul class="webtags">
+                     {% for t in tags %}
+                     <li><a href="{% url 'tag' t.slug %}">{{t.name}}</a></li>
+                     {% endfor %}
+                  </ul>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+</section>
+<!--Our Blogs Ends-->
+<br><br><br>
+
+
+
+
+
+
+
+
+
+{% endblock body %}

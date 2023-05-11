@@ -1,0 +1,290 @@
+{% extends 'core/base.html' %}
+{% block title %}
+{{vendor.title}}
+{% endblock title %}
+{% block body %}
+
+
+{% load static %}
+
+<div class="sidebar">
+   <br><br>
+   <div class="col-md-4">
+      <aside class="sidebar whitebox">
+         <br><br><br><br><br><br><br><br>
+
+         <div class="widget heading_space" style="border-radius: 8px;">
+            <h4 class="text-capitalize darkcolor bottom20">Categories</h4>
+            <ul class="webcats">
+               {% for c in categories %}
+               <li><a href="{% url 'category-product-list' c.cid %}">{{c.title}}<span>({{c.category.count}})</span></a>
+               </li>
+               {% endfor %}
+
+            </ul>
+         </div>
+         <div class="widget heading_space">
+            <h4 class="text-capitalize darkcolor bottom20">Tags</h4>
+            <ul class="webtags">
+               {% for t in tags %}
+               <li><a href="{% url 'tag' t.slug %}">{{t.name}}</a></li>
+               {% endfor %}
+            </ul>
+         </div>
+
+      </aside>
+   </div>
+</div>
+
+<!--page Header-->
+<!-- Testimonials -->
+<section id="our-testimonial" class="padding testimonial-bg">
+   <br><br>
+   <div class="container">
+      <div class="row row1">
+         <div class="col-md-4 " style="padding-left: 0px; width: 15%;">
+
+            <div class="item">
+               <img height="130px" style="padding-bottom: 10px; border-radius: 20px;" src="{{vendor.image.url}}"
+                  alt="vendor image">
+            </div>
+         </div>
+         <div class="col-md-4 " style="padding-left: 80px;width:35%">
+
+            <div class="item">
+               <div class=" whitecolor">
+                  <h3 class="bottom20">{{vendor.title}}</h3>
+                  <h4 style="color: yellow;">
+                     {% if average_rating < 0.3 %} <i class="fa fa-star-o"></i>
+                        <i class="fa fa-star-o"></i>
+                        <i class="fa fa-star-o"></i>
+                        <i class="fa fa-star-o"></i>
+                        <i class="fa fa-star-o"></i>
+                        {% elif average_rating >= 0.3 and average_rating <= 0.8 %} <i class="fa fa-star-half-full"></i>
+                           <i class="fa fa-star-o"></i>
+                           <i class="fa fa-star-o"></i>
+                           <i class="fa fa-star-o"></i>
+                           <i class="fa fa-star-o"></i>
+                           {% elif average_rating >= 0.8 and average_rating <= 1.2 %} <i class="fa fa-star"></i>
+                              <i class="fa fa-star-o"></i>
+                              <i class="fa fa-star-o"></i>
+                              <i class="fa fa-star-o"></i>
+                              <i class="fa fa-star-o"></i>
+                              {% elif average_rating >= 1.2 and average_rating <= 1.8 %} <i class="fa fa-star"></i>
+                                 <i class="fa fa-star-half-full"></i>
+                                 <i class="fa fa-star-o"></i>
+                                 <i class="fa fa-star-o"></i>
+                                 <i class="fa fa-star-o"></i>
+                                 {% elif average_rating >= 1.8 and average_rating <= 2.2 %} <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star-o"></i>
+                                    <i class="fa fa-star-o"></i>
+                                    <i class="fa fa-star-o"></i>
+                                    {% elif average_rating >= 2.2 and average_rating <= 2.8 %} <i class="fa fa-star">
+                                       </i>
+                                       <i class="fa fa-star"></i>
+                                       <i class="fa fa-star-half-full"></i>
+                                       <i class="fa fa-star-o"></i>
+                                       <i class="fa fa-star-o"></i>
+                                       {% elif average_rating >= 2.8 and average_rating <= 3.2 %} <i class="fa fa-star">
+                                          </i>
+                                          <i class="fa fa-star"></i>
+                                          <i class="fa fa-star"></i>
+                                          <i class="fa fa-star-o"></i>
+                                          <i class="fa fa-star-o"></i>
+                                          {% elif average_rating >= 3.2 and average_rating <= 3.8 %} <i
+                                             class="fa fa-star"></i>
+                                             <i class="fa fa-star"></i>
+                                             <i class="fa fa-star"></i>
+                                             <i class="fa fa-star-half-full"></i>
+                                             <i class="fa fa-star-o"></i>
+                                             {% elif average_rating >= 3.8 and average_rating <= 4.2 %} <i
+                                                class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star-o"></i>
+                                                {% elif average_rating >= 4.2 and average_rating <= 4.8 %} <i
+                                                   class="fa fa-star"></i>
+                                                   <i class="fa fa-star"></i>
+                                                   <i class="fa fa-star"></i>
+                                                   <i class="fa fa-star"></i>
+                                                   <i class="fa fa-star-half-full"></i>
+                                                   {% elif average_rating > 4.8 %}
+                                                   <i class="fa fa-star"></i>
+                                                   <i class="fa fa-star"></i>
+                                                   <i class="fa fa-star"></i>
+                                                   <i class="fa fa-star"></i>
+                                                   <i class="fa fa-star"></i>
+                                                   {% endif %}
+                                                   <span style="color: white;">{{average_rating|floatformat:1}}</span>
+                  </h4>
+                  <small style="font-weight: 600; font-style: italic;">since {{vendor.date|date:"Y"}}</small>
+                  <br><br>
+               </div>
+            </div>
+         </div>
+         <div class="col-md-4" style="width: 50%;">
+
+            <div class="item">
+               <div class=" whitecolor">
+                  <p style="font-weight: 600; font-size: large;">
+                     <span style="font-style: italic;">{{vendor.description}}</span>
+                     <br>
+                     {{vendor.address}}
+                     <br>
+                     {{vendor.contact}}
+                  </p>
+               </div>
+            </div>
+         </div>
+
+      </div>
+   </div>
+   <style>
+      .testimonial-bg {
+         background: url({% static 'images/cover image.jpg' %}) no-repeat;
+         border-bottom-left-radius: 20px;
+         border-bottom-right-radius: 20px;
+      }
+   </style>
+
+</section>
+<!--Testimonials Ends-->
+<!--page Header ends-->
+
+<div class="main">
+   <div class="row">
+      <div class="col-md-8 offset-md-2 col-sm-12 text-center">
+         <div class="heading-title wow fadeInUp" data-wow-delay="300ms">
+            <p class="heading_space">We've found <span style="color: #00bcd4;">{{product.count}} </span>items for you.
+            </p>
+         </div>
+      </div>
+   </div>
+   <section id="video-bg" class="video-parallax padding_top">
+      {% for p in product %}
+      <div class="container shadow" style="padding: 6px; border-radius: 10px;">
+         <div class="row row1">
+
+            <div class="col-md-5 col-sm-5  wow fadeInRight " data-wow-delay="350ms" style="width: 30%;">
+               <a href="{% url 'product-detail' p.pid %}">
+                  <div class="image hover-effect">
+                     <img class="img1" style="border-radius: 10px; " alt="product" src="{{p.image.url}}">
+                  </div>
+               </a>
+            </div>
+            <div class="col-md-7 col-sm-7 wow fadeInLeft" data-wow-delay="300ms" style="width: 70%;">
+               <div class="news_desc">
+                  <h6 style="text-align: left; font-weight: 600; color: darkgrey;"
+                     class="text-capitalize font-light darkcolor">{{p.category}}</h6>
+                  <h4 style="font-weight: 900;" class="text-capitalize font-light darkcolor"><a
+                        href="{% url 'product-detail' p.pid %}">{{p.title}}</a></h4><a href="#."><span
+                        style="color: gold;">
+                        {% if p.get_average_rating < 0.3 %} <i class="fa fa-star-o"></i>
+                           <i class="fa fa-star-o"></i>
+                           <i class="fa fa-star-o"></i>
+                           <i class="fa fa-star-o"></i>
+                           <i class="fa fa-star-o"></i>
+                           {% elif p.get_average_rating >= 0.3 and p.get_average_rating <= 0.8 %} <i
+                              class="fa fa-star-half-full"></i>
+                              <i class="fa fa-star-o"></i>
+                              <i class="fa fa-star-o"></i>
+                              <i class="fa fa-star-o"></i>
+                              <i class="fa fa-star-o"></i>
+                              {% elif p.get_average_rating >= 0.8 and p.get_average_rating <= 1.2 %} <i
+                                 class="fa fa-star"></i>
+                                 <i class="fa fa-star-o"></i>
+                                 <i class="fa fa-star-o"></i>
+                                 <i class="fa fa-star-o"></i>
+                                 <i class="fa fa-star-o"></i>
+                                 {% elif p.get_average_rating >= 1.2 and p.get_average_rating <= 1.8 %} <i
+                                    class="fa fa-star"></i>
+                                    <i class="fa fa-star-half-full"></i>
+                                    <i class="fa fa-star-o"></i>
+                                    <i class="fa fa-star-o"></i>
+                                    <i class="fa fa-star-o"></i>
+                                    {% elif p.get_average_rating >= 1.8 and p.get_average_rating <= 2.2 %} <i
+                                       class="fa fa-star"></i>
+                                       <i class="fa fa-star"></i>
+                                       <i class="fa fa-star-o"></i>
+                                       <i class="fa fa-star-o"></i>
+                                       <i class="fa fa-star-o"></i>
+                                       {% elif p.get_average_rating >= 2.2 and p.get_average_rating <= 2.8 %} <i
+                                          class="fa fa-star"></i>
+                                          <i class="fa fa-star"></i>
+                                          <i class="fa fa-star-half-full"></i>
+                                          <i class="fa fa-star-o"></i>
+                                          <i class="fa fa-star-o"></i>
+                                          {% elif p.get_average_rating >= 2.8 and p.get_average_rating <= 3.2 %} <i
+                                             class="fa fa-star"></i>
+                                             <i class="fa fa-star"></i>
+                                             <i class="fa fa-star"></i>
+                                             <i class="fa fa-star-o"></i>
+                                             <i class="fa fa-star-o"></i>
+                                             {% elif p.get_average_rating >= 3.2 and p.get_average_rating <= 3.8 %} <i
+                                                class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star-half-full"></i>
+                                                <i class="fa fa-star-o"></i>
+                                                {% elif p.get_average_rating >= 3.8 and p.get_average_rating <= 4.2 %}
+                                                   <i class="fa fa-star"></i>
+                                                   <i class="fa fa-star"></i>
+                                                   <i class="fa fa-star"></i>
+                                                   <i class="fa fa-star"></i>
+                                                   <i class="fa fa-star-o"></i>
+                                                   {% elif p.get_average_rating >= 4.2 and p.get_average_rating <= 4.8
+                                                      %} <i class="fa fa-star"></i>
+                                                      <i class="fa fa-star"></i>
+                                                      <i class="fa fa-star"></i>
+                                                      <i class="fa fa-star"></i>
+                                                      <i class="fa fa-star-half-full"></i>
+                                                      {% elif p.get_average_rating > 4.8 %}
+                                                      <i class="fa fa-star"></i>
+                                                      <i class="fa fa-star"></i>
+                                                      <i class="fa fa-star"></i>
+                                                      <i class="fa fa-star"></i>
+                                                      <i class="fa fa-star"></i>
+                                                      {% endif %}
+                     </span>
+                     {% if p.get_average_rating == None %}
+                     </i>(0)</a>
+                  {% else %}
+                  </i>{{p.get_average_rating|floatformat:1}}</a>
+                  {% endif %}
+
+                  <ul class="meta-tags top20 bottom20">
+                     <li><a href="#."><i class="fa fa-calendar"></i>{{p.date|date:"d M Y"}}</a></li>
+                     <br>
+                     <li><a href="{% url 'product-detail' p.pid %}"><i
+                              class="fa fa-circle-info"></i>{{p.description|slice:"20"|safe}}...</a></li>
+                  </ul>
+                  <p style="text-decoration: line-through; font-weight: 200; color: rgb(162, 166, 167);"
+                     class="bottom35">Rs.{{p.old_price}}</p>
+                  <p style="font-weight: 500; font-size: large; color: chartreuse;" class="bottom35">Rs.<span
+                        class="current-product-price-{{p.id}}">{{p.price}} </span><button data-product-item="{{p.id}}"
+                        id="add-to-wishlist" class="add-to-wishlist btn btnprimary"> <i class="fa fa-heart"></i>
+                     </button></p>
+                  <input type="hidden" value="1" id="product-quantity" class="product-quantity-{{p.id}}">
+                  <input type="hidden" value="{{p.pid}}" class="product-pid-{{p.id}}">
+                  <input type="hidden" value="{{p.id}}" class="product-id-{{p.id}}">
+                  <input type="hidden" value="{{p.title}}" class="product-title-{{p.id}}">
+                  <input type="hidden" value="{{p.image.url}}" class="product-image-{{p.id}}">
+                  <button class="button btnprimary add-to-cart-btn" data-index="{{p.id}}" id="add-to-cart-btn">Add to
+                     cart <i class="fa fa-cart-shopping"></i> </button>
+
+               </div>
+            </div>
+
+         </div>
+      </div>
+      <br>
+      {% endfor %}
+   </section>
+
+   <!--Our Blogs Ends-->
+   <br><br><br>
+
+</div>
+{% endblock body %}
