@@ -292,27 +292,16 @@
 							</button>
 							<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
 
-								{% if request.user.is_authenticated and request.user.is_vendor %}
-								<li class="nav-item">
-									<a class="nav-link " href="{% url 'userauths:signout' %}">Sign out</a>
-								</li>
-								<li class="nav-item">
-									<a class="nav-link " href="{% url 'dashboard' %}">dashboard</a>
-								</li>
-								<li class="nav-item">
-									<a class="nav-link " href="{% url 'vendor-dashboard' %}">Store</a>
-								</li>
+
 								
-								{% elif request.user.is_authenticated %}
+								{% if request.user.is_authenticated %}
 								<li class="nav-item">
 									<a class="nav-link " href="{% url 'userauths:signout' %}">Sign out</a>
 								</li>
 								<li class="nav-item">
 									<a class="nav-link " href="{% url 'dashboard' %}">dashboard</a>
 								</li>
-								<li class="nav-item">
-									<a class="nav-link " href="{% url 'create-vendor-profile' %}">Create Store</a>
-								</li>
+							
 
 
 								{% else %}
@@ -420,26 +409,14 @@
 							</button>
 							<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
 
-								{% if request.user.is_authenticated and request.user.is_vendor %}
-								<li class="nav-item">
-									<a class="nav-link " href="{% url 'userauths:signout' %}">Sign out</a>
-								</li>
-								<li class="nav-item">
-									<a class="nav-link " href="{% url 'dashboard' %}">dashboard</a>
-								</li>
-								<li class="nav-item">
-									<a class="nav-link " href="{% url 'vendor-dashboard' %}">Store</a>
-								</li>
+
 								
-								{% elif request.user.is_authenticated %}
+								{% if request.user.is_authenticated %}
 								<li class="nav-item">
 									<a class="nav-link " href="{% url 'userauths:signout' %}">Sign out</a>
 								</li>
 								<li class="nav-item">
 									<a class="nav-link " href="{% url 'dashboard' %}">dashboard</a>
-								</li>
-								<li class="nav-item">
-									<a class="nav-link " href="{% url 'create-vendor-profile' %}">Create Store</a>
 								</li>
 
 
