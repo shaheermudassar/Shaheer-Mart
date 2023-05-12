@@ -131,6 +131,12 @@
                             <p>Log out</p>
                         </a>
                     </li>
+		 <li {% if request.path == '/userauths/delete-account/' %} class="active" {% endif %} class="nav-item ">
+                        <a class="nav-link" href="{% url 'userauths:delete-account' %}">
+                            <i class="material-icons">delete</i>
+                            <p>Delete Account</p>
+                        </a>
+                    </li>
                     </li>
                     <li {% if request.path == '/contact/' %} class="active" {% endif %} class="nav-item ">
                         <a class="nav-link" href="{% url 'contact' %}">
