@@ -79,3 +79,14 @@ def change_password(request):
             messages.success(request, "Password changed successfully")
             return redirect("/")
     return render(request, "userauths/change_password.html")
+
+
+@login_required
+def delete_account(request):
+    if request.method == "POST":
+        request.user.delete()
+        logout(request)
+        messages.success(request, "Account Deleted Successfully!")
+        return redirect("/")
+
+    return render(request, "userauths/delete-account.html")
