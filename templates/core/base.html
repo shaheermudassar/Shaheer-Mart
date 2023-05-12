@@ -712,7 +712,7 @@
 						console.log("Adding product to cart...");
 					},
 					success: function (response) {
-						this_val.html("item added to cart")
+						this_val.html("<a href={% url 'cart' %}>Go to Cart<i class='fa-solid fa-arrow-right'></i></a>")
 						console.log("Added Product to Cart!");
 						$(".cart-items-count").text(response.totalcartitems)
 					}
