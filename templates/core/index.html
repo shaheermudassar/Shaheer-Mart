@@ -17,7 +17,7 @@ Shaheer Mart
 			<div class="col-md-8 col-sm-10">
 				<div class="text-center banner-center-content padding_half">
 					<h2 class="text-capitalize whitecolor font-light top50 bottom35">
-						<img height="100px" src="{% static 'images/logo-transparent.png' %}" alt="logo"><span
+						<span
 							class="block fontbold">Buy or Sell Goods</span>
 					</h2>
 					<a href="#main-page-index" class="button btnwhite pagescroll">Visit Store</a>
@@ -128,8 +128,8 @@ Shaheer Mart
 				</div>
 			</div>
 		</div>
-		<div class="row row1" style="animation: scroll 10s linear infinite; flex-wrap: nowrap;">
-			{% for c in categories|slice:":10" %}
+		<div class="row row1" style="animation: scroll 10s linear infinite; ">
+			{% for c in categories|slice:":4" %}
 			<div class="col-md-4">
 				<div class="news_item shadow text-center">
 					<div class="image-container">
