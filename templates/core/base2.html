@@ -76,13 +76,13 @@
                     <li {% if request.path == '/dashboard/' %} class="active" {% endif %} class="nav-item   ">
                         <a class="nav-link" href="{% url 'dashboard' %}">
                             <i class="material-icons">dashboard</i>
-                            <p>Dashboard</p>
+                            <p>User Dashboard</p>
                         </a>
                     </li>
                     <li {% if request.path == '/index/' %} class="active" {% endif %} class="nav-item   ">
                         <a class="nav-link" href="{% url 'index' %}">
                             <i class="material-icons">home</i>
-                            <p>Home</p>
+                            <p>Back to Home</p>
                         </a>
                     </li>
                     <li {% if request.path == '/profile/' %} class="active" {% endif %} class="nav-item ">
@@ -94,7 +94,7 @@
                     <li {% if request.path == '/order/' %} class="active" {% endif %} class="nav-item ">
                         <a class="nav-link" href="{% url 'order' %}">
                             <i class="fa fa-shopping-bag"></i>
-                            <p>Orders</p>
+                            <p>Orders Made</p>
                         </a>
 
                     <li {% if request.path == '/address/' %} class="active" {% endif %} class="nav-item ">
@@ -113,7 +113,7 @@
                     <li {% if request.path == '/vendor-profile/' %} class="active" {% endif %} class="nav-item ">
                         <a class="nav-link" href="{% url 'vendor-profile' %}">
                             <i class="material-icons">storefront</i>
-                            <p>Your Shop</p>
+                            <p>Your Store</p>
                         </a>
                     </li>
                     {% else %}
