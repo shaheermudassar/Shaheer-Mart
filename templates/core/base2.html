@@ -54,51 +54,51 @@
                 </a></div>
             <div class="sidebar-wrapper">
                 <ul class="nav">
-                    <li {% if request.path=='/dashboard/' %} class="active" {% endif %} class="nav-item   ">
+                    <li {% if request.path == '/dashboard/' %} class="active" {% endif %} class="nav-item   ">
                         <a class="nav-link" href="{% url 'dashboard' %}">
                             <i class="material-icons">dashboard</i>
                             <p>Dashboard</p>
                         </a>
                     </li>
-                    <li {% if request.path=='/index/' %} class="active" {% endif %} class="nav-item   ">
+                    <li {% if request.path == '/index/' %} class="active" {% endif %} class="nav-item   ">
                         <a class="nav-link" href="{% url 'index' %}">
                             <i class="material-icons">home</i>
                             <p>Home</p>
                         </a>
                     </li>
-                    <li {% if request.path=='/profile/' %} class="active" {% endif %} class="nav-item ">
+                    <li {% if request.path == '/profile/' %} class="active" {% endif %} class="nav-item ">
                         <a class="nav-link" href="{% url 'profile' %}">
                             <i class="material-icons">person</i>
                             <p>User Profile</p>
                         </a>
                     </li>
-                    <li {% if request.path=='/order/' %} class="active" {% endif %} class="nav-item ">
+                    <li {% if request.path == '/order/' %} class="active" {% endif %} class="nav-item ">
                         <a class="nav-link" href="{% url 'order' %}">
                             <i class="fa fa-shopping-bag"></i>
                             <p>Orders</p>
                         </a>
 
-                    <li {% if request.path=='/address/' %} class="active" {% endif %} class="nav-item ">
+                    <li {% if request.path == '/address/' %} class="active" {% endif %} class="nav-item ">
                         <a class="nav-link" href="{% url 'address' %}">
                             <i class="material-icons">location_ons</i>
                             <p>Address</p>
                         </a>
                     </li>
-                    <li {% if request.path=='/user-notification/' %} class="active" {% endif %} class="nav-item ">
+                    <li {% if request.path == '/user-notification/' %} class="active" {% endif %} class="nav-item ">
                         <a class="nav-link" href="{% url 'user-notifications' %}">
                             <i class="material-icons">notifications</i>
                             <p>Notifications</p>
                         </a>
                     </li>
                     {% if request.user.is_vendor == True %}
-                    <li {% if request.path=='/vendor-profile/' %} class="active" {% endif %} class="nav-item ">
+                    <li {% if request.path == '/vendor-profile/' %} class="active" {% endif %} class="nav-item ">
                         <a class="nav-link" href="{% url 'vendor-profile' %}">
                             <i class="material-icons">storefront</i>
                             <p>Your Shop</p>
                         </a>
                     </li>
                     {% else %}
-                    <li {% if request.path=='/create-vendor-profile/' %} class="active" {% endif %} class="nav-item ">
+                    <li {% if request.path == '/create-vendor-profile/' %} class="active" {% endif %} class="nav-item ">
                         <a class="nav-link" href="{% url 'create-vendor-profile' %}">
                             <i class="material-icons">storefront</i>
                             <p>Become a Seller</p>
@@ -106,14 +106,14 @@
                     </li>
                     {% endif %}
 
-                    <li {% if request.path=='/userauths/signout/' %} class="active" {% endif %} class="nav-item ">
+                    <li {% if request.path == '/userauths/signout/' %} class="active" {% endif %} class="nav-item ">
                         <a class="nav-link" href="{% url 'userauths:signout' %}">
                             <i class="material-icons">logout</i>
                             <p>Log out</p>
                         </a>
                     </li>
                     </li>
-                    <li {% if request.path=='/contact/' %} class="active" {% endif %} class="nav-item ">
+                    <li {% if request.path == '/contact/' %} class="active" {% endif %} class="nav-item ">
                         <a class="nav-link" href="{% url 'contact' %}">
                             <i class="material-icons">language</i>
                             <p>Contact us</p>
