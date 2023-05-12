@@ -114,10 +114,11 @@ Payment Completed
                            <span class="text-inverse">Free</span>
                         </div>
                      </div>
-                  </div>
+                  
                   <div class="invoice-price-right">
-                     <small>TOTAL</small> <span class="f-w-600">Rs.{{cart_total_amount|floatformat:2}}</span>
+                     <small style="font-size: large;">TOTAL</small> <span class="f-w-600">Rs.{{cart_total_amount|floatformat:2}}</span>
                   </div>
+               </div>
                </div>
                <!-- end invoice-price -->
             </div>
@@ -147,7 +148,7 @@ Payment Completed
    </div>
    </div>
    <br>
-   <a href="{% url 'product-list' %}" style="display: block; margin: 0 auto; width: 30%;"
+   <a href="{% url 'product-list' %}" style="display: block; margin: 0 auto; width: 40%;"
       class="button btnsecondary wow fadeInUp" data-wow-delay="450ms">Continue Shopping</a>
    <script>
       function downloadAsPDF() {
