@@ -173,6 +173,7 @@ Add Product
 
                                 </div>
                             </div>
+                            <h3>Add Additional imgaes for Product</h3>
                             <div class="row row1" id="add-images">
                                 <div class="col-md-4">
                                     <input class="form-control" placeholder="Choose an image" name="images" required
@@ -194,7 +195,8 @@ Add Product
 
                                 let imageCount = 1;
 
-                                $("#add-image").on("click", function () {
+                                $("#add-image").on("click", function (e) {
+                                    e.preventDefault();
                                     let previewId = "preview-image" + imageCount;
                                     let _html = '<div class="col-md-4">';
                                     _html += '<input class="form-control" placeholder="Choose an image" name="images" required type="file" data-preview="' + previewId + '" onchange="previewImage(\'' + previewId + '\')" accept=".jpg, .jpeg, .png">';
