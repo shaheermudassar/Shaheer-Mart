@@ -86,7 +86,10 @@ def product_detail_view(request, pid):
     p_image = product.p_images.all()
     reviews = ProductReview.objects.filter(product=product)
     vendor_average_rating = ProductReview.objects.filter(product__vendor__vid=product.vendor.vid).aggregate(avg_rating=Avg('rating'))['avg_rating']
-    vendor_rating = vendor_average_rating*20
+    if vendor_average_rating is not None:
+        vendor_rating = vendor_average_rating * 20
+    else:
+        vendor_rating = 0
     average_rating = ProductReview.objects.filter(product=product).aggregate(rating=Avg('rating'))
     review_form = ProductReviewForm()
     
