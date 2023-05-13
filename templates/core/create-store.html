@@ -35,14 +35,14 @@ Add store
                 <div class="form-group bottom35">
                   <label class="bmd-label-floating">Store Name:</label>
 
-                  <input class="form-control" placeholder="Store Name" type="text" name="title">
+                  <input class="form-control" placeholder="Store Name" type="text" name="title" required>
 
                 </div>
               </div>
               <div class="col-md-6">
                 <div class="form-group bottom35">
                   <label class="bmd-label-floating">Store Address:</label>
-                  <input class="form-control" type="text" placeholder="Address" name="address">
+                  <input class="form-control" type="text" placeholder="Address" name="address" required>
                 </div>
               </div>
             </div>
@@ -50,7 +50,7 @@ Add store
               <div class="col-md-5">
                 <div class="form-group bottom35">
                   <label class="bmd-label-floating">Profile Image:</label>
-                  <input class="form-control" placeholder="Choose an image" name="image" type="file"
+                  <input class="form-control" placeholder="Choose an image" name="image" type="file" required
                     data-preview="profile-preview" onchange="previewImage('profile-preview')"
                     accept=".jpg, .jpeg, .png">
                   <br><img id="profile-preview" src="{% static 'images/Unknown_person.jpg' %}">
@@ -94,14 +94,14 @@ Add store
                   <div class="form-group bottom35">
                     <label class="bmd-label-floating">Store Bio:</label>
                     <textarea class="form-control" placeholder="(Should not be more than 50 Characters):"
-                      name="description"></textarea>
+                      name="description" required></textarea>
                   </div>
                 </div>
                 <div class="row row1">
                   <div class="col-md-6">
                     <div class="form-group bottom35">
                       <label class="bmd-label-floating">contact no.:</label>
-                      <input class="form-control" type="text" placeholder="Contact no." name="contact">
+                      <input class="form-control" type="text" placeholder="Contact no." name="contact" required>
                     </div>
                   </div>
                   <div class="col-md-6"><button style="display: block; margin: 0 auto; margin-top: 20px;" type="submit"
