@@ -54,9 +54,15 @@ Address
               {%endfor%}
 
 
+              {% if address %}
               <a href="{% url 'update-address' %}" class="btn btn-primary pull-right">
                 Edit Address
               </a>
+              {% else %}
+              <a href="{% url 'add-address' %}" class="btn btn-primary pull-right">
+                Create Address
+              </a>
+              {% endif %}
               <div class="clearfix"></div>
             </form>
           </div>
