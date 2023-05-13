@@ -1,6 +1,7 @@
 from core.models import Product, UserProfile,Notification, VendorNotification ,Category, Vendor,Tags, CartOrder, CartOrderItems, ProductImages, ProductReview, wishlist, Address
 from django.db.models import Min, Max, Avg
 from django.contrib import messages
+from userauths.models import User
 from taggit.models import Tag
 from django.http import HttpRequest, JsonResponse
 
@@ -10,9 +11,9 @@ def default(request):
     vendor_list = Vendor.objects.all()
     profile_image = None
     vendor_image = None
-    if request.user.is_authenticated:
+    if request.user.is_authenticated and UserProfile.objects.filter(user=request.user).exists():
         profile_image = UserProfile.objects.get(user = request.user)
-    if request.user.is_authenticated:    
+    if request.user.is_authenticated and UserProfile.objects.filter(user=request.user).exists and request.user.is_vendor == True:    
         vendor_image = Vendor.objects.get(user = request.user)
 
     for vendor in vendor_list:

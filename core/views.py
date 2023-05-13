@@ -880,8 +880,8 @@ def vendor_dashboard(request):
     vendor = Vendor.objects.get(user=request.user)
     total_sum = CartOrderItems.objects.filter(product__vendor = vendor).aggregate(Sum('total'))
     total_orders = CartOrderItems.objects.filter(product__vendor = vendor)
-    delivered = CartOrderItems.objects.filter(order__product_status="delivered")
-    to_be_delivered = CartOrderItems.objects.filter(order__product_status="processing" or "shipped")
+    delivered = CartOrderItems.objects.filter(product__vendor=vendor ,order__product_status="delivered")
+    to_be_delivered = CartOrderItems.objects.filter(product__vendor=vendor ,order__product_status="processing" or "shipped")
     total_revenue = total_sum['total__sum']
 
     items = CartOrderItems.objects.filter(product__vendor=vendor)
