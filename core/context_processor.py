@@ -8,6 +8,8 @@ def default(request):
     products = Product.objects.all()
     categories = Category.objects.all()
     vendor_list = Vendor.objects.all()
+    profile_image = UserProfile.objects.get(user = request.user)
+    vendor_image = Vendor.objects.get(user = request.user)
 
     for vendor in vendor_list:
         avg_rating = ProductReview.objects.filter(product__vendor=vendor).aggregate(avg_rating=Avg('rating'))['avg_rating']
@@ -48,5 +50,7 @@ def default(request):
         "ven_noti": ven_noti,
         "unread_noti": unread_noti,
         "unread_ven_noti": unread_ven_noti,
+        "profile_image": profile_image,
+        "vendor_image": vendor_image,
     }
 
