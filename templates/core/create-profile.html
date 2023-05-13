@@ -34,21 +34,21 @@ Create Profile
               <div class="form-group bottom35">
                 <label class="bmd-label-floating">First Name:</label>
 
-                <input class="form-control" placeholder="First Name" type="text" id="first_name" name="first_name">
+                <input class="form-control" placeholder="First Name" type="text" id="first_name" name="first_name" required>
 
               </div>
             </div>
             <div class="col-md-12 col-sm-12">
               <div class="form-group bottom35">
                 <label class="bmd-label-floating">Last Name:</label>
-                <input class="form-control" type="text" id="last_name" placeholder="Last Name" name="last_name">
+                <input class="form-control" type="text" id="last_name" placeholder="Last Name" name="last_name" required>
               </div>
             </div>
 
             <div class="col-md-12 col-sm-12">
               <div class="form-group bottom35">
                 <label class="bmd-label-floating">Profile Image:</label>
-                <input class="form-control" placeholder="Choose an image" name="image" type="file" id="image"
+                <input class="form-control" placeholder="Choose an image" name="image" type="file" id="image" required
                   onchange="previewImage()" accept=".jpg, .jpeg, .png" required>
                 <br><img id="preview" src="{% static 'images/Unknown_person.jpg' %}">
                 <style>
@@ -80,7 +80,7 @@ Create Profile
             <div class="col-md-12 col-sm-12">
               <div class="form-group bottom35">
                 <label class="bmd-label-floating">Bio:</label>
-                <textarea class="form-control" placeholder="Add Bio" id="bio" name="bio"></textarea>
+                <textarea class="form-control" placeholder="Add Bio" id="bio" name="bio" required></textarea>
               </div>
             </div>
 
