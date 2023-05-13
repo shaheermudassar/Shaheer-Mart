@@ -25,7 +25,7 @@ def default(request):
         ven_noti =  VendorNotification.objects.filter(vendor__user=request.user).order_by("-id")
     unread_ven_noti = []
     if request.user.is_authenticated:
-        unread_ven_noti =  VendorNotification.objects.filter(vendor__user=request.user).order_by("-id")
+        unread_ven_noti =  VendorNotification.objects.filter(vendor__user=request.user, is_read=False).order_by("-id")
     min_max_price = Product.objects.aggregate(Min("price"), Max("price"))
     try:
         address = Address.objects.get(user=request.user)
