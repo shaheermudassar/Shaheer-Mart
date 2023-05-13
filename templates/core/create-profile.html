@@ -1,10 +1,33 @@
 {% extends 'core/base.html' %}
 {% block title %}
-Create Profile
+Edit Profile
 {% endblock title %}
 
 {% block body %}
-{% load static %}
+<script>
+  document.querySelector('#profile_form').addEventListener('submit', function (event) {
+    console.log("error")
+    var formInputs = document.querySelectorAll('#profile_form input[required], #profile_form textarea[required], #profile_form select[required]');
+
+    var emptyFields = [];
+
+    for (var i = 0; i < formInputs.length; i++) {
+      if (!formInputs[i].value) {
+        emptyFields.push(formInputs[i].name);
+      }
+    }
+
+    if (emptyFields.length > 0) {
+      event.preventDefault();
+
+      var message = 'Please fill in the following fields:\n\n';
+      message += emptyFields.join('\n');
+
+      alert(message);
+    }
+  });
+</script>
+
 <section class="page-header parallaxie padding_top center-block">
   <div class="container">
     <div class="row">
@@ -27,30 +50,32 @@ Create Profile
     <div class="row d-flex justify-content-center">
       <div class="col-lg-4 col-md-6 col-sm-10">
         <div class="bglight logincontainer">
-          <h3 class="darkcolor bottom35">Create Profile </h3>
-          <form method="post" class="getin_form border-form" enctype="multipart/form-data">
+          <h3 class="darkcolor bottom35">Edit details</h3>
+          <form method="post" id="profile_form" class="getin_form border-form" enctype="multipart/form-data">
             {% csrf_token %}
             <div class="col-md-12 col-sm-12">
               <div class="form-group bottom35">
                 <label class="bmd-label-floating">First Name:</label>
-
-                <input class="form-control" placeholder="First Name" type="text" id="first_name" name="first_name" required>
+                {% for p in profile %}
+                <input required class="form-control" placeholder="First Name" type="text" id="first_name"
+                  value="{{p.first_name}}" name="first_name">
 
               </div>
             </div>
             <div class="col-md-12 col-sm-12">
               <div class="form-group bottom35">
                 <label class="bmd-label-floating">Last Name:</label>
-                <input class="form-control" type="text" id="last_name" placeholder="Last Name" name="last_name" required>
+                <input required class="form-control" type="text" id="last_name" value="{{p.last_name}}"
+                  placeholder="Last Name" name="last_name">
               </div>
             </div>
 
             <div class="col-md-12 col-sm-12">
               <div class="form-group bottom35">
                 <label class="bmd-label-floating">Profile Image:</label>
-                <input class="form-control" placeholder="Choose an image" name="image" type="file" id="image" required
-                  onchange="previewImage()" accept=".jpg, .jpeg, .png" required>
-                <br><img id="preview" src="{% static 'images/Unknown_person.jpg' %}">
+                <input class="form-control" placeholder="Choose an image" name="image" value="{{p.image.url}}"
+                  type="file" id="image" onchange="previewImage()" accept=".jpg, .jpeg, .png">
+                <br><img id="preview" src="{{p.image.url}}">
                 <style>
                   #preview {
                     max-width: 300px;
@@ -80,13 +105,13 @@ Create Profile
             <div class="col-md-12 col-sm-12">
               <div class="form-group bottom35">
                 <label class="bmd-label-floating">Bio:</label>
-                <textarea class="form-control" placeholder="Add Bio" id="bio" name="bio" required></textarea>
+                <textarea required class="form-control" placeholder="Add Bio" id="bio" name="bio">{{p.bio}}</textarea>
               </div>
             </div>
-
+            {% endfor %}
             <br>
-            <button style="display: block; margin: 0 auto;" type="submit" class="button btnprimary" name="submit">Next
-              <i class="fas fa-arrow-right"></i></button>
+            <button style="display: block; margin: 0 auto;" type="submit" class="button btnprimary" name="submit">Update
+              Profile</button>
           </form>
         </div>
       </div>
