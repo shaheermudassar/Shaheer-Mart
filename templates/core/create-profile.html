@@ -49,7 +49,7 @@ Create Profile
               <div class="form-group bottom35">
                 <label class="bmd-label-floating">Profile Image:</label>
                 <input class="form-control" placeholder="Choose an image" name="image" type="file" id="image"
-                  onchange="previewImage()" accept=".jpg, .jpeg, .png">
+                  onchange="previewImage()" accept=".jpg, .jpeg, .png" required>
                 <br><img id="preview" src="{% static 'images/Unknown_person.jpg' %}">
                 <style>
                   #preview {
