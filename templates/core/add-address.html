@@ -31,10 +31,10 @@ Add Address
             <div class="col-md-12 col-sm-12">
               <div class="form-group bottom35">
                 <label class="bmd-label-floating">Address</label>
-                <input type="text" class="form-control" name="address" placeholder="Your Address" />
+                <input required type="text" class="form-control" name="address" placeholder="Your Address" />
               </div>
             </div>
-            <input type="hidden" name="previous_url" value="{{ request.META.HTTP_REFERER }}">
+            <input required type="hidden" name="previous_url" value="{{ request.META.HTTP_REFERER }}">
             <div class="row">
               <div class="col-md-6 col-sm-6">
                 <div class="form-group bottom35">
@@ -47,7 +47,7 @@ Add Address
               <div class="col-md-6 col-sm-6">
                 <div class="form-group bottom35">
                   <label class="bmd-label-floating">City</label>
-                  <input type="text" class="form-control" name="city" placeholder="Your City" />
+                  <input required type="text" class="form-control" name="city" placeholder="Your City" />
                 </div>
               </div>
             </div>
@@ -55,13 +55,13 @@ Add Address
               <div class="col-md-6 col-sm-6">
                 <div class="form-group bottom35">
                   <label class="bmd-label-floating">Country</label>
-                  <input type="text" class="form-control" name="country" placeholder="Your Country" />
+                  <input required type="text" class="form-control" name="country" placeholder="Your Country" />
                 </div>
               </div>
               <div class="col-md-6 col-sm-6">
                 <div class="form-group bottom35">
                   <label class="bmd-label-floating">Postal Code</label>
-                  <input type="text" class="form-control" name="postal_code" placeholder="Postal Code" />
+                  <input required type="text" class="form-control" name="postal_code" placeholder="Postal Code" />
                 </div>
               </div>
             </div>
