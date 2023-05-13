@@ -16,7 +16,7 @@ Edit Address
     </div>
   </div>
 </section>
-{% if address %}
+
 {% for address in address %}
 <!--page Header-->
 
@@ -81,74 +81,11 @@ Edit Address
   </div>
   </div>
 </section>
-{% endfor %}
-{% else %}
-<section id="our-blog" class="padding text-center">
-  <div class="container">
-    <div class="row d-flex justify-content-center">
-      <div class="col-lg-4 col-md-6 col-sm-10">
-        <div class="bglight logincontainer">
-          <h3 class="darkcolor bottom35">Update your address</h3>
-          <form method="post" class="getin_form border-form">
-            {% csrf_token %}
-            <div class="col-md-12 col-sm-12">
-              <div class="form-group bottom35">
-                <label class="bmd-label-floating">Address</label>
-                <input type="text" class="form-control" name="address" placeholder="Your Address"
-                   />
-              </div>
-            </div>
-            <input type="hidden" name="previous_url" value="{{ request.META.HTTP_REFERER }}">
-            <div class="row">
-              <div class="col-md-6 col-sm-6">
-                <div class="form-group bottom35">
-                  <label class="bmd-label-floating">Mobile</label>
-                  <input type="text" class="form-control" name="mobile" placeholder="Your Phone no."
-                     />
-                </div>
-              </div>
-
-
-              <div class="col-md-6 col-sm-6">
-                <div class="form-group bottom35">
-                  <label class="bmd-label-floating">City</label>
-                  <input type="text" class="form-control" name="city" placeholder="Your City"
-                     />
-                </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-6 col-sm-6">
-                <div class="form-group bottom35">
-                  <label class="bmd-label-floating">Country</label>
-                  <input type="text" class="form-control" name="country" placeholder="Your Country"
-                     />
-                </div>
-              </div>
-              <div class="col-md-6 col-sm-6">
-                <div class="form-group bottom35">
-                  <label class="bmd-label-floating">Postal Code</label>
-                  <input type="text" class="form-control" name="postal_code" placeholder="Postal Code"
-                     />
-                </div>
-              </div>
-            </div>
-        </div>
-        <br>
-        <button style="display: block; margin: 0 auto;" type="submit" class="button btnprimary" name="submit">Update
-          Address</button>
-        </form>
-      </div>
-    </div>
-  </div>
-  </div>
-</section>
-{% endif %}
 <style>
   .form-control {
     border-radius: 20px;
   }
 </style>
-
+{% endfor %}
 
 {% endblock body %}
