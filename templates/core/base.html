@@ -347,9 +347,9 @@
 						</li>
 						<li class="nav-item">
 
-							<form class="widget_search">
+							<form method="get" action="{% url 'search' %}" class="widget_search">
 								<div class="input-group">
-									<input type="search" class="form-control" placeholder="search..." required>
+									<input type="search" class="form-control" placeholder="search..." name="q" required>
 									<button type="submit" class="input-group-addon"><i class="fa fa-search"></i>
 									</button>
 								</div>
