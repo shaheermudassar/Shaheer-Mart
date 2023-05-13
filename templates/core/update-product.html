@@ -1,248 +1,203 @@
 {% extends 'core/base.html' %}
 {% block title %}
-Update Product
+Edit Profile
 {% endblock title %}
 
 {% block body %}
-{% load static %}
-<!-- Include necessary CSS and JavaScript files -->
-<link rel="stylesheet" href="{% static 'tag-it/css/jquery.tagit.css' %}">
-<script src="{% static 'tag-it/js/tag-it.min.js' %}"></script>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<link rel="stylesheet" href="https://cdn.ckeditor.com/4.16.0/full-all/ckeditor.css">
-<!-- CKEditor 4 script -->
-<script src="https://cdn.ckeditor.com/4.16.0/full-all/ckeditor.js"></script>
+<script>
+  document.querySelector('#profile_form').addEventListener('submit', function (event) {
+    console.log("error")
+    var formInputs = document.querySelectorAll('#profile_form input[required], #profile_form textarea[required], #profile_form select[required]');
+
+    var emptyFields = [];
+
+    for (var i = 0; i < formInputs.length; i++) {
+      if (!formInputs[i].value) {
+        emptyFields.push(formInputs[i].name);
+      }
+    }
+
+    if (emptyFields.length > 0) {
+      event.preventDefault();
+
+      var message = 'Please fill in the following fields:\n\n';
+      message += emptyFields.join('\n');
+
+      alert(message);
+    }
+  });
+</script>
+
 <section class="page-header parallaxie padding_top center-block">
-    <div class="container">
-        <div class="row">
-            <div class="col-sm-12">
-                <div class="page-titles text-center">
-                    <h2 class="whitecolor font-light bottom30">Edit Product</h2>
-                    </ul>
-                </div>
-            </div>
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="page-titles text-center">
+          <h2 class="whitecolor font-light bottom30">Edit Your Profile</h2>
+          </ul>
         </div>
+      </div>
     </div>
+  </div>
 </section>
 
 
 <!--page Header-->
 
+{% if profile %}
+
 <!--page Header ends-->
 <section id="our-blog" class="padding text-center">
-    <div class="container">
-        <div class="row d-flex justify-content-center">
-            <div class="col-lg-12">
-                <div class="bglight logincontainer">
-                    <h3 class="darkcolor bottom35">Edit the Product details
-                        <form method="post">
-                            {% csrf_token %}
-                            <input type="hidden" name="form_type" value="form1">
-                            <button type="submit" class="button" style="background-color: red;">Delete Product</button>
-                        </form>
-                    </h3>
-                    <form method="post" class="getin_form border-form" enctype="multipart/form-data">
+  <div class="container">
+    <div class="row d-flex justify-content-center">
+      <div class="col-lg-4 col-md-6 col-sm-10">
+        <div class="bglight logincontainer">
+          <h3 class="darkcolor bottom35">Edit details</h3>
+          <form method="post" id="profile_form" class="getin_form border-form" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="col-md-12 col-sm-12">
+              <div class="form-group bottom35">
+                <label class="bmd-label-floating">First Name:</label>
+                {% for p in profile %}
+                <input required class="form-control" placeholder="First Name" type="text" id="first_name"
+                  value="{{p.first_name}}" name="first_name">
 
-                        {% csrf_token %}
-                        <input type="hidden" name="form_type" value="form2">
-                        <div class="row row1">
-                            <div class="col-md-6">
-                                <div class="form-group bottom35">
-                                    <label class="bmd-label-floating">Product Name:</label>
-
-                                    <input class="form-control" value="{{p.title}}" placeholder="Product Name"
-                                        type="text" name="title" required>
-
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="form-group bottom35">
-                                    <label class="bmd-label-floating">Old Price:</label>
-                                    <input class="form-control" type="text" value="{{p.old_price}}"
-                                        placeholder="Old Price" name="old_price" required>
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="form-group bottom35">
-                                    <label class="bmd-label-floating">New Price:</label>
-                                    <input class="form-control" type="text" placeholder="New Price" value="{{p.price}}"
-                                        name="price" required>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-5">
-                                <div class="form-group bottom35">
-                                    <label class="bmd-label-floating">Product Image:</label>
-                                    <input class="form-control" placeholder="Choose an image" name="image" type="file"
-                                        data-preview="profile-preview" onchange="previewImage('profile-preview')"
-                                        accept=".jpg, .jpeg, .png">
-                                    <br><img id="profile-preview" src="{{p.image.url}}">
-                                    <style>
-                                        #profile-preview {
-                                            max-width: 300px;
-                                            max-height: 300px;
-                                        }
-
-                                        #cover-preview {
-                                            width: 600px;
-                                            max-width: 100%;
-                                            max-height: 300px;
-                                            border-radius: 30px;
-                                        }
-                                    </style>
-                                    <script>
-                                        function previewImage(previewId) {
-                                            var preview = document.querySelector('#' + previewId);
-                                            var file = document.querySelector('input[type=file][data-preview="' + previewId + '"]').files[0];
-                                            var reader = new FileReader();
-
-                                            reader.onloadend = function () {
-                                                preview.src = reader.result;
-                                            }
-
-                                            if (file) {
-                                                reader.readAsDataURL(file);
-                                            } else {
-                                                preview.src = "";
-                                            }
-                                        }
-
-                                    </script>
-                                </div>
-                            </div>
-
-                            <div class="col-md-7">
-                                <div class="col-md-12">
-                                    <div class="form-group bottom35">
-                                        <label class="bmd-label-floating">Product description:</label>
-                                        <textarea class="form-control ckeditor" placeholder="Description" required
-                                            name="description">{{p.description}}</textarea>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row row1">
-                                <div class="col-md-3">
-                                    <div class="form-group bottom35">
-                                        <!-- Render the tags input field -->
-                                        <label class="bmd-label-floating" for="tags">Add Tags:</label>
-                                        <input placeholder="like: cakes, chocolate.." class="form-control" id="tags"
-                                            value="{% if p.tags.all %}{% if p.tags.all|length == 1 %}{{ p.tags.all.0.name }}{% else %}{% for tag in p.tags.all %}{{ tag.name }}{% if not forloop.last %}, {% endif %}{% endfor %}{% endif %}{% endif %}"
-                                            name="tags" type="text" required>
-                                        <div style="font-size: smaller;" class="help-block">Must be seperated by a
-                                            comma( , )</div>
-                                    </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="form-group bottom35">
-                                        <label class="bmd-label-floating" for="tags">Return days policy:</label>
-                                        <input placeholder="No. of days" value="{{p.days_return}}" class="form-control"
-                                            name="days_return" type="text" required>
-                                        <div style="font-size: smaller;" class="help-block">None if no return policy
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="form-group bottom35">
-                                        <label class="bmd-label-floating" for="tags">Warranty Period:</label>
-                                        <input placeholder="No. of days" value="{{p.warranty_period}}"
-                                            class="form-control" name="warranty_period" type="text" required>
-                                        <div style="font-size: smaller;" class="help-block">None if no Warranty</div>
-                                    </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="form-group bottom35">
-                                        <label class="bmd-label-floating" for="tags">In Stock:</label>
-                                        <input name="in_stock" type="checkbox"
-                                            value="{% if p.in_stock %}True{% else %}False{% endif %}" {% if p.in_stock %}checked{% endif %}>
-                                        <div style="font-size: smaller;" class="help-block">check the box if item is
-                                            available</div>
-                                    </div>
-                                </div>
-
-                            </div>
-                            <div class="row">
-                                <div class="col-md-7">
-                                    <div class="form-group bottom35">
-                                        <label class="bmd-label-floating">Specifications/Additional info:</label>
-                                        <textarea class="form-control ckeditor" placeholder="specification"
-                                            name="specification" required>{{p.specification}}</textarea>
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="form-group bottom35">
-                                        <label for="color">Category:</label>
-                                        <select class="button" style="width: auto;" name="category" required>
-                                            <option class="button" value="" disabled>Select a category</option>
-                                            {% for c in categories %}
-                                            {% if c.title == p.category.title %}
-                                            <option class="button" value="{{c.title}}" selected>{{c.title}}</option>
-                                            {% else %}
-                                            <option class="button" value="{{c.title}}">{{c.title}}</option>
-                                            {% endif %}
-                                            {% endfor %}
-                                        </select>
-                                    </div>
-
-                                    <br><br>
-                                    <button type="submit" class="button btnsecondary"
-                                        style="padding-top: 30px; padding-bottom: 30px; width: 50%;">Next <i
-                                            class="fas fa-arrow-right"></i></button>
-                                </div>
-
-                            </div>
-                    </form>
-                </div>
+              </div>
             </div>
+            <div class="col-md-12 col-sm-12">
+              <div class="form-group bottom35">
+                <label class="bmd-label-floating">Last Name:</label>
+                <input required class="form-control" type="text" id="last_name" value="{{p.last_name}}"
+                  placeholder="Last Name" name="last_name">
+              </div>
+            </div>
+
+            <div class="col-md-12 col-sm-12">
+              <div class="form-group bottom35">
+                <label class="bmd-label-floating">Profile Image:</label>
+                <input class="form-control" placeholder="Choose an image" name="image" value="{{p.image.url}}"
+                  type="file" id="image" onchange="previewImage()" accept=".jpg, .jpeg, .png">
+                <br><img id="preview" src="{{p.image.url}}">
+                <style>
+                  #preview {
+                    max-width: 300px;
+                    max-height: 300px;
+                    border-radius: 300px;
+                  }
+                </style>
+                <script>
+                  function previewImage() {
+                    var preview = document.querySelector('#preview');
+                    var file = document.querySelector('input[type=file]').files[0];
+                    var reader = new FileReader();
+
+                    reader.onloadend = function () {
+                      preview.src = reader.result;
+                    }
+
+                    if (file) {
+                      reader.readAsDataURL(file);
+                    } else {
+                      preview.src = "";
+                    }
+                  }
+                </script>
+              </div>
+            </div>
+            <div class="col-md-12 col-sm-12">
+              <div class="form-group bottom35">
+                <label class="bmd-label-floating">Bio:</label>
+                <textarea required class="form-control" placeholder="Add Bio" id="bio" name="bio">{{p.bio}}</textarea>
+              </div>
+            </div>
+            {% endfor %}
+            <br>
+            <button style="display: block; margin: 0 auto;" type="submit" class="button btnprimary" name="submit">Update
+              Profile</button>
+          </form>
         </div>
+      </div>
     </div>
+  </div>
 </section>
+{% else %}
+<!--page Header ends-->
+<section id="our-blog" class="padding text-center">
+  <div class="container">
+    <div class="row d-flex justify-content-center">
+      <div class="col-lg-4 col-md-6 col-sm-10">
+        <div class="bglight logincontainer">
+          <h3 class="darkcolor bottom35">Edit details</h3>
+          <form method="post" id="profile_form" class="getin_form border-form" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="col-md-12 col-sm-12">
+              <div class="form-group bottom35">
+                <label class="bmd-label-floating">First Name:</label>
+                <input required class="form-control" placeholder="First Name" type="text" id="first_name"
+                  name="first_name">
+
+              </div>
+            </div>
+            <div class="col-md-12 col-sm-12">
+              <div class="form-group bottom35">
+                <label class="bmd-label-floating">Last Name:</label>
+                <input required class="form-control" type="text" id="last_name" 
+                  placeholder="Last Name" name="last_name">
+              </div>
+            </div>
+
+            <div class="col-md-12 col-sm-12">
+              <div class="form-group bottom35">
+                <label class="bmd-label-floating">Profile Image:</label>
+                <input class="form-control" placeholder="Choose an image" name="image" value="{{p.image.url}}"
+                  type="file" id="image" onchange="previewImage()" accept=".jpg, .jpeg, .png">
+                <br><img id="preview" src="{% static 'images/Unknown_person.jpg' %}">
+                <style>
+                  #preview {
+                    max-width: 300px;
+                    max-height: 300px;
+                    border-radius: 300px;
+                  }
+                </style>
+                <script>
+                  function previewImage() {
+                    var preview = document.querySelector('#preview');
+                    var file = document.querySelector('input[type=file]').files[0];
+                    var reader = new FileReader();
+
+                    reader.onloadend = function () {
+                      preview.src = reader.result;
+                    }
+
+                    if (file) {
+                      reader.readAsDataURL(file);
+                    } else {
+                      preview.src = "";
+                    }
+                  }
+                </script>
+              </div>
+            </div>
+            <div class="col-md-12 col-sm-12">
+              <div class="form-group bottom35">
+                <label class="bmd-label-floating">Bio:</label>
+                <textarea required class="form-control" placeholder="Add Bio" id="bio" name="bio"></textarea>
+              </div>
+            </div>
+            <br>
+            <button style="display: block; margin: 0 auto;" type="submit" class="button btnprimary" name="submit">Update
+              Profile</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endif %}
 <style>
-    .form-control {
-        border-radius: 20px;
-    }
+  .form-control {
+    border-radius: 20px;
+  }
 </style>
-<!-- Initialize the Tag-it plugin for the tags input field -->
-<script>
-    $(document).ready(function () {
-        $('#tags').tagit({
-            fieldName: 'tags',
-            allowSpaces: true,
-            removeConfirmation: true,
-            autocomplete: {
-                source: '/tags-autocomplete/'  // Replace with the URL to your tags autocomplete view
-            }
-        });
-    });
-</script>
+
 {% endblock body %}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<script>
-    CKEDITOR.replace('description');
-</script>
-
-<script>
-    CKEDITOR.replace('specification');
-</script>
-<!-- CKEditor 4 stylesheet -->
