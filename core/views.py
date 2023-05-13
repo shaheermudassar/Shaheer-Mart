@@ -803,7 +803,7 @@ def update_product(request, pid):
             product.description = request.POST.get("description")
             product.days_return = request.POST.get("days_return")
             product.warranty_period = request.POST.get("warranty_period")
-            product.in_stock = request.POST.get("in_stock") == "on"
+            product.in_stock = 'in_stock' in request.POST
             product.specification = request.POST.get("specification")
             product.category = Category.objects.get(title=request.POST.get("category"))
             product.tags.clear()
