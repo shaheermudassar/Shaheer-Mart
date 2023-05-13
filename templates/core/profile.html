@@ -97,9 +97,15 @@
                   </div>
                 </div>
               </div>
+              {% if profile %}
               <a href="{% url 'update-profile' %}" class="btn btn-primary pull-right">
                 Edit Profile
               </a>
+              {% else %}
+              <a href="{% url 'create-profile' %}" class="btn btn-primary pull-right">
+                Create Profile
+              </a>
+              {% endif %}
               <a href="{% url 'userauths:change_password' %}" class="btn btn-primary pull-left">
                 Change Password
               </a>
