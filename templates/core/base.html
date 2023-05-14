@@ -377,10 +377,10 @@
 							<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
 
 								<li class="nav-item">
-									<a class="nav-link " href="{% url 'cart' %}">View cart</a>
+									<a class="nav-link " style="color: #101414de; border-radius: 20px; font-size: 18px; font-weight: 500;" href="{% url 'cart' %}">View cart</a>
 								</li>
 								<li class="nav-item">
-									<a class="nav-link " href="{% url 'checkout' %}">Checkout</a>
+									<a class="nav-link " style="color: #101414de; border-radius: 20px; font-size: 18px; font-weight: 500;" href="{% url 'checkout' %}">Checkout</a>
 								</li>
 
 							</div>
@@ -422,36 +422,39 @@
 
 								{% if request.user.is_authenticated and request.user.is_vendor %}
 								<li class="nav-item">
-									<a class="nav-link " href="{% url 'userauths:signout' %}">Sign out</a>
+									<a class="nav-link " style="color: #101414de; border-radius: 20px; font-size: 18px; font-weight: 500;" href="{% url 'userauths:signout' %}">Sign out</a>
 								</li>
 								<li class="nav-item">
-									<a class="nav-link " href="{% url 'dashboard' %}">dashboard</a>
+									<a class="nav-link " style="color: #101414de; border-radius: 20px; font-size: 18px; font-weight: 500;" href="{% url 'dashboard' %}">dashboard</a>
 								</li>
 								<li class="nav-item">
-									<a class="nav-link " href="{% url 'vendor-dashboard' %}">Store</a>
+									<a class="nav-link " style="color: #101414de; border-radius: 20px; font-size: 18px; font-weight: 500;" href="{% url 'vendor-dashboard' %}">Store</a>
 								</li>
 								
 								{% elif request.user.is_authenticated %}
 								<li class="nav-item">
-									<a class="nav-link " href="{% url 'userauths:signout' %}">Sign out</a>
+									<a class="nav-link " style="color: #101414de; border-radius: 20px; font-size: 18px; font-weight: 500;" href="{% url 'userauths:signout' %}">Sign out</a>
 								</li>
 								<li class="nav-item">
-									<a class="nav-link " href="{% url 'dashboard' %}">dashboard</a>
+									<a class="nav-link " style="color: #101414de; border-radius: 20px; font-size: 18px; font-weight: 500;" href="{% url 'dashboard' %}">dashboard</a>
 								</li>
 								<li class="nav-item">
-									<a class="nav-link " href="{% url 'create-vendor-profile' %}">Create Store</a>
+									<a class="nav-link " style="color: #101414de; border-radius: 20px; font-size: 18px; font-weight: 500;" href="{% url 'create-vendor-profile' %}">Create Store</a>
 								</li>
 
 
 								{% else %}
 								<li class="nav-item">
-									<a class="nav-link " href="{% url 'userauths:signin' %}">Sign in</a>
+									<a class="nav-link " style="color: #101414de; border-radius: 20px; font-size: 18px; font-weight: 500;" href="{% url 'userauths:signin' %}">Sign in</a>
 								</li>
 								<li class="nav-item">
-									<a class="nav-link " href="{% url 'userauths:signup' %}">Create Account</a>
+									<a class="nav-link " style="color: #101414de; border-radius: 20px; font-size: 18px; font-weight: 500;" href="{% url 'userauths:signup' %}">Create Account</a>
 								</li>
 								{% endif %}
 							</div>
+							<li class="nav-item">
+								<a class="nav-link " href="{% url 'contact' %}">Contact us</a>
+							</li>
 						</div>
 
 					</ul>
@@ -548,6 +551,8 @@
 									class="fa fa-facebook"></i> </a> </li>
 						<li><a href="https://www.twitter.com/mrshaheer786" target="_blank"><i class="fa fa-twitter"></i>
 							</a> </li>
+						<li><a href="https://github.com/shaheermudassar" target="_blank"><i class="fa fa-github"></i>
+							</a> </li>
 						<li><a href="https://www.linkedin.com/in/shaheer-mudassar-8b43b8264/" target="_blank"><i
 									class="fa fa-linkedin"></i> </a> </li>
 						<li><a href="https://www.instagram.com/shaheer_mudassar/" target="_blank"><i
@@ -576,7 +581,6 @@
 					{% endfor %}
 					<li><a style="backdrop-filter: unset; color: #222831; border:0.5px solid #222831" href="{% url 'vendor-list' %}">All Vendors</a></li>
 					<li><a style="backdrop-filter: unset; color: #222831; border:0.5px solid #222831" href="{% url 'vendor-profile' %}">Vendor Profile</a></li>
-					<li><a style="backdrop-filter: unset; color: #222831; border:0.5px solid #222831" href="{% url 'search' %}">Search</a></li>
 					<li><a style="backdrop-filter: unset; color: #222831; border:0.5px solid #222831" href="{% url 'cart' %}">Cart</a></li>
 					<li><a style="backdrop-filter: unset; color: #222831; border:0.5px solid #222831" href="{% url 'checkout' %}">Checkout</a></li>
 					<li><a style="backdrop-filter: unset; color: #222831; border:0.5px solid #222831" href="{% url 'payment-failed' %}">Payment Failed</a></li>

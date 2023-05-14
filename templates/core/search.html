@@ -43,7 +43,7 @@ Search-{{query}}
             <div class="news_item shadow text-center">
                <div class="image-container">
                   <a class="image" href="{% url 'product-detail' p.pid %}">
-                     <img src="{{p.image.url}}" style="height: 200px; " alt="Latest News" class="img-responsive">
+                     <img src="{{p.image.url}}" style="height: 180px; " alt="Latest News" class="img-responsive">
 
                   </a>
                   <div class="hot-deal">-{{p.get_percentage|floatformat:0}}%</div>

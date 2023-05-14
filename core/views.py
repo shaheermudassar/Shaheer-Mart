@@ -873,8 +873,9 @@ def customers_profile(request, id):
     }
     return render(request, "core/customer-profile.html", context)
 
+@login_required
 def vendor_dashboard(request):
-    if not Vendor.objects.filter(user=request.user).exists():
+    if not Vendor.objects.filter(user=request.user).exists() :
         messages.warning(request, "You first need to create your Store")
         return redirect('create-vendor-profile')
     vendor = Vendor.objects.get(user=request.user)

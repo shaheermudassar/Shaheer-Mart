@@ -71,7 +71,7 @@ class Vendor(models.Model):
     shipping_on_time = models.CharField(max_length=100, default="100")
     authentic_rating = models.CharField(max_length=100, default="100")
     image = models.ImageField(upload_to=user_directory_path)
-    description = RichTextUploadingField(null=True, blank=True)
+    description = models.TextField(null=True, blank=True)
     user = models.OneToOneField(User, on_delete=models.SET_NULL, null=True)
     date = models.DateTimeField(auto_now_add=True, null=True, blank=True)
     avr_rating = models.FloatField(null=True)

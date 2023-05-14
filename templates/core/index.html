@@ -71,7 +71,7 @@ Shaheer Mart
 				<div class="news_item shadow text-center">
 					<div class="image-container">
 						<a class="image" href="{% url 'product-detail' p.pid %}">
-							<img src="{{p.image.url}}" style="height: 200px; " alt="Latest News" class="img-responsive">
+							<img src="{{p.image.url}}" style="height: 180px;  " alt="Latest News" class="img-responsive">
 						</a>
 						<div class="hot-deal">-{{p.get_percentage|floatformat:0}}%</div>
 					</div>
@@ -209,10 +209,14 @@ Shaheer Mart
 						<img class="image-offer" width="120px" src="{{v.image.url}}" alt="vendor image"
 							style="border-radius: 5px;">
 
-						<h3 class="bottom20 darkcolor"><span>{{v.title}}</span></h3>
+						<h3 class="bottom20 darkcolor"><span style="color: #fff;">{{v.title}}</span></h3>
 
 						<p>
-							{{v.description}}
+							<span>
+								{{v.description}}
+
+							</span>
+								
 							<br>
 							{{v.address}}
 							<br>
