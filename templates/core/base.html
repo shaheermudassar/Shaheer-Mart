@@ -229,7 +229,7 @@
 							</button>
 							<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
 
-								{% for c in categories %}
+								{% for c in categories|slice:":5" %}
 								<li class="nav-item">
 
 									<a class="nav-link" href="{% url 'category-product-list' c.cid %}">{{c.title}}</a>
@@ -393,7 +393,7 @@
 							</button>
 							<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
 
-								{% for c in categories %}
+								{% for c in categories|slice:":4" %}
 								<li class="nav-item">
 
 									<a style="color: #101414de; border-radius: 20px; font-size: 18px; font-weight: 500;"

@@ -48,20 +48,20 @@ Login
                            <input class="form-control" name="email" type="email" placeholder="Email:" required>
                         </div>
                      </div>
-                     <div class="col-md-12 col-sm-12">
-                        <div class="form-group bottom35">
-                           <input class="form-control" name="password" type="password" placeholder="Password:" required>
+            
+                        <div class="col-md-12 col-sm-12">
+                           <div class="form-group bottom35">
+                              <input class="form-control" name="password" type="password" id="password-field" placeholder="Password:" required >
+                           </div>
+                           <input  id="password-toggle" type="checkbox" style="margin-right: 5px;"><label class="form-check-label" for="rememberMe">
+                               See Password
+                           </label>
                         </div>
-                     </div>
+            
                      <div class="col-md-12 col-sm-12">
                         <div class="form-group bottom35">
 
-                           <div class="form-check text-start">
-                              <input class="form-check-input" type="checkbox" value="" id="rememberMe">
-                              <label class="form-check-label" for="rememberMe">
-                                 Keep Me Signed In
-                              </label>
-                           </div>
+                          
 
                         </div>
                      </div>
@@ -77,5 +77,19 @@ Login
       </div>
    </div>
 </section>
+<script>
+   const passwordField = document.getElementById("password-field");
+const passwordToggle = document.getElementById("password-toggle");
+passwordToggle.addEventListener("click", function () {
+  if (passwordField.type === "password") {
+    passwordField.type = "text";
+    
+  } else {
+    passwordField.type = "password";
+   
+  }
+});
+
+</script>
 <!--Login Ends-->
 {% endblock body %}
