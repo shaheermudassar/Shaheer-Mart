@@ -906,10 +906,10 @@
                             </p>
                             <p class="bottom40">{{r.review}}</p>
                           </div>
-                          <div class="testimonial-photo"><img alt="" src="{% static 'images/testimonial-1.jpg' %}">
+                          <div class="testimonial-photo"><img alt="" src="{{r.image.image.url}}">
                           </div>
                           <h4 class="darkcolor">{{r.user.username|title}}</h4>
-                          <small class="defaultcolor">Businessman</small>
+                          <small class="defaultcolor">{{r.date|date:"d M"}}</small>
                         </div>
                       </div>
                       {% endfor %}

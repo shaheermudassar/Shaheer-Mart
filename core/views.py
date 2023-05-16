@@ -110,7 +110,7 @@ def product_detail_view(request, pid):
         "reviews": reviews,
         "review_form": review_form,
         "vendor_average_rating": vendor_average_rating,
-        "vendor_rating": vendor_rating
+        "vendor_rating": vendor_rating,
         
     }
     return render(request, "core/product-detail.html", context)
@@ -131,14 +131,24 @@ def tag_list(request, tag_slug = None):
 def ajax_add_review(request, pid):
     product = Product.objects.get(pk=pid)
     user=request.user
+    if UserProfile.objects.filter(user = request.user).exists():
+        image = UserProfile.objects.get(user = request.user)
+    if UserProfile.objects.filter(user = request.user).exists():
+        review = ProductReview.objects.create(
+            user=user,
+            image = image,
+            product=product,
+            review = request.POST['review'],
+            rating = request.POST['rating'],
 
-    review = ProductReview.objects.create(
-        user=user,
-        product=product,
-        review = request.POST['review'],
-        rating = request.POST['rating'],
-
-    )
+        )
+    else:
+        review = ProductReview.objects.create(
+            user=user,
+            product=product,
+            review = request.POST['review'],
+            rating = request.POST['rating'],
+        )
     context = {
         'user':user.username,
         'review': request.POST['review'],

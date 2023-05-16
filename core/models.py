@@ -179,22 +179,6 @@ class CartOrderItems(models.Model):
     
 ################################### Product Review, wishlist, Address ###################################################
 
-class ProductReview(models.Model):
-    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
-    product = models.ForeignKey(Product, on_delete=models.SET_NULL, null=True, related_name="reviews")
-    review = models.TextField()
-    rating = models.IntegerField(choices=RATING, default=None)
-    date = models.DateTimeField(auto_now_add=True)
-
-    class Meta:
-        verbose_name_plural = "Product Reviews"
-
-    def __str__(self):
-        return self.product.title
-
-    def get_rating(self):
-        return self.rating
-    
 class wishlist(models.Model):
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     product = models.ForeignKey(Product, on_delete=models.SET_NULL, null=True)
@@ -261,3 +245,21 @@ class VendorNotification(models.Model):
     message = models.TextField()
 
 
+
+class ProductReview(models.Model):
+    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+    product = models.ForeignKey(Product, on_delete=models.SET_NULL, null=True, related_name="reviews")
+    review = models.TextField()
+    rating = models.IntegerField(choices=RATING, default=None)
+    date = models.DateTimeField(auto_now_add=True)
+    image = models.ForeignKey(UserProfile, on_delete=models.SET_NULL, null=True)
+
+    class Meta:
+        verbose_name_plural = "Product Reviews"
+
+    def __str__(self):
+        return self.product.title
+
+    def get_rating(self):
+        return self.rating
+    
