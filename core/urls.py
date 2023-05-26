@@ -49,7 +49,7 @@ urlpatterns = [
     path('vendor-notifications/', views.vendor_notifications, name='vendor-notifications'),
     path('vendor-orders/', views.vendor_orders, name='vendor-orders'),
     path('customer-profile/<id>', views.customers_profile, name='customer-profile'),
-    path('paypal/', views.paypal_view, name='paypal'),
+    path('paypal_pay/', views.paypal_view, name='paypal_pay'),
     path('vendor-dashboard/', views.vendor_dashboard, name='vendor-dashboard'),
 
    

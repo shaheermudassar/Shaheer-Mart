@@ -164,7 +164,7 @@ Checkout
                             class="button btnsecondary">Cash on Delivery</button>
                     </form>
                     <p style="text-align: center; font-size: large; color: #00bcd4; font-weight: 700;">OR</p>
-                    <form method="post" action="{% url 'paypal' %}">
+                    <form method="post" action="{% url 'paypal_pay' %}">
                         {% csrf_token %}
                         <button type="submit" class="button btnsecondary "
                             style="display: block; margin: 0 auto; width: 50%;">

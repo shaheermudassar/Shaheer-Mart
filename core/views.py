@@ -299,6 +299,7 @@ def paypal_view(request):
             message=f"Hey {request.user} Your order was placed."
         )
         # Send email to the user
+        address = Address.objects.get(user=request.user)
         subject = 'Order Confirmation'
         message = f"Dear {request.user},\n\nWe are thrilled to inform you that your order has been placed successfully. Here are the details of your purchase:\n\nOrder ID: {order.id}\nTotal Price: {order.price}\nPayment Method: Cash on Delivery\n\nYour order will be delivered to the following address:\n{address.address}\n{address.city}, {address.country}\n\nTo view your order details, please visit our website. If you have any questions or concerns, please don't hesitate to contact us.\n\nThank you for shopping at Shaheer Mart!\n\nBest regards,\nShaheer Mart Customer Service"
         from_email = settings.DEFAULT_FROM_EMAIL
@@ -347,7 +348,7 @@ def paypal_view(request):
     if 'cart_data_obj' in request.session:
         for p_id, item in request.session['cart_data_obj'].items():
             cart_total_amount += int(item['qty']) * float(item['price'])
-        return render(request, "core/paypal.html",  {"cart_data":request.session['cart_data_obj'], 'totalcartitems': len(request.session['cart_data_obj']), 'cart_total_amount':cart_total_amount, 'paypal_payment_button':paypal_payment_button})
+        return render(request, "core/paypal_pay.html",  {"cart_data":request.session['cart_data_obj'], 'totalcartitems': len(request.session['cart_data_obj']), 'cart_total_amount':cart_total_amount, 'paypal_payment_button':paypal_payment_button})
 
 
 
