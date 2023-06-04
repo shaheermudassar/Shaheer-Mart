@@ -11,7 +11,7 @@ defusedxml==0.7.1
 distlib==0.3.6
 Django==3.2
 django-allauth==0.54.0
-django-ckeditor==6.5.1
+django-ckeditor==6.3.2
 django-cors-headers==3.14.0
 django-countries-with-calling-codes==0.1.1
 django-crispy-forms==2.0
